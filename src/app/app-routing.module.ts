@@ -6,7 +6,7 @@ import { PageCreateComponent } from './page-create/page-create.component'
 const routes: Routes = [
   {
     component: PageCreateComponent,
-    path: 'create'
+    path: '' // create
   }
 ]
 
