@@ -8,7 +8,7 @@ import { IsTouchService } from '../services/is-touch.service'
 })
 export class PageCreateComponent implements OnInit {
 
-  stage: number = 2
+  stage: number = 1
   typeScreen: string = 'none'
 
   constructor(
