@@ -1,0 +1,20 @@
+<div
+class="display"
+[style.width.px]="width"
+[style.height.px]="height"
+[style.transform]="'rotateX('+rotateDisplayX+'deg) rotateY('+rotateDisplayY+'deg)'"
+>
+  <app-greeting-card *ngIf="gift?.type === 'greetingcard'" [size]="width" [smooth]="true" [front]='gift.front' [back]='gift.back' [text]='gift.text' [color]='gift.color' [sign]='giftsign'></app-greeting-card>
+  <app-game *ngIf="gift?.type === 'game'" [size]="width" [front]="gift.front" [inside]="gift.inside" [code]="gift.code" [side]="gift.side" [color]="gift.color" [open]="gift.open" [smooth]="true"></app-game>
+  <app-speaker *ngIf="gift?.type === 'speaker'" [size]="width" [grill]="gift.grill" [color]="gift.color" [smooth]="true"></app-speaker>
+  <app-tablet *ngIf="gift?.type === 'tablet'" [size]="width" [color]="gift.color" [smooth]="true"></app-tablet>
+  <app-photo *ngIf="gift?.type === 'photo'" [size]="width" [photo]="gift.photo" [sign]="giftsign" [smooth]="true"></app-photo>
+</div>
+<div class="hintview">
+  <div class="ico" [style.backgroundImage]="'url('+('../../assets/loupe.svg')+')'"></div>
+  <div class="text">{{ locationService.translate('double tap', 'двойное нажатие') }}</div>
+</div>
+<div class="hintsidebar">
+  <div class="text">{{ locationService.translate('change object parameters in the right sidebar', 'измение параметров подарка в правом меню') }}</div>
+  <div class="ico" [style.backgroundImage]="'url('+'../../assets/arrow-right-sidebar2.svg'+')'"></div>
+</div>

@@ -1,0 +1,50 @@
+<!-- <div
+  class="fill"
+  [style.width]="((value-min)/(max-min)*rectHost.width)+'px'"
+  [style.height.px]="rectHost.height*0.4"
+></div>
+<div
+  class="back"
+  [style.height.px]="rectHost.height*0.4"
+></div>
+<div class="ticks">
+  <div *ngFor="let t of [].constructor(max-min+1); let i = index" class="tick" [style.margin-left]="(i/(max-min))*rectHost.width+'px'">
+    <div class="title">title</div>
+    <div class="line"></div>
+  </div>
+</div>
+<div
+  class="button"
+  [style.width.px]="rectHost.height"
+  [style.height.px]="rectHost.height"
+  [style.margin-left]="((value-min)/(max-min)*rectHost.width)+'px'"
+></div> -->
+
+<!-- <div class="hint">{{ locationService.translate('doble tap to continue', 'два раза нажми - дальше пройди') }}</div> -->
+
+<div *ngFor="let option of options; let i = index" class="option" (click)="onChange.emit(i)">
+  <ng-container *ngIf="i < options.length-1">
+    <div class="left">
+      <div *ngIf="i === 0" class="number" [class.number-first]="i === 0">
+        <div class="tick"></div>
+        <div class="text">{{ options[i] }}</div>
+      </div>
+      <div class="line" [class.round-top]="i === 0" [style.background-color]="getColor(i)" ></div>
+      <div class="number">
+        <div class="tick"></div>
+        <div class="text">{{ options[i+1] }}</div>
+      </div>
+    </div>
+    <div class="title" [style.background-color]="i === active ? getColor(i)+'33' : 'unset'"> {{ options[i] === options[i+1] ? options[i]+' '+currencyName : options[i]+' '+currencyName+' < ... < '+options[i+1]+' '+currencyName }}</div>
+  </ng-container>
+  <ng-container *ngIf="i === options.length-1">
+    <div class="left">
+      <div *ngIf="i === 0" class="number" [class.number-first]="i === 0">
+        <div class="tick"></div>
+        <div class="text">{{ options[i] }}</div>
+      </div>
+      <div class="line" [class.round-top]="i === 0" [class.round-bottom]="true" [style.background-color]="getColor(i)" ></div>
+    </div>
+    <div class="title" [style.background-color]="i === active ? getColor(i)+'33' : 'unset'" >+ {{ currencyName+currencyName+currencyName }}</div>
+  </ng-container>
+</div>

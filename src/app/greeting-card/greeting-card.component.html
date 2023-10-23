@@ -1,0 +1,15 @@
+<div
+class="front"
+[style.width.px]="getWidth"
+[style.height.px]="getHeight"
+[style.transform]="'translateZ('+(getDepth/2)+'px)'"
+[style.backgroundImage]="'url('+front+')'"></div>
+<div
+class="back"
+[style.width.px]="getWidth"
+[style.height.px]="getHeight"
+[style.transform]="'translateZ('+(-getDepth/2)+'px)'"
+[style.backgroundImage]="'url('+back+')'">
+  <div class="text" [style.fontSize.px]="getFont" [style.color]="color" [innerHtml]="text" ></div>
+  <div class="sign"></div>
+</div>

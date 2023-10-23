@@ -1,0 +1,270 @@
+:host {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .hint {
+    position: fixed;
+    padding: 10px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff33;
+    backdrop-filter: blur(2px);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 10px;
+    color: #333333;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .slide-money {
+    margin: 50px 0px;
+    width: 80%;
+    align-self: center;
+  }
+  .stage2-screen::ng-deep {
+    background-color: unset;
+    box-shadow: none;
+    app-touch-refresh {
+      margin-top: -41px;
+      z-index: 10;
+    }
+    > .back {
+      background-color: unset;
+      border: none;
+    }
+  }
+  .stage2-rename::ng-deep {
+    background-color: unset;
+    bottom: 0px;
+    height: calc(100% - 40px);
+    .title, .maxlength, .hint {
+      background-color: #ffffff33;
+      backdrop-filter: blur(2px);
+      width: 100%;
+    }
+  }
+  .stage2-money {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    z-index: -1;
+    > .stage2-coin {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 100px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      text-align: center;
+      border: 2px dashed #ffffff;
+      box-shadow: 2px 2px 5px #00000066;
+      opacity: 0;
+      background-color: #000000;
+      animation-name: coin;
+      animation-duration: 2s;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+    }
+    > .stage2-coin_dollar {
+      background-color: #4caf50;
+    }
+    > .stage2-coin_euro {
+      background-color: #2196f3;
+    }
+    > .stage2-coin_ruble {
+      background-color: #ff9800;
+    }
+    > .stage2-coin_yen {
+      background-color: #e91e63;
+    }
+    > .stage2-coin_pound {
+      background-color: #795548;
+    }
+  }
+  > .screen-show-price::ng-deep {
+    box-shadow: none;
+    > .back {
+      border-bottom: 1px solid #dddddd00;
+    }
+  }
+  .stage2-question {
+    margin: 0px 50px;
+    position: absolute;
+    align-self: center;
+    text-align: center;
+    transform: translateY(-50px);
+    user-select: none;
+    color: #333333;
+    font-size: 16px;
+  }
+  .stage2-answers {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    > .stage2-answer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      > .stage2-answer__text {
+        user-select: none;
+        font-size: 18px;
+        color: #333333;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+    > .stage2-answer:first-child > .stage2-answer__text {
+      transform: translateX(20px) translateY(150px);
+      color: #f44336;
+    }
+    > .stage2-answer:last-child > .stage2-answer__text {
+      transform: translateX(-20px) translateY(150px);
+      color: #4caf50;
+    }
+  }
+  .stage2-answers.stage2-answers_hint {
+    > .stage2-answer:first-child > .stage2-answer__text {
+      transform: translateX(0px) translateY(130px);
+      color: #f44336;
+      width: 90%;
+    }
+    > .stage2-answer:last-child > .stage2-answer__text {
+      transform: translateX(0px) translateY(130px);
+      color: #4caf50;
+      width: 90%;
+    }
+  }
+  .stage2-slider-money::ng-deep {
+    position: absolute;
+    transform: translateY(100px);
+    width: 80%;
+    .mat-slider-track-wrapper {
+      .mat-slider-track-background {
+        background-color: #dddddd;
+      }
+      .mat-slider-track-fill {
+        background-color: #8bc34a;
+      }
+    }
+    .mat-slider-thumb {
+      transform: scale(1);
+      background-color: #8bc34a;
+    }
+    .mat-slider-thumb-label {
+      width: 90px;
+      padding: 10px;
+      height: 20px;
+      background-color: #8bc34a;
+      transform: scale(1);
+      border-radius: 5px;
+      right: -50px;
+      top: -60px;
+      > .mat-slider-thumb-label-text {
+        transform: none;
+        text-align: center;
+        font-size: 12px;
+        opacity: 1;
+      }
+    }
+  }
+  .stage2-slider-money.cdk-focused::ng-deep {
+    .mat-slider-thumb {
+      transform: scale(1) !important;
+      background-color: #8bc34a;
+    }
+    .mat-slider-thumb-label {
+      width: 90px;
+      padding: 10px;
+      height: 20px;
+      background-color: #8bc34a;
+      transform: scale(1);
+      border-radius: 5px;
+      right: -60px;
+      > .mat-slider-thumb-label-text {
+        transform: none;
+        text-align: center;
+        font-size: 12px;
+        opacity: 1;
+      }
+    }
+  }
+  .stage2-slider-money.cdk-focused.mat-slider-thumb-label-showing .mat-slider-thumb::ng-deep {
+    .mat-slider-thumb {
+      transform: scale(1);
+    }
+  }
+  .currency-img {
+    margin: 20px 0px;
+    width: 90%;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .currency-text {
+    font-size: 18px;
+    color: #333333;
+  }
+  .currency-img_dollar {
+    background-image: url(../../assets/currency/dollar.png);
+  }
+  .currency-img_euro {
+    background-image: url(../../assets/currency/euro.png);
+  }
+  .currency-img_ruble {
+    background-image: url(../../assets/currency/ruble.png);
+  }
+  .currency-img_yen {
+    background-image: url(../../assets/currency/yen.png);
+  }
+  .currency-img_pound {
+    background-image: url(../../assets/currency/pound.png);
+  }
+  .currency-img_other {
+    background-image: url(../../assets/currency/other.png);
+  }
+  @keyframes coin {
+    0% {
+      transform: translateY(0px) scale(0.1);
+      opacity: 0;
+    }
+    5% {
+      transform: translateY(5px) scale(1);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translateY(50px) scale(1);
+      opacity: 0.2;
+    }
+    95% {
+      transform: translateY(95px) scale(1);
+      opacity: 0.2;
+    }
+    100% {
+      transform: translateY(100px) scale(0.1);
+      opacity: 0;
+    }
+  }
+}

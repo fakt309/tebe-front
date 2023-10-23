@@ -1,0 +1,52 @@
+:host {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  > .icon {
+    flex-shrink: 0;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 2000px;
+    > .gift-animated {
+      transition: all ease 0.2s;
+    }
+  }
+  > .title {
+    margin: 20px;
+    font-size: 18px;
+    text-align: left;
+    word-break: break-word;
+  }
+  > .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: auto;
+    > * {
+      margin: 10px;
+      margin-left: 0px;
+    }
+    > *:first-child {
+      margin-left: 10px;
+    }
+    > .move-button {
+      margin: 10px;
+      width: 30px;
+      height: 30px;
+      cursor: grab;
+      background-image: url(../../assets/menu.svg);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+}

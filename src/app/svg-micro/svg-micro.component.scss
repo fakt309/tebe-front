@@ -1,0 +1,15 @@
+:host {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  > svg {
+    width: 100px;
+    height: 100px;
+    * {
+      transition: all ease 0.3s;
+    }
+  }
+}

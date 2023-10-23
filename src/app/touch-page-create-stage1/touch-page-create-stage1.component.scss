@@ -1,0 +1,110 @@
+:host {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .option-list-gift-animated {
+    transition: transform 250ms ease;
+  }
+  .placeholder-list-gift {
+    width: 100%;
+    height: 120px;
+    opacity: 0;
+    transition: transform 250ms ease;
+  }
+  .listimages {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .icon-platform {
+    margin: 10px 0px;
+    width: 90%;
+    height: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .text-platform {
+    margin: 10px;
+    text-align: center;
+    user-select: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  .tablet-demo {
+    width: 80%;
+    height: 60%;
+    border-radius: 10px;
+    overflow: hidden;
+    > .tablet-gradient {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #00000066, #00000000);
+    }
+  }
+  .icon-tablet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px;
+    width: 90%;
+    height: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .dialog {
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .dialog-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      color: #333333;
+      margin: 50px 50px 10px 50px;
+    }
+    .dialog-text {
+      text-align: center;
+      font-size: 16px;
+      color: #333333;
+      margin: 10px 50px;
+    }
+    .dialog-quote {
+      text-align: center;
+      font-style: italic;
+      color: #999999;
+      font-size: 16px;
+      margin: 10px 50px;
+    }
+    .dialog-img {
+      margin: 10px;
+    }
+    .dialog-warning {
+      text-align: center;
+      font-size: 16px;
+      color: #f44336;
+      margin: 10px 50px;
+    }
+    .dialog-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+  }
+}

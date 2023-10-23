@@ -1,0 +1,16 @@
+:host {
+  position: fixed;
+  display: none;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  background-color: #f44336;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all ease 0.2s;
+  z-index: 100;
+}

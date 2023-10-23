@@ -1,0 +1,49 @@
+<app-desktop-select-location *ngIf="showSelectLanguage"></app-desktop-select-location>
+
+<app-desktop-edit-gift
+  *ngIf="activeGift !== null"
+  [gift]="activeGift"
+  [initialRect]="initialRectViewGift"
+  (close)="closeEditGift()"
+></app-desktop-edit-gift>
+
+<template #moveGift></template>
+<div *ngIf="screens.listGifts === 'open' && gifts.length === 0 && !showSelectLanguage" class="skelet-empty" @fade>
+  <app-desktop-empty-giftlist></app-desktop-empty-giftlist>
+</div>
+<div *ngIf="screens.listGifts === 'open' && gifts.length !== 0" class="skelet-giftlist" @fade>
+  <app-desktop-gift-list-option
+  *ngFor="let gift of gifts"
+  [gift]="gift"
+  [showMove]="gifts.length > 1"
+  (startMove)="moveGiftStart($event)"
+  (edit)="showEditGift($event)"
+  (delete)="deleteGift($event)"
+  [sublimeStartRotate]="sublimeStartRotate"
+  [sublimeStopRotate]="sublimeStopRotate"
+  ></app-desktop-gift-list-option>
+</div>
+
+<div *ngIf="screens.listGifts === 'open' && activeGift === null" class="buttons-gift-list">
+  <app-desktop-button
+    [text]="locationService.translate('add', 'добавить')"
+    [icon]="'assets/plus.svg'"
+    [background]="'#ffffff'"
+    [color]="'#333333'"
+    (click)="screens.addGift = 'open'"
+  ></app-desktop-button>
+  <app-desktop-button
+    (click)="mixxxx()"
+    [text]="locationService.translate('next stage', 'след. этап')"
+    [icon]="'../../assets/checkmark.svg'"
+    [background]="'#ffffff'"
+    [color]="'#333333'"
+    [disabled]="gifts.length === 0"
+  ></app-desktop-button>
+</div>
+
+<app-desktop-add-gift
+  *ngIf="screens.addGift === 'open'"
+  (close)="closeAddGift($event)"
+  @fadeAdd
+></app-desktop-add-gift>

@@ -1,0 +1,9 @@
+<div class="back">
+  <div class="ico"></div>
+  <div class="text">{{ locationService.translate('back', 'назад') }}</div>
+</div>
+<div class="wraplist">
+  <app-touch-scroll [refreshable]="refreshable" [scrolltocenter]="doscrolltocenter" [touch]="scroll">
+    <ng-content></ng-content>
+  </app-touch-scroll>
+</div>

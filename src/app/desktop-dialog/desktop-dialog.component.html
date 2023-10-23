@@ -1,0 +1,5 @@
+<div @opacity class="background"></div>
+<div #displayRef @slideTop class="display">
+  <div class="close" (click)="close.emit()"></div>
+  <ng-content></ng-content>
+</div>

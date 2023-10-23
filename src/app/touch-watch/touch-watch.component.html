@@ -1,0 +1,16 @@
+<app-tablet [video]="video" [size]="size" [style.transform]="'translateY('+ycoord+'px)'" [control]="control"></app-tablet>
+<div class="hint">
+  <div class="hint__block">
+    <div class="hint__icon" [style.backgroundImage]="'url(../../assets/prev-gray.svg)'"></div>
+    <div class="hint__text">{{ locationService.translate('double tap', 'два клика') }}</div>
+  </div>
+  <div class="hint__block">
+    <div *ngIf="pause" class="hint__icon" [style.backgroundImage]="'url(../../assets/play-gray.svg)'"></div>
+    <div *ngIf="!pause" class="hint__icon" [style.backgroundImage]="'url(../../assets/pause-gray.svg)'"></div>
+    <div class="hint__text">{{ locationService.translate('tap', 'клик') }}</div>
+  </div>
+  <div class="hint__block">
+    <div class="hint__text">{{ locationService.translate('double tap', 'два клика') }}</div>
+    <div class="hint__icon" [style.backgroundImage]="'url(../../assets/next-gray.svg)'"></div>
+  </div>
+</div>

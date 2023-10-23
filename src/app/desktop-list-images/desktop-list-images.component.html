@@ -1,0 +1,16 @@
+<div class="list-images-background">
+  <div class="list-images-display" @rightShow>
+    <div class="list-images-close" (click)="choose.emit('')"></div>
+    <div class="list-images-list">
+      <div class="list-images-option" matRipple [matRippleColor]="'#00000022'" (click)="inputFile.click()">
+        <div class="list-images-option__image" [style.background-image]="'url(../../assets/upload.svg)'"></div>
+      </div>
+      <div *ngFor="let img of images" class="list-images-option" matRipple [matRippleColor]="'#00000022'" (click)="choose.emit(img)">
+        <div class="list-images-option__image" [style.background-image]="'url('+img+')'"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<input #inputFile style='display:none' type="file" accept="image/png, image/jpeg" (input)="tryuploadimage($event)" />
+
+<app-desktop-error [text]="textError" [color]="'#f44336'"></app-desktop-error>

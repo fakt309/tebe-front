@@ -1,0 +1,29 @@
+<div *ngIf="loading && !error" class="loading"></div>
+<video
+*ngIf="error === ''"
+class="preview"
+[attr.width]="width+'px'"
+[attr.height]="height+'px'"
+autoplay
+[muted]="'muted'"
+[style.opacity]="opacityVideo"
+[style.animationName]="chickchick ? 'takephoto' : 'none'"
+></video>
+<div
+class="photo"
+[style.width]="width+'px'"
+[style.height]="height+'px'"
+[style.opacity]="opacityPhoto"
+[style.animationName]="chickchick ? 'takephoto' : 'none'"
+[style.transform]="'translateY('+ycoord+'px)'"
+[style.backgroundImage]="'url('+picture+')'"
+></div>
+<div *ngIf="error !== ''" class="error">
+  <div class="icon"></div>
+  <div class="text">{{ error }}</div>
+</div>
+<div class="hint" [style.opacity]="opacityVideo">{{ locationService.translate('tap to take a photo', 'нажмите чтобы сделать фото') }}</div>
+<div class="hintCancel" [style.opacity]="opacityPhoto">{{ locationService.translate('swipe up to cancel', 'свайп вверх чтобы отменить') }}</div>
+<div class="hintSave" [style.opacity]="opacityPhoto">
+  <div class="subtext">{{ locationService.translate('tap to save', 'нажмите чтобы сохранить') }}</div>
+</div>

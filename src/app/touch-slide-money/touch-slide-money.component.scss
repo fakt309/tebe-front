@@ -1,0 +1,125 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  user-select: none;
+  > .option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    > .left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      > .number {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        align-self: flex-end;
+        transform: translateX(5px) translateY(50%);
+        > .tick {
+          margin-right: 10px;
+          width: 2px;
+          height: 1px;
+          background: #00000033;
+        }
+        > .text {
+          font-size: 10px;
+          color: #333333;
+        }
+      }
+      > .number.number-first {
+        align-self: flex-start;
+        transform: translateX(5px) translateY(-50%);
+      }
+      > .line {
+        width: 10px;
+        height: 50px;
+        background-color: #00000033;
+      }
+      > .line.round-top {
+        border-radius: 5px 5px 0px 0px;
+      }
+      > .line.round-bottom {
+        border-radius: 0px 0px 5px 5px;
+      }
+    }
+    > .title {
+      padding: 5px 20px;
+      border-radius: 10px;
+      margin-left: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: center;
+      color: #333333;
+      font-size: 14px;
+      align-self: stretch;
+    }
+  }
+
+  .hint {
+    position: fixed;
+    padding: 10px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff33;
+    backdrop-filter: blur(5px);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 10px;
+    color: #333333;
+    text-align: center;
+  }
+
+  // > .fill, > .back {
+  //   position: absolute;
+  //   border-radius: 10px;
+  // }
+  // > .fill {
+  //   background-color: #03a9f4;
+  // }
+  // > .back {
+  //   width: 100%;
+  //   background-color: #00000033;
+  // }
+  // > .ticks {
+  //   width: 100%;
+  //   display: flex;
+  //   flex-direction: row;
+  //   align-items: center;
+  //   justify-content: flex-start;
+  //   align-self: flex-start;
+  //   > .tick {
+  //     position: absolute;
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //     justify-content: flex-start;
+  //     > .title {
+  //       position: absolute;
+  //     }
+  //     > .line {
+  //       position: absolute;
+  //       width: 1px;
+  //       height: 20px;
+  //       background-color: #000000;
+  //     }
+  //   }
+  // }
+  // > .button {
+  //   position: absolute;
+  //   border-radius: 100%;
+  //   background-color: #ffffff;
+  //   box-shadow: 0px 0px 5px #999999;
+  //   transform: translateX(-50%);
+  // }
+}

@@ -1,0 +1,205 @@
+<app-touch-screen-static @slideShow [show]="stats.showPrice === 'open' ? true : false" [touch]="touches.showPrice" (close)="onCloseScreen('showPrice')">
+  <div class="stage2-question">{{ locationService.translate('Specify the value of the gift?', 'Указать стоимость подарка?') }}</div>
+  <div class="stage2-answers">
+    <div class="stage2-answer" matRipple matRippleColor="#f4433611" (click)="resultShowPrice(false)">
+      <div class="stage2-answer__text">{{ locationService.translate('NO', 'НЕТ') }}</div>
+    </div>
+    <div class="stage2-answer" matRipple matRippleColor="#4caf5011" (click)="resultShowPrice(true)">
+      <div class="stage2-answer__text">{{ locationService.translate('YES', 'ДА') }}</div>
+    </div>
+  </div>
+</app-touch-screen-static>
+
+<app-touch-screen-static [show]="stats.hintNo === 'open' ? true : false" [touch]="touches.hintNo" (close)="onCloseScreen('hintNo')">
+  <div class="stage2-question">{{ locationService.translate('You can hint at the value of a gift without giving the exact price', 'Вы можете намекнуть на стоимость подарка, не указывая точную цену') }}</div>
+  <div class="stage2-answers stage2-answers_hint">
+    <div class="stage2-answer" matRipple matRippleColor="#f4433611" (click)="resultHintNo(false)">
+      <div class="stage2-answer__text">{{ locationService.translate('Don\'t list the price at all', 'Не указывать цену совсем') }}</div>
+    </div>
+    <div class="stage2-answer" matRipple matRippleColor="#4caf5011" (click)="resultHintNo(true)">
+      <div class="stage2-answer__text">{{ locationService.translate('Hint at the price', 'Намекнуть') }}</div>
+    </div>
+  </div>
+</app-touch-screen-static>
+
+<app-touch-screen-static [show]="stats.hintYes === 'open' ? true : false" [touch]="touches.hintYes" (close)="onCloseScreen('hintYes')">
+  <div class="stage2-question">{{ locationService.translate('You can hint at the value of a gift without giving the exact price', 'Вы можете намекнуть на стоимость подарка, не указывая точную цену') }}</div>
+  <div class="stage2-answers stage2-answers_hint">
+    <div class="stage2-answer" matRipple matRippleColor="#f4433611" (click)="resultHintYes(false)">
+      <div class="stage2-answer__text">{{ locationService.translate('Specify the exact price', 'Указать точную цену') }}</div>
+    </div>
+    <div class="stage2-answer" matRipple matRippleColor="#4caf5011" (click)="resultHintYes(true)">
+      <div class="stage2-answer__text">{{ locationService.translate('Hint at the price', 'Намекнуть') }}</div>
+    </div>
+  </div>
+</app-touch-screen-static>
+
+<app-touch-scroll-fragments-refresh [show]="stats.currency === 'open' ? true : false" [touch]="touches.currency" (close)="onCloseScreen('currency')" [title]="locationService.translate('select currency', 'выберите валюту')">
+  <ng-container *ngIf="locationService.location().country.code === 'us'">
+    <div (click)="chooseCurrency('dollar')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_dollar"></div>
+      <div class="currency-text">$ dollar</div>
+    </div>
+    <div (click)="chooseCurrency('euro')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_euro"></div>
+      <div class="currency-text">€ euro</div>
+    </div>
+    <div (click)="chooseCurrency('ruble')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_ruble"></div>
+      <div class="currency-text">₽ ruble</div>
+    </div>
+    <div (click)="chooseCurrency('yen')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_yen"></div>
+      <div class="currency-text">¥ yen</div>
+    </div>
+    <div (click)="chooseCurrency('pound')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_pound"></div>
+      <div class="currency-text">£ pound</div>
+    </div>
+    <div (click)="chooseCurrency('other')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_other"></div>
+      <div class="currency-text">other currency</div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="locationService.location().country.code === 'ru'">
+    <div (click)="chooseCurrency('ruble')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_ruble"></div>
+      <div class="currency-text">₽ рубль</div>
+    </div>
+    <div (click)="chooseCurrency('dollar')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_dollar"></div>
+      <div class="currency-text">$ доллар</div>
+    </div>
+    <div (click)="chooseCurrency('euro')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_euro"></div>
+      <div class="currency-text">€ евро</div>
+    </div>
+    <div (click)="chooseCurrency('yen')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_yen"></div>
+      <div class="currency-text">¥ йена</div>
+    </div>
+    <div (click)="chooseCurrency('pound')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_pound"></div>
+      <div class="currency-text">£ фунт стерлингов</div>
+    </div>
+    <div (click)="chooseCurrency('other')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_other"></div>
+      <div class="currency-text">other currency</div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="locationService.location().country.code !== 'us' && locationService.location().country.code !== 'ru'">
+    <div (click)="chooseCurrency('dollar')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_dollar"></div>
+      <div class="currency-text">$ dollar</div>
+    </div>
+    <div (click)="chooseCurrency('euro')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_euro"></div>
+      <div class="currency-text">€ euro</div>
+    </div>
+    <div (click)="chooseCurrency('ruble')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_ruble"></div>
+      <div class="currency-text">₽ ruble</div>
+    </div>
+    <div (click)="chooseCurrency('yen')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_yen"></div>
+      <div class="currency-text">¥ yen</div>
+    </div>
+    <div (click)="chooseCurrency('pound')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_pound"></div>
+      <div class="currency-text">£ pound</div>
+    </div>
+    <div (click)="chooseCurrency('other')" matRipple matRippleColor="#00000011">
+      <div class="currency-img currency-img_other"></div>
+      <div class="currency-text">other currency</div>
+    </div>
+  </ng-container>
+</app-touch-scroll-fragments-refresh>
+
+<!-- <app-touch-screen-static [show]="stats.hint === 'open' ? true : false" [touch]="touches.hint" (close)="onCloseScreen('hint')">
+  <div class="stage2-question">{{ locationService.translate('Specify the price range for your items', 'Укажите диапазон стоимости ваших товаров') }}</div>
+  <mat-slider
+    class="stage2-slider-money"
+    thumbLabel="true"
+    [displayWith]="formatLabelMoneyHint"
+    tickInterval="1"
+    step="1"
+    min="0"
+    max="5"
+    (touchstart)="this.disableds['hint'] = true"
+  >
+  </mat-slider>
+</app-touch-screen-static> -->
+
+<app-touch-screen-static [show]="stats.currencyName === 'open' ? true : false" [touch]="touches.currencyName" (close)="onCloseScreen('currencyName')">
+  <app-touch-rename
+    class="stage2-rename"
+    [useAnimate]="false"
+    [show]="stats.currencyName === 'open' ? true : false"
+    [value]="currency.name"
+    [enterable]="false"
+    [max]="20"
+    [min]="1"
+    [title]="locationService.translate('enter currency name', 'введите название валюты')"
+    (save)="onSaveCurrencyName($event)"
+  ></app-touch-rename>
+</app-touch-screen-static>
+
+<app-touch-screen-static [show]="stats.currencyRate === 'open' ? true : false" [touch]="touches.currencyRate" (close)="onCloseScreen('currencyRate')">
+  <app-touch-rename
+    class="stage2-rename"
+    [useAnimate]="false"
+    [show]="stats.currencyRate === 'open' ? true : false"
+    [value]="currency.rate"
+    [enterable]="false"
+    [onlyNumbers]="true"
+    [max]="10"
+    [min]="1"
+    [title]="locationService.translate('rate ', 'курс валюты ')+' 1 $ = ??? '+currency.name"
+    (save)="onSaveCurrencyRate($event)"
+  ></app-touch-rename>
+</app-touch-screen-static>
+
+<div [style.opacity]="stats.currencySlide === 'open' ? '0.5' : '1'">
+  <app-touch-money-pack [show]="stats.currencyValue === 'open' || stats.currencySlide === 'open'" [value]="currency.value/currency.rate" ></app-touch-money-pack>
+</div>
+
+<app-touch-screen-static [show]="stats.currencyValue === 'open' ? true : false" [touch]="touches.currencyValue" (close)="onCloseScreen('currencyValue')">
+  <app-touch-rename
+    class="stage2-rename"
+    [useAnimate]="false"
+    [show]="stats.currencyValue === 'open' ? true : false"
+    [value]="currency.value"
+    [enterable]="false"
+    [onlyNumbers]="true"
+    [max]="20"
+    [min]="1"
+    [title]="locationService.translate('Total value of your gifts. Currency: '+currency.name, 'Суммарная стоимость ваших подарков в валюте: '+currency.name)"
+    (save)="onSaveCurrencyValue($event)"
+    (onInput)="onInputCurrencyValue($event)"
+  ></app-touch-rename>
+</app-touch-screen-static>
+
+<div [style.display]="stats.currencySlide === 'open' ? 'flex' : 'none'" class="hint">
+  {{ locationService.translate('doble tap to continue', 'два раза нажми - дальше пройди') }}
+</div>
+<app-touch-screen class="stage2-screen" [show]="stats.currencySlide === 'open' ? true : false" [touch]="touches.currencySlide" [refreshable]="true" [doscrolltocenter]="doscrolltocenter" (close)="onCloseScreen('currencySlide')">
+  <app-touch-slide-money
+    class="slide-money"
+    [active]="currency.active"
+    [options]="currency.options"
+    [currencyName]="currency.sign"
+    [touch]="touches.currencySlide"
+    (onChange)="currency.active = $event; currency.value = currency.options[$event]"
+    (complete)="onSaveCurrencySlide()"
+  ></app-touch-slide-money>
+</app-touch-screen>
+
+<div #moneyRef class="stage2-money">
+  <div
+    *ngFor="let coin of coins"
+    [class]="'stage2-coin stage2-coin_'+coin.type"
+    [style.margin-left]="coin.x+'px'"
+    [style.margin-top]="coin.y+'px'"
+    [style.animation-duration]="coin.speed+'s'"
+  >{{ coinContent(coin.type) }}</div>
+</div>

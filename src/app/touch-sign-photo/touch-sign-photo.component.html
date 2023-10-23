@@ -1,0 +1,25 @@
+<div
+[style.transform]="'translateX('+(xcoord+width/2)+'px) translateY('+(ycoord+height/2)+'px) rotateY(180deg)'"
+class="wrap">
+  <app-photo class="photo" [size]="width"></app-photo>
+</div>
+<div class="mask">
+  <div
+  class="bright"
+  [style.width.px]="width"
+  [style.height.px]="height"
+  [style.transform]="'translateX('+xcoord+'px) translateY('+ycoord+'px)'"></div>
+</div>
+<app-touch-draw-svg
+class="canvas"
+[touch]="touch"
+[tool]="tool"
+[color]="color"
+[width]="width"
+[height]="height"
+[points]="gift?.sign ? gift?.sign : []"
+[sublimereset]="sublimereset"
+[sublimesave]="sublimesave"
+[style.transform]="'translateX('+xcoord+'px) translateY('+ycoord+'px) translateZ(1000px)'"
+(save)="savedraw($event)"></app-touch-draw-svg>
+<div class="hint">{{ locationService.translate('double tap to menu', 'двойное нажатие для выхода в меню') }}</div>

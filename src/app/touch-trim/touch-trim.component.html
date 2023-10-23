@@ -1,0 +1,46 @@
+<div
+class="image"
+[style.width.px]="width"
+[style.height.px]="height"
+[style.transform]="'translateX('+x+'px) translateY('+y+'px)'"
+[style.backgroundImage]="'url('+img+')'"
+>
+</div>
+
+<div [style.display]="mode === 'trim' ? 'flex' : 'none'" class="trimtools">
+  <!-- <div
+  class="back"
+  [style.width]="'100%'"
+  [style.height.px]="frame.y"
+  [style.transform]="'translateX('+0+'px) translateY('+0+'px)'"></div>
+  <div
+  class="back"
+  [style.width]="'100%'"
+  [style.height]="'calc(100% - '+(frame.y+frame.h)+'px)'"
+  [style.transform]="'translateX('+0+'px) translateY('+(frame.y+frame.h)+'px)'"></div>
+  <div
+  class="back"
+  [style.width.px]="frame.x"
+  [style.height.px]="frame.h"
+  [style.transform]="'translateX('+0+'px) translateY('+(frame.y)+'px)'"></div> -->
+  <div
+  class="back"
+  [style.width]="'100%'"
+  [style.height]="'100%'"
+  [style.transform]="'translateX('+0+'px) translateY('+0+'px)'"></div>
+  <div
+  class="frame"
+  [style.width.px]="frame.w"
+  [style.height.px]="frame.h"
+  [style.transform]="'translateX('+frame.x+'px) translateY('+frame.y+'px)'">
+    <div class="resize"></div>
+  </div>
+</div>
+
+<div
+class="hint"
+[style.transform]="'translateY('+taptransform+'px)'">{{ locationService.translate('tap to menu', 'нажмите чтобы выйти в меню') }}</div>
+<div class="hintsidebar" [style.transform]="'translateY('+hintsidebartransform+'px)'">
+  <div class="text">{{ locationService.translate('change image in the right sidebar', 'изменить картнку можно в правом меню') }}</div>
+  <div class="ico" [style.backgroundImage]="'url('+'../../assets/arrow-right-sidebar3.svg'+')'"></div>
+</div>

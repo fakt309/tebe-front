@@ -1,0 +1,52 @@
+:host {
+  > .list-platforms-background {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #00000066;
+  }
+  > .list-platforms-display {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    > * {
+      flex-shrink: 0;
+    }
+    > .list-platforms-display__close {
+      position: fixed;
+      right: 0px;
+      top: 0px;
+      width: 30px;
+      height: 30px;
+      margin: 20px;
+      cursor: pointer;
+      opacity: 0.7;
+      background-image: url(../../assets/cross.svg);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: all ease 0.3s;
+    }
+    > .list-platforms-display__close:hover {
+      opacity: 1;
+    }
+    > .list-platforms-display__option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<div class="icon">
+  <app-greeting-card
+    *ngIf="type === 'greetingcard'"
+    [size]="290*(297/420)"
+    [front]="locationService.translate('../../assets/greetingcard/front/8.png', '../../assets/greetingcard/front/21.png')"
+    [back]="'../../assets/greetingcard/back/5.jpg'"
+    [text]="locationService.translate('May you be gifted with life’s biggest joys and never-ending bliss. After all, you yourself are a gift to earth, so you deserve the best. Happy birthday.', 'Желаю счастья, радости, любви,\nЕще мечты заветной исполненья,\nЗдоровья крепкого, удач всегда во всем\nИ добрых слов не только в день рожденья!')"
+    [color]="'#ffffff'"
+    [sign]="exampleSignGreeting">
+  </app-greeting-card>
+  <app-game
+    *ngIf="type === 'game'"
+    [size]="290*(135/190)">
+  </app-game>
+  <app-speaker
+    *ngIf="type === 'speaker'"
+    [size]="270"
+    [style.animationName]="'rotPlus180'"
+  >
+  </app-speaker>
+  <app-tablet
+    *ngIf="type === 'tablet'"
+    [size]="290">
+  </app-tablet>
+  <app-photo
+    *ngIf="type === 'photo'"
+    [size]="290*(48/64)"
+    [sign]="exampleSignPhoto"
+    [style.position]="'unset'">
+  </app-photo>
+</div>
+<div *ngIf="descr" @fadeScaleInfo class="info">
+  <div class="title">{{ title }}</div>
+  <div class="descr">{{ description }}</div>
+</div>
+<div class="buttons">
+  <app-desktop-button
+    *ngIf="descr"
+    @fadeScaleButton1
+    class="button"
+    [text]="locationService.translate('how it works', 'что это')"
+    [icon]="'assets/question-mark.svg'"
+    [background]="'#ffffff'"
+    [color]="'#333333'"
+    (click)="how.emit()"
+  ></app-desktop-button>
+  <app-desktop-button
+    *ngIf="descr"
+    @fadeScaleButton2
+    class="button"
+    [text]="locationService.translate('add', 'добавить')"
+    [icon]="'assets/plus.svg'"
+    [background]="'#ffffff'"
+    [color]="'#333333'"
+    (click)="add.emit()"
+  ></app-desktop-button>
+</div>

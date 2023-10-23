@@ -1,0 +1,27 @@
+<div [style.animationName]="animationName" class="image">
+  <svg  viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="
+      M 20 10
+      C 20 10, 20 30, 20 30
+      " stroke-width="2px" stroke="#fff" fill="transparent" stroke-linecap="round">
+      <animate #animate1 attributeName="d" values="M 20 10 C 20 10, 20 30, 20 30 ; M 20 30 C 20 30, 20 30, 20 30" dur="0.3s" fill="freeze" ></animate>
+      <animate #animate2 attributeName="d" values="M 20 30 C 20 30, 20 30, 20 30 ; M 20 10 C 20 10, 20 30, 20 30" dur="0.3s" fill="freeze" ></animate>
+    </path>
+    <path d="
+      M 15 25
+      C 15 25, 15 25, 15 25
+      C 15 25, 20 30, 20 30
+      " stroke-width="2px" stroke="#fff" fill="transparent" stroke-linecap="round">
+      <animate #animate3 attributeName="d" values="M 15 25 C 15 25, 15 25, 15 25 C 15 25, 20 30, 20 30 ; M 20 10 C 20 10, 10 10, 10 20 C 10 20, 10 30, 20 30" dur="0.3s" fill="freeze" ></animate>
+      <animate #animate4 attributeName="d" values="M 20 10 C 20 10, 10 10, 10 20 C 10 20, 10 30, 20 30 ; M 15 25 C 15 25, 15 25, 15 25 C 15 25, 20 30, 20 30" dur="0.3s" fill="freeze" ></animate>
+    </path>
+    <path d="
+      M 25 25
+      C 25 25, 20 30, 20 30
+      " stroke-width="2px" stroke="#fff" fill="transparent" stroke-linecap="round">
+      <animate #animate5 attributeName="d" values="M 25 25 C 25 25, 20 30, 20 30 ; M 30 20 C 30 20, 30 30, 20 30" dur="0.3s" fill="freeze" ></animate>
+      <animate #animate6 attributeName="d" values="M 30 20 C 30 20, 30 30, 20 30 ; M 25 25 C 25 25, 20 30, 20 30" dur="0.3s" fill="freeze" ></animate>
+    </path>
+  </svg>
+</div>
+<div class="text">refresh</div>

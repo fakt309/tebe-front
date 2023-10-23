@@ -1,0 +1,4 @@
+<div class="wrap" [style.transform]="'translateX('+xcoord+'px) translateY('+ycoord+'px)'">
+  <app-speaker [size]="size" [timer]="timer ? timer : null" [button]="button" [grill]="(gift && gift.grill) ? gift.grill : '../../assets/speaker/grill/0.jpg'" [color]="(gift && gift.color) ? gift.color : '#ff5722'"></app-speaker>
+</div>
+<div class="hint">{{ locationService.translate('tap to buttons to listen', 'нажмите на кнопки, чтобы слушать') }}<br>{{ locationService.translate('tap anywhere else to close', 'нажмите в любом другом месте, чтобы выйти') }}</div>

@@ -1,0 +1,67 @@
+<div class="icon">
+  <app-greeting-card
+    *ngIf="gift.type === 'greetingcard'"
+    [class.gift-animated]="animateGifts"
+    [style.transform]="'rotateY('+rotateGifts+'deg)'"
+    [size]="190*(297/420)"
+    [front]="gift.front"
+    [back]="gift.back"
+    [text]="gift.text"
+    [color]="gift.color"
+    [sign]="gift.sign">
+  </app-greeting-card>
+  <app-game
+    *ngIf="gift.type === 'game'"
+    [class.gift-animated]="animateGifts"
+    [style.transform]="'rotateY('+rotateGifts+'deg)'"
+    [size]="190*(135/190)"
+    [color]="gift.color"
+    [front]="gift.front"
+    [inside]="gift.inside"
+    [side]="gift.side"
+    [code]="gift.code">
+  </app-game>
+  <app-speaker
+    *ngIf="gift.type === 'speaker'"
+    [class.gift-animated]="animateGifts"
+    [style.transform]="'rotateY('+(rotateGifts+180)+'deg)'"
+    [size]="170"
+    [grill]="gift.grill"
+    [color]="gift.color"
+    [style.animationName]="'rotPlus180'"
+  >
+  </app-speaker>
+  <app-tablet
+    *ngIf="gift.type === 'tablet'"
+    [class.gift-animated]="animateGifts"
+    [style.transform]="'rotateY('+rotateGifts+'deg)'"
+    [color]="gift.color"
+    [size]="190">
+  </app-tablet>
+  <app-photo
+    *ngIf="gift.type === 'photo'"
+    [class.gift-animated]="animateGifts"
+    [style.transform]="'rotateY('+rotateGifts+'deg)'"
+    [photo]="gift.photo"
+    [sign]="gift.sign"
+    [size]="190*(48/64)">
+  </app-photo>
+</div>
+<div class="title">{{ gift.title }}</div>
+<div class="buttons">
+  <div *ngIf="showMove" class="move-button" [style.filter]="buttonsDisabled ? 'blur(2px)' : ''" [style.cursor]="buttonsDisabled ? 'default' : 'pointer'" (mousedown)="!buttonsDisabled ? pushMove($event) : null"></div>
+  <app-desktop-button
+    class="button-edit"
+    [icon]="'../../assets/pen.svg'"
+    [background]="'#ffffff'"
+    [disabled]="buttonsDisabled"
+    (click)="!buttonsDisabled ? clickAdd() : null"
+  ></app-desktop-button>
+  <app-desktop-button
+    class="button-edit"
+    [icon]="'../../assets/trash.svg'"
+    [background]="'#ffffff'"
+    [disabled]="buttonsDisabled"
+    (click)="!buttonsDisabled ? clickDelete($event) : null"
+  ></app-desktop-button>
+</div>

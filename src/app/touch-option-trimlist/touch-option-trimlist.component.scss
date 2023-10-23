@@ -1,0 +1,33 @@
+:host {
+  width: 130px;
+  height: 130px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-position: center;
+  background-size: 90% auto;
+  background-repeat: no-repeat;
+  user-select: none;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  > .ripple {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  // > .checkmark {
+  //   margin: 10px;
+  //   width: 30px;
+  //   height: 30px;
+  //   border-radius: 100px;
+  //   transform: translateY(-20px);
+  //   transition: all ease 0.2s;
+  // }
+}

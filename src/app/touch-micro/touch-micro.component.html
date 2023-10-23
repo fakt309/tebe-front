@@ -1,0 +1,10 @@
+<div [class]="timer > 0 ? (timer <= 5 ? 'timer hurryup' : 'timer') : 'timer hidden'"> {{ timer }} </div>
+<div *ngIf="error === ''" [class]="status === 'recording' ? 'wrapMicro recording' : 'wrapMicro'" [style.animationName]="status === 'recording' ? 'shadow' : 'none'">
+  <app-svg-micro [recording]="status === 'recording'"></app-svg-micro>
+</div>
+<div *ngIf="error !== ''" class="error"></div>
+<div class="hint">{{ error === '' ? (status === 'recording' ? locationService.translate('Tap to stop', 'Нажмите чтобы остановить') : locationService.translate('Tap to start', 'Нажмите чтобы начать') ) : error }}</div>
+<div class="track">
+  <div *ngFor="let sound of sounds" class="sound" [style.height.px]="sound"></div>
+</div>
+<app-touch-confirm [value]="confirm" (result)="resultconfirm($event)"></app-touch-confirm>

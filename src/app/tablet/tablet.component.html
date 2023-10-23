@@ -1,0 +1,167 @@
+<div
+class="screen"
+[style.width]="width+'px'"
+[style.height]="height+'px'"
+[style.borderRadius]="radius+'px'"
+[style.transform]="'translateZ('+(depth/2)+'px)'"
+>
+  <div
+  class="display"
+  [style.borderRadius]="radius+'px'"
+  >
+    <video class="video" [attr.src]="video" (ended)="endVideo()" >
+      <!-- <source type="webm/video" > -->
+    </video>
+    <div class="icon" [style.opacity]="opacityIcon"></div>
+  </div>
+</div>
+<div
+class="body"
+[style.width]="width+'px'"
+[style.height]="height+'px'"
+[style.borderRadius]="radius+'px'"
+[style.transform]="'translateZ('+(-depth/2)+'px)'"
+[style.backgroundColor]="color"
+>
+
+<div class="gradient"></div>
+
+</div>
+
+<div
+class="side"
+[style.width]="(height-2*radius)+'px'"
+[style.height]="depth+'px'"
+[style.transform]="'translateX('+(-width/2)+'px) translateY('+0+'px) rotateX(90deg) rotateY(90deg)'"
+[style.backgroundColor]="color"
+>
+</div>
+<div
+class="side"
+[style.width]="(height-2*radius)+'px'"
+[style.height]="depth+'px'"
+[style.transform]="'translateX('+(width/2)+'px) translateY('+0+'px) rotateX(-90deg) rotateY(90deg)'"
+[style.backgroundColor]="color"
+>
+</div>
+<div
+class="side"
+[style.width]="(width-2*radius)+'px'"
+[style.height]="depth+'px'"
+[style.transform]="'translateX('+0+'px) translateY('+(-height/2)+'px) rotateX(90deg) rotateY(0deg)'"
+[style.backgroundColor]="color"
+>
+</div>
+<div
+class="side"
+[style.width]="(width-2*radius)+'px'"
+[style.height]="depth+'px'"
+[style.transform]="'translateX('+0+'px) translateY('+(height/2)+'px) rotateX(-90deg) rotateY(0deg)'"
+[style.backgroundColor]="color"
+>
+</div>
+
+<div
+class="corner"
+[style.transform]="'translateX('+(-width/2+radius)+'px) translateY('+(-height/2+radius)+'px)'"
+>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-radius+(widthpath/2)*math.cos(75*(2*math.PI/360)))+'px) translateY('+(-(widthpath/2)*math.sin(75*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-75deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath)*math.cos(15*(2*math.PI/360))-(widthpath/2)*math.cos(45*(2*math.PI/360)))+'px) translateY('+(-(widthpath)*math.sin(75*(2*math.PI/360))-(widthpath/2)*math.sin(45*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-45deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath/2)*math.cos(15*(2*math.PI/360)))+'px) translateY('+(-radius+(widthpath/2)*math.sin(15*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-15deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+</div>
+<div
+class="corner"
+[style.transform]="'translateX('+(width/2-radius)+'px) translateY('+(-height/2+radius)+'px) rotateZ(90deg)'"
+>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-radius+(widthpath/2)*math.cos(75*(2*math.PI/360)))+'px) translateY('+(-(widthpath/2)*math.sin(75*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-75deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath)*math.cos(15*(2*math.PI/360))-(widthpath/2)*math.cos(45*(2*math.PI/360)))+'px) translateY('+(-(widthpath)*math.sin(75*(2*math.PI/360))-(widthpath/2)*math.sin(45*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-45deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath/2)*math.cos(15*(2*math.PI/360)))+'px) translateY('+(-radius+(widthpath/2)*math.sin(15*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-15deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+</div>
+<div
+class="corner"
+[style.transform]="'translateX('+(-width/2+radius)+'px) translateY('+(height/2-radius)+'px) rotateZ(270deg)'"
+>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-radius+(widthpath/2)*math.cos(75*(2*math.PI/360)))+'px) translateY('+(-(widthpath/2)*math.sin(75*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-75deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath)*math.cos(15*(2*math.PI/360))-(widthpath/2)*math.cos(45*(2*math.PI/360)))+'px) translateY('+(-(widthpath)*math.sin(75*(2*math.PI/360))-(widthpath/2)*math.sin(45*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-45deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath/2)*math.cos(15*(2*math.PI/360)))+'px) translateY('+(-radius+(widthpath/2)*math.sin(15*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-15deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+</div>
+<div
+class="corner"
+[style.transform]="'translateX('+(width/2-radius)+'px) translateY('+(height/2-radius)+'px) rotateZ(180deg)'"
+>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-radius+(widthpath/2)*math.cos(75*(2*math.PI/360)))+'px) translateY('+(-(widthpath/2)*math.sin(75*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-75deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath)*math.cos(15*(2*math.PI/360))-(widthpath/2)*math.cos(45*(2*math.PI/360)))+'px) translateY('+(-(widthpath)*math.sin(75*(2*math.PI/360))-(widthpath/2)*math.sin(45*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-45deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+  <div
+  class="part"
+  [style.width]="widthpath+'px'"
+  [style.height]="depth+'px'"
+  [style.transform]="'translateX('+(-(widthpath/2)*math.cos(15*(2*math.PI/360)))+'px) translateY('+(-radius+(widthpath/2)*math.sin(15*(2*math.PI/360)))+'px) rotateX(90deg) rotateY(-15deg)'"
+  [style.backgroundColor]="color"
+  ></div>
+</div>

@@ -1,0 +1,52 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  > * {
+    flex-shrink: 0;
+  }
+  > .skelet-empty {
+    margin: auto 0px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  > .skelet-giftlist {
+    margin: auto 0px;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  > .buttons-gift-list {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #00000033;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    > * {
+      margin: 10px;
+      margin-left: 0px;
+    }
+    > *:first-child {
+      margin-left: 10px;
+    }
+  }
+}

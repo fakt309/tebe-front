@@ -1,0 +1,530 @@
+<div class="inside-wrap" [style.maxWidth]='insideWrapDOM.maxWidth'>
+  <div
+    class="close"
+    [style.opacity]="this.closeDOM.opacity"
+    [style.transform]="this.closeDOM.transform"
+    (click)="hide()"></div>
+  <div class="view" [style.width]="viewDOM.width" [style.height]="viewDOM.height" (mousedown)="mousedownIcon($event)">
+    <app-greeting-card
+      *ngIf="gift.type === 'greetingcard'"
+      [style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+      [class.gift-animated]="rotateGift.animate"
+      [size]="giftDOM.size*(297/420)"
+      [front]="gift.front"
+      [back]="gift.back"
+      [text]="gift.text"
+      [color]="gift.color"
+      [sign]="gift.sign"
+      [smooth]="animate"
+    >
+    </app-greeting-card>
+    <app-game
+      *ngIf="gift.type === 'game'"
+      [style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+      [class.gift-animated]="rotateGift.animate"
+      [size]="giftDOM.size*(135/190)"
+      [color]="gift.color"
+      [front]="gift.front"
+      [inside]="gift.inside"
+      [side]="gift.side"
+      [code]="gift.code"
+      [open]="openGame"
+      [smooth]="animate"
+    >
+    </app-game>
+    <app-speaker
+      *ngIf="gift.type === 'speaker'"
+      [style.transform]="'rotateY('+(rotateGift.angle+180)+'deg)'"
+      [class.gift-animated]="rotateGift.animate"
+      [size]="giftDOM.size-20"
+      [style.animationName]="'rotPlus180'"
+      [grill]="gift.grill"
+      [color]="gift.color"
+      [smooth]="animate"
+    >
+    </app-speaker>
+    <app-tablet
+      *ngIf="gift.type === 'tablet'"
+      [style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+      [class.gift-animated]="rotateGift.animate"
+      [size]="giftDOM.size"
+      [color]="gift.color"
+      [smooth]="animate"
+    >
+    </app-tablet>
+    <app-photo
+      *ngIf="gift.type === 'photo'"
+      [style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+      [class.gift-animated]="rotateGift.animate"
+      [size]="giftDOM.size*(48/64)"
+      [photo]="gift.photo"
+      [sign]="gift.sign"
+      [smooth]="animate"
+    >
+    </app-photo>
+  </div>
+  <div class="info">
+    <div class="content">
+      <div class="title">
+        <div
+          class="text"
+          [style.margin]="editingTitle ? '0px' : '0px 20px'"
+          [style.display]="editingTitle ? 'none' : 'flex'"
+        >{{ gift.title }}</div>
+        <input
+          class="title-edit-input"
+          type="text"
+          [attr.value]="gift.title"
+          [style.margin]="editingTitle ? '0px 9px' : '0px'"
+          [style.display]="editingTitle ? 'flex' : 'none'"
+          (input)="inputTitle($event)"
+          (keyup.enter)="editingTitle = !editingTitle"
+          maxlength="100"
+        />
+        <app-desktop-button
+          class="button-change-title"
+          [icon]="editingTitle ? '../../assets/checkmark.svg' : '../../assets/pen.svg'"
+          [background]="'#fafafa'"
+          [style.opacity]="editIconTitleDOM.opacity"
+          (click)="editingTitle = !editingTitle"
+        ></app-desktop-button>
+      </div>
+      <div
+        class="content-addition"
+        [style.maxHeight]="contentAdditionDOM.maxHeight"
+        [style.opacity]="contentAdditionDOM.opacity">
+          <ng-container *ngIf="gift.type === 'greetingcard'">
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-front"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('front', 'обложка') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showUploadImageFrontGreetingCard()"
+              ></app-desktop-button>
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-back"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('back', 'задняя сторона') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showUploadImageBack()"
+              ></app-desktop-button>
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-text"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('text', 'стихотворение') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="showTextGreetingcard ? '../../assets/checkmark.svg' : '../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="this.showTextGreetingcard = !this.showTextGreetingcard"
+              ></app-desktop-button>
+            </div>
+            <textarea class="edit-gift-textarea" [class.edit-gift-textarea_collapsed]="!showTextGreetingcard" (input)="inputTextGreetingcard($event)" [value]="gift.text"></textarea>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-color"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('color', 'цвет') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="colorTextGreetingCard.click()"
+              ></app-desktop-button>
+              <input #colorTextGreetingCard class="colorTextGreetingCard" type="color" [value]="gift.color" (input)="setColorTextGreetingCard($event)">
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-signature"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('signature', 'подпись') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="signGreetingcard.visible = true"
+              ></app-desktop-button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="gift.type === 'game'">
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-password"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('code', 'код') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="showTextCodeGame ? '../../assets/checkmark.svg' : '../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="switchTextCodeGame()"
+              ></app-desktop-button>
+            </div>
+            <input [value]="gift.code" class="edit-gift-input" [class.edit-gift-input_collapsed]="!showTextCodeGame" (input)="setCodeGame($event)" />
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-front"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('front', 'обложка') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showUploadImageFrontGame()"
+              ></app-desktop-button>
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-platform"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('platform', 'игровая платформа') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showListPlatformsGame = true"
+              ></app-desktop-button>
+            </div>
+            <div *ngIf="gift.platform === 'custom'" class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-color"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('color', 'цвет') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="colorGame.click()"
+              ></app-desktop-button>
+              <input #colorGame class="colorTextGreetingCard" type="color" [value]="gift.color" (input)="setColorTextGreetingCard($event)">
+            </div>
+            <div *ngIf="gift.platform === 'custom'" class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-inside"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('inside', 'внутренняя обёртка') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showUploadImageInside()"
+              ></app-desktop-button>
+            </div>
+            <div *ngIf="gift.platform === 'custom'" class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-left-side"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('left side', 'боковая надпись') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showUploadImageLeftSide()"
+              ></app-desktop-button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="gift.type === 'speaker'">
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-speaker"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('record', 'запись') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="audioSpeaker.visible ? '../../assets/checkmark.svg' : '../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)=" switchShowRecordAudioSpeaker()"
+              ></app-desktop-button>
+            </div>
+            <app-desktop-micro class="micro-speaker" [style.height.px]="audioSpeaker.visible ? 50 : 0" [style.opacity]="audioSpeaker.visible ? '1' : '0'" [sublimeValue]="gift.value" [sublimeDuration]="gift.duration" [sublimeSounds]="gift.sounds" [sublimestop]="audioSpeaker.sublimestop" (save)="saveSpeaker($event)"></app-desktop-micro>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-grill"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('grill', 'сетка') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showUploadImageGrill()"
+              ></app-desktop-button>
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-color"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('color', 'цвет') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="colorSpeaker.click()"
+              ></app-desktop-button>
+              <input #colorSpeaker class="colorTextGreetingCard" type="color" [value]="gift.color" (input)="setColorTextGreetingCard($event)">
+            </div>
+          </ng-container>
+          <ng-container *ngIf="gift.type === 'tablet'">
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-webcam"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('record', 'запись') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="this.webcamVideo.visible = true"
+              ></app-desktop-button>
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-case"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('case', 'корпус') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="showSideListTableCase = true"
+              ></app-desktop-button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="gift.type === 'photo'">
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-photo"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('photo', 'фото') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="takePicture.visible = true; takePicture.preview = false"
+              ></app-desktop-button>
+            </div>
+            <div class="edit-gift-option">
+              <div class="edit-gift-option__icon edit-gift-option__icon-signature"></div>
+              <div class="edit-gift-option__text">{{ locationService.translate('sign', 'подпись') }}</div>
+              <app-desktop-button
+                class="edit-gift-option__button-edit"
+                [icon]="'../../assets/pen.svg'"
+                [background]="'#fafafa'"
+                (click)="signPhoto.visible = true"
+              ></app-desktop-button>
+            </div>
+          </ng-container>
+      </div>
+    </div>
+    <div
+      class="mockButtons"
+      [style.maxWidth]="mockButtonsDOM.maxWidth"
+      [style.opacity]="mockButtonsDOM.opacity">
+      <app-desktop-button
+        class="button-edit"
+        [icon]="'../../assets/pen.svg'"
+        [background]="'#ffffff'"
+      ></app-desktop-button>
+      <app-desktop-button
+        class="button-edit"
+        [icon]="'../../assets/trash.svg'"
+        [background]="'#ffffff'"
+      ></app-desktop-button>
+    </div>
+  </div>
+</div>
+
+<app-desktop-list-images *ngIf="imageUpload.showList" [images]="getListUploadImages()" (choose)="selectUploadImage($event)"></app-desktop-list-images>
+
+<app-desktop-list-platforms *ngIf="showListPlatformsGame" (choose)="onChoosePlatformGame($event)"></app-desktop-list-platforms>
+
+<app-desktop-list-side *ngIf="showSideListTableCase" (choose)="onChooseTabletCase($event)">
+  <div value="pure-silver" class="table-case-option">
+    <div class="table-case-option__image table-case-option__image_pure-silver">
+      <div class="table-case-option__tablet-gradient"></div>
+    </div>
+    <div class="table-case-option__text">{{ locationService.translate('Pure silver', 'Чистое серебро') }}</div>
+  </div>
+  <div value="sierra-blue" class="table-case-option">
+    <div class="table-case-option__image table-case-option__image_sierra-blue">
+      <div class="table-case-option__tablet-gradient"></div>
+    </div>
+    <div class="table-case-option__text">{{ locationService.translate('Sierra blue', 'Сьерра синий') }}</div>
+  </div>
+  <div value="alpine-green" class="table-case-option">
+    <div class="table-case-option__image table-case-option__image_alpine-green">
+      <div class="table-case-option__tablet-gradient"></div>
+    </div>
+    <div class="table-case-option__text">{{ locationService.translate('Alpine green', 'Альпийский зеленый') }}</div>
+  </div>
+  <div value="shining-gold" class="table-case-option">
+    <div class="table-case-option__image table-case-option__image_shining-gold">
+      <div class="table-case-option__tablet-gradient"></div>
+    </div>
+    <div class="table-case-option__text">{{ locationService.translate('Shining gold', 'Сияющее золото') }}</div>
+  </div>
+  <div value="dark-matter" class="table-case-option">
+    <div class="table-case-option__image table-case-option__image_dark-matter">
+      <div class="table-case-option__tablet-gradient"></div>
+    </div>
+    <div class="table-case-option__text">{{ locationService.translate('Dark matter', 'Тёмная материя') }}</div>
+  </div>
+</app-desktop-list-side>
+
+<div *ngIf="signPhoto.visible" class="screen-image-upload" @verticalShow>
+  <div class="screen-image-upload__close" (click)="signPhoto.visible = false"></div>
+  <app-desktop-sign-photo [gift]="gift" [tool]="signPhoto.tool" [color]="signPhoto.color" (save)="saveSignGreetingcard($event)"></app-desktop-sign-photo>
+  <div class="screen-image-upload__menu">
+    <app-desktop-button
+      *ngIf="signPhoto.tool === 'pen'"
+      [text]="locationService.translate('eraser', 'ластик')"
+      [icon]="'../../assets/eraser.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="signPhoto.tool = 'eraser'"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="signPhoto.tool === 'eraser'"
+      [text]="locationService.translate('pen', 'ручка')"
+      [icon]="'../../assets/pen.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="signPhoto.tool = 'pen'"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="signPhoto.tool === 'pen'"
+      [text]="locationService.translate('color', 'цвет')"
+      [icon]="'../../assets/palette.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="inputColorSignPhoto.click()"
+    ></app-desktop-button>
+    <input #inputColorSignPhoto class="input-color-sign-greetingcard" type="color" [value]="signPhoto.color" (input)="setColorSignPhoto($event)" />
+  </div>
+</div>
+
+<div *ngIf="signGreetingcard.visible" class="screen-image-upload" @verticalShow>
+  <div class="screen-image-upload__close" (click)="signGreetingcard.visible = false"></div>
+  <app-desktop-sign-greetingcard [gift]="gift" [tool]="signGreetingcard.tool" [color]="signGreetingcard.color" (save)="saveSignGreetingcard($event)"></app-desktop-sign-greetingcard>
+  <div class="screen-image-upload__menu">
+    <app-desktop-button
+      *ngIf="signGreetingcard.tool === 'pen'"
+      [text]="locationService.translate('eraser', 'ластик')"
+      [icon]="'../../assets/eraser.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="signGreetingcard.tool = 'eraser'"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="signGreetingcard.tool === 'eraser'"
+      [text]="locationService.translate('pen', 'ручка')"
+      [icon]="'../../assets/pen.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="signGreetingcard.tool = 'pen'"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="signGreetingcard.tool === 'pen'"
+      [text]="locationService.translate('color', 'цвет')"
+      [icon]="'../../assets/palette.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="inputColorSignGreetingcard.click()"
+    ></app-desktop-button>
+    <input #inputColorSignGreetingcard class="input-color-sign-greetingcard" type="color" [value]="signGreetingcard.color" (input)="setColorSignGreetingcard($event)" />
+  </div>
+</div>
+
+<div *ngIf="webcamVideo.visible" class="screen-image-upload" @verticalShow>
+  <app-desktop-webcam-video [value]="gift.value" [duration]="gift.duration" [recording]="webcamVideo.recording" [screen]="webcamVideo.screen" [sublimeuninit]="webcamVideo.sublimeUninit" (save)="saveWebcamVideo($event)"></app-desktop-webcam-video>
+  <div class="screen-image-upload__close screen-image-upload__close_background" (click)="closeWebcamVideo()"></div>
+  <div class="screen-image-upload__menu">
+    <app-desktop-button
+      [text]="webcamVideo.screen === 'recording' ? locationService.translate('to watching', 'к предпросмотру') : locationService.translate('to recording', 'к записи')"
+      [icon]="webcamVideo.screen === 'recording' ? '../../assets/eye.svg' : '../../assets/webcam.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      [disabled]="!gift.value[0] || webcamVideo.showConfirm === 'open' || webcamVideo.recording"
+      (click)="switchWebcamVideoMode() "
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="webcamVideo.screen === 'recording'"
+      [text]="webcamVideo.recording ? locationService.translate('stop', 'стоп') : locationService.translate('record', 'запись')"
+      [icon]="webcamVideo.recording ? '../../assets/stop.svg' : '../../assets/record.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      [disabled]="webcamVideo.showConfirm === 'open'"
+      (click)="switchWebcamRecord()"
+    ></app-desktop-button>
+    <div #confirmWebcamVideo class="webcam-video-confirm" [@popup]="webcamVideo.showConfirm">
+      <div class="webcam-video-confirm__text">{{ locationService.translate('Overwrite?', 'Перезаписать?') }}</div>
+      <div class="webcam-video-confirm__buttons">
+        <div class="webcam-video-confirm__button" [style.color]="'#f44336'" (click)="resultWebcamConfirm('reject')">{{ locationService.translate('no', 'нет') }}</div>
+        <div class="webcam-video-confirm__button" [style.color]="'#4caf50'" (click)="resultWebcamConfirm('agree')">{{ locationService.translate('yes', 'да') }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="takePicture.visible" class="screen-image-upload" @verticalShow>
+  <app-desktop-take-picture [value]="gift.value" [sublimeTakePicture]="takePicture.sublimeTakePicture" [sublimeSave]="takePicture.sublimeSave" [sublimeCancel]="takePicture.sublimeCancel" (save)="saveTakePicture($event)"></app-desktop-take-picture>
+  <div class="screen-image-upload__close screen-image-upload__close_background" (click)="takePicture.visible = false"></div>
+  <div class="screen-image-upload__menu">
+    <app-desktop-button
+      *ngIf="!takePicture.preview"
+      [text]="locationService.translate('take a picture', 'сделать фото')"
+      [icon]="'../../assets/photo.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="takePicture.sublimeTakePicture = !takePicture.sublimeTakePicture; takePicture.preview = true"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="takePicture.preview"
+      [text]="(gift.photo && gift.photo !== '') ? locationService.translate('overwrite', 'перезаписать') : locationService.translate('save', 'сохранить')"
+      [icon]="'../../assets/checkmark.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="takePicture.sublimeSave = !takePicture.sublimeSave"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="takePicture.preview"
+      [text]="locationService.translate('cancel', 'отмена')"
+      [icon]="'../../assets/cross.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="takePicture.sublimeCancel = !takePicture.sublimeCancel"
+    ></app-desktop-button>
+  </div>
+</div>
+
+<div *ngIf="imageUpload.visible" class="screen-image-upload" @verticalShow>
+  <app-desktop-trim
+    [img]="imageUpload.img"
+    [ratio]="imageUpload.ratio"
+    [mode]="imageUpload.mode"
+    [sublimesave]="imageUpload.sublimesave"
+    (save)="saveUploadImage($event)"
+  ></app-desktop-trim>
+  <div class="screen-image-upload__close" [class.screen-image-upload__close_background]="imageUpload.mode === 'usual'" (click)="imageUpload.visible = false"></div>
+  <div class="screen-image-upload__menu">
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'usual'"
+      [text]="locationService.translate('trim', 'обрезать')"
+      [icon]="'../../assets/scissors.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="imageUpload.mode = 'trim'"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="!noListUploadImage() && imageUpload.mode === 'usual'"
+      [text]="locationService.translate('change', 'изменить')"
+      [icon]="'../../assets/image.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="imageUpload.showList = true"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="noListUploadImage() && imageUpload.mode === 'usual'"
+      [text]="locationService.translate('upload', 'загрузить')"
+      [icon]="'../../assets/upload-mini.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="inputUploadImage.click()"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'trim'"
+      [text]="locationService.translate('save', 'сохранить')"
+      [icon]="'../../assets/checkmark.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="imageUpload.sublimesave = !imageUpload.sublimesave"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'trim'"
+      [text]="locationService.translate('cancel', 'отменить')"
+      [icon]="'../../assets/cross.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="cancelTrim()"
+    ></app-desktop-button>
+  </div>
+</div>
+
+<input #inputUploadImage style="display:none" type="file" accept="image/png, image/jpeg" (input)="tryuploadimage($event)" />
+
+<app-desktop-error [text]="textError" [color]="'#f44336'"></app-desktop-error>

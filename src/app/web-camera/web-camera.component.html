@@ -1,0 +1,26 @@
+<div [class]="timer > 0 ? (timer <= 5 ? 'timer hurryup' : 'timer') : 'timer hidden'"> {{ timer }} </div>
+<video
+*ngIf="error === ''"
+class="preview"
+[attr.width]="width+'px'"
+[attr.height]="height+'px'"
+autoplay
+[muted]="'muted'"
+[style.opacity]="opacityVideo"></video>
+<div *ngIf="loading && !error" class="loading"></div>
+<div *ngIf="error !== ''" class="error">
+  <div class="icon"></div>
+  <div class="text">{{ error }}</div>
+</div>
+<div class="hint" [style.opacity]="opacityVideo">
+  <svg class="rec" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="15" cy="15" r="6" fill="#ffffff">
+      <animate attributeName="fill" values="#ffffff; #d93025; #ffffff" dur="2s" repeatCount="indefinite" begin="indefinite" />
+    </circle>
+    <circle cx="15" cy="15" r="10" fill="transparent" stroke="#fff" stroke-width="2">
+      <animate attributeName="stroke" values="#ffffff; #d93025; #ffffff" dur="2s" repeatCount="indefinite" begin="indefinite" />
+    </circle>
+  </svg>
+  <div class="text">{{ text }}</div>
+</div>
+<app-touch-confirm [value]="confirm" (result)="resultconfirm($event)"></app-touch-confirm>

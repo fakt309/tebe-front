@@ -1,0 +1,42 @@
+<app-greeting-card
+class="greetingcard"
+[size]="under.w"
+[back]="gift?.back"
+[text]="gift?.text"
+[color]="gift?.color"
+[style.transform]="'translateX('+under.x+'px) translateY('+under.y+'px) translateZ(0px) rotateY(180deg)'"></app-greeting-card>
+<!-- <app-touch-draw
+class="canvas"
+[touch]="touchcanvas"
+[tool]="tool"
+[color]="color"
+[width]="canvas.w"
+[height]="canvas.h"
+[value]="gift?.sign"
+[sublimereset]="sublimereset"
+[sublimesave]="sublimesave"
+[style.transform]="'translateX('+canvas.x+'px) translateY('+canvas.y+'px) translateZ(1000px)'"
+(save)="savedraw($event)"></app-touch-draw> -->
+<app-touch-draw-svg
+class="canvas"
+[touch]="touchcanvas"
+[tool]="tool"
+[color]="color"
+[width]="canvas.w"
+[height]="canvas.h"
+[points]="gift?.sign"
+[sublimereset]="sublimereset"
+[sublimesave]="sublimesave"
+[style.transform]="'translateX('+canvas.x+'px) translateY('+canvas.y+'px) translateZ(1000px)'"
+(save)="savedraw($event)"></app-touch-draw-svg>
+<div
+class="background"
+[style.transform]="'translateZ(998px)'"></div>
+<div
+class="bright"
+[style.width]="canvas.w+'px'"
+[style.height]="canvas.h+'px'"
+[style.transform]="'translateX('+canvas.x+'px) translateY('+canvas.y+'px) translateZ(999px)'"></div>
+<div
+class="hint"
+[style.transform]="'translateZ(1001px)'">{{ locationService.translate('double tap to menu', 'двойное нажати для выхода в меню') }}</div>

@@ -1,0 +1,102 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  > .timer {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all ease 0.3s;
+  }
+  > .timer.hidden {
+    opacity: 0;
+  }
+  > .timer.hurryup {
+    animation-name: hurryup;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    color: #d93025;
+  }
+  > .wrapMicro {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    transition: all ease 0.3s;
+    animation-name: none;
+    animation-duration: 3s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+  }
+  > .wrapMicro.recording {
+    animation-name: shadow;
+  }
+  > .hint {
+    margin: 10px 40px;
+    margin-top: 50px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+  > .error {
+    width: 100px;
+    height: 100px;
+    margin: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../../assets/cross.svg);
+  }
+  > .track {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    > .sound {
+      flex-shrink: 0;
+      width: 1px;
+      background-color: #999;
+      margin: 0px 1px;
+    }
+  }
+  @keyframes shadow {
+    0% {
+      box-shadow: 0px 0px 5px -5px #d9302599;
+    }
+    50% {
+      box-shadow: 0px 0px 5px 10px #d9302599;
+    }
+    100% {
+      box-shadow: 0px 0px 5px -5px #d9302599;
+    }
+  }
+  @keyframes hurryup {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}

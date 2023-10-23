@@ -1,0 +1,37 @@
+:host {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  transform-style: preserve-3d;
+  opacity: 0;
+  display: none;
+  transform: translateY(-100%);
+  opacity: 0;
+  > .object {
+    position: absolute;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    transition: all ease 0.2s;
+    animation-name: showTop;
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+  }
+  @keyframes showTop {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+
+    to {
+      opacity: 1;
+      margin-top: 0px;
+    }
+  }
+}

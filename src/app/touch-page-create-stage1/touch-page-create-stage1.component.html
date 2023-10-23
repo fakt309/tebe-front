@@ -1,0 +1,305 @@
+<app-touch-select-location *ngIf="showSelectLanguage"></app-touch-select-location>
+
+<app-touch-confirm [value]="confirm.value" (result)="resultConfirm($event)"></app-touch-confirm>
+
+<app-touch-error [value]="valerror"></app-touch-error>
+
+<app-touch-menu [touch]="touches.menu" [options]="menu" [sublimeshow]="menusublimeshow" (action)="actionmenu($event)" (choose)="menuwaschoosen($event)" ></app-touch-menu>
+
+<app-touch-empty-giftslist *ngIf="!gifts.length" [touch]="touches.giftslist"></app-touch-empty-giftslist>
+
+<app-touch-scroll *ngIf="gifts.length" cdkDropList [cdkDropListAutoScrollDisabled]="true" [touch]='touches.giftslist' [refreshable]="true" (cdkDropListDropped)="dropListGifts($event)">
+  <app-touch-giftslist-option *ngFor="let gift of gifts" cdkDrag [class.option-list-gift-animated]="optionListGiftAnimated" [cdkDragDisabled]="gifts.length < 2" [cdkDragStartDelay]="500" [gift]="gift" [refresh]="refreshsnapshots" (click)="showviewgift(gift)" >
+    <div class="placeholder-list-gift" *cdkDragPlaceholder></div>
+    {{ gift.title | textMore:20 }}
+  </app-touch-giftslist-option>
+</app-touch-scroll>
+
+<app-touch-screen [touch]="touches.screenadd" [show]="stats.screenadd == 'open' ? true : false" (close)="closescreenadd()">
+  <app-touch-giftlistadd-option [display]="'greetingcard'" (click)="chooseaddlist('greetingcard')">
+    <div class="title">{{ locationService.translate('Greeting card', 'Открытка') }}</div>
+    <div class="description">{{ locationService.translate('Congratulate with a quatrain and sign with your own hand', 'Напишите поздравление в стихотворной форме и подпишите собственной рукой') }}</div>
+  </app-touch-giftlistadd-option>
+  <app-touch-giftlistadd-option [display]="'game'" (click)="chooseaddlist('game')">
+    <ng-container class="title">{{ locationService.translate('Game', 'Видеоигра') }}</ng-container>
+    <ng-container class="description">{{ locationService.translate('Buy a game redemption code and give it as a gift{{ locationService.translate', 'Купите активационный ключ для игры и подарите игру') }}</ng-container>
+  </app-touch-giftlistadd-option>
+  <app-touch-giftlistadd-option [display]="'speaker'" (click)="chooseaddlist('speaker')">
+    <ng-container class="title">{{ locationService.translate('Audio', 'Колонка') }}</ng-container>
+    <ng-container class="description">{{ locationService.translate('Record your voice', 'Запишите свой голос с поздравлениями') }}</ng-container>
+  </app-touch-giftlistadd-option>
+  <app-touch-giftlistadd-option [display]="'tablet'" (click)="chooseaddlist('tablet')">
+    <ng-container class="title">{{ locationService.translate('Video', 'Планшет') }}</ng-container>
+    <ng-container class="description">{{ locationService.translate('Record your video', 'Запишите видео на вебкамеру с поздравлениями') }}</ng-container>
+  </app-touch-giftlistadd-option>
+  <app-touch-giftlistadd-option [display]="'photo'" (click)="chooseaddlist('photo')">
+    <ng-container class="title">{{ locationService.translate('Photo', 'Фотография') }}</ng-container>
+    <ng-container class="description">{{ locationService.translate('Take a photo', 'Сделайте фотографию и подпишите её собственной рукой') }}</ng-container>
+  </app-touch-giftlistadd-option>
+</app-touch-screen>
+
+<app-touch-screen [touch]="touches.screenviewgift" [show]="stats.screenviewgift == 'open' ? true : false" [scrollable]="false" [backable]="modeviewgift === 'usual'" (close)='closescreenviewgift()'>
+  <app-touch-view-gift [touch]="touches.screenviewgift" [gift]="activeGift" [mode]="modeviewgift" [sublimerefresh]="sublimerefreshviewgift"></app-touch-view-gift>
+</app-touch-screen>
+
+<app-touch-rename [show]="stats.screentitle === 'open'" [value]="renamevalue" (close)="screentitlewasclosed()" (save)="screentitlewassaved($event)" [enterable]="enterablerename" [max]="renamemax" [min]="renamemin"></app-touch-rename>
+
+<app-touch-screen [touch]="touches.screentrim" [show]="stats.screentrim === 'open'" [scrollable]="false" [backable]="modetrim === 'usual'" (close)="closescreentrim()">
+  <app-touch-trim [touch]="touches.screentrim" [ratio]="ratiotrim" [img]="imgtrim" [mode]="modetrim" [sublimesave]="sublimesavetrim" (closetrim)="closetrim()" (save)="savetrim($event)" ></app-touch-trim>
+</app-touch-screen>
+
+<input style="display:none;" type="file" id="inputuploadtrim" accept="image/png, image/jpeg, image/webp, image/x-icon, image/gif" (change)="tryuploadimage($event)">
+<input style="display:none;" type="color" id="inputcolor" (change)="changecolor($event)">
+<app-touch-screen [touch]="touches.screenlisttrim" [show]="stats.screenlisttrim === 'open'" [scrollable]="true" [backable]="true" (close)="closescreentrimlist()">
+  <div *ngIf="listtrim === 'greetingcardfront'" class="listimages">
+    <app-touch-option-trimlist [value]="'../../assets/upload.svg'" (click)="inputUploadImageTrim()"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/1.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/1.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/2.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/2.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/3.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/3.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/4.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/4.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/5.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/5.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/6.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/6.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/7.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/7.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/8.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/8.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/9.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/9.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/10.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/10.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/11.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/11.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/12.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/12.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/13.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/13.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/14.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/14.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/15.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/15.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/16.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/16.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/17.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/17.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/18.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/18.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/19.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/19.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/20.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/20.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/21.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/21.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/22.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/22.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/23.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/23.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/24.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/24.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/25.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/25.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/26.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/26.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/27.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/27.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/28.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/28.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/29.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/29.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/30.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/30.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/31.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/31.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/32.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/32.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/33.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/33.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/34.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/34.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/35.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/35.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/36.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/36.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/37.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/37.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/38.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/38.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/39.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/39.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/front/40.png'" (click)="uploadImageTrim('../../assets/greetingcard/front/40.png')"></app-touch-option-trimlist>
+  </div>
+  <div *ngIf="listtrim === 'greetingcardback'" class="listimages">
+    <app-touch-option-trimlist [value]="'../../assets/upload.svg'" (click)="inputUploadImageTrim()"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/1.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/1.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/2.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/2.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/3.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/3.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/4.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/4.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/5.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/5.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/6.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/6.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/7.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/7.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/8.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/8.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/9.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/9.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/10.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/10.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/11.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/11.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/12.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/12.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/13.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/13.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/14.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/14.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/15.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/15.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/16.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/16.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/17.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/17.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/18.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/18.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/19.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/19.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/greetingcard/back/20.jpg'" (click)="uploadImageTrim('../../assets/greetingcard/back/20.jpg')"></app-touch-option-trimlist>
+  </div>
+  <div *ngIf="listtrim === 'speakergrill'" class="listimages">
+    <app-touch-option-trimlist [value]="'../../assets/upload.svg'" (click)="inputUploadImageTrim()"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="''" (click)="uploadImageTrim('../../assets/speaker/grill/0.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/speaker/grill/1.png'" (click)="uploadImageTrim('../../assets/speaker/grill/1.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/speaker/grill/2.png'" (click)="uploadImageTrim('../../assets/speaker/grill/2.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/speaker/grill/3.png'" (click)="uploadImageTrim('../../assets/speaker/grill/3.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/speaker/grill/4.png'" (click)="uploadImageTrim('../../assets/speaker/grill/4.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/speaker/grill/5.png'" (click)="uploadImageTrim('../../assets/speaker/grill/5.png')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/speaker/grill/6.png'" (click)="uploadImageTrim('../../assets/speaker/grill/6.png')"></app-touch-option-trimlist>
+  </div>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screensigngreeting === 'open'" [backable]="false" [scrollable]="false">
+  <app-touch-sign-greetingcard [touch]="touches.screensigngreeting" [tool]="signgreetingtool" [color]="signgreetingcolor" [gift]="activeGift" [sublimereset]="signgreetingsublimereset" [sublimesave]="signgreetingsublimesave" (close)="closesignturegreeting()" (save)="savegreetingsign($event)"></app-touch-sign-greetingcard>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screenplatformgame === 'open'" [backable]="true" [scrollable]="false" [touch]="touches.screenplatformgame" (close)="screenplatformgamewasclose()">
+  <app-touch-scroll-fragments [touch]="touches.screenplatformgame" [sublimerefresh]="sublimerefreshplatform">
+    <div matRipple matRippleColor="#00000011" (click)="setPlatformGame('pc')">
+      <div class="icon-platform" style="background-image:url(../../assets/pc-logo.svg);backgroundSize:50%"></div>
+      <div class="text-platform">PC</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setPlatformGame('ps')">
+      <div class="icon-platform" style="background-image:url(../../assets/ps-logo.svg);"></div>
+      <div class="text-platform">Playstation</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setPlatformGame('xbox')">
+      <div class="icon-platform" style="background-image:url(../../assets/xbox-logo.svg);"></div>
+      <div class="text-platform">Xbox</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setPlatformGame('switch')">
+      <div class="icon-platform" style="background-image:url(../../assets/nintendo-switch-logo.svg)"></div>
+      <div class="text-platform">Nintendo switch</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setPlatformGame('custom')">
+      <div class="icon-platform" style="background-image:url(../../assets/tools.svg);backgroundSize:50%"></div>
+      <div class="text-platform">{{ locationService.translate('Custom', 'Настроить самостоятельно') }}</div>
+    </div>
+  </app-touch-scroll-fragments>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screenrecordaudio === 'open'" [touch]="touches.screenrecordaudio" [backable]="true" [scrollable]="false" (close)="closescreenrecordaudio()">
+  <app-touch-micro (save)="saveaudio($event)" [sublimestop]="sublimestoprecordaudio" ></app-touch-micro>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screenlistenaudio === 'open'" [backable]="false" [scrollable]="false">
+  <app-touch-listen [touch]="touches.screenlistenaudio" [gift]="activeGift" [value]="activeGift?.type === 'speaker' ? activeGift?.value : null" (close)="closescreenlistenaudio()" ></app-touch-listen>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screencolorplate === 'open'" [backable]="true" [scrollable]="false" [touch]="touches.screencolorplate" (close)="closescreencolorplate()">
+  <app-touch-scroll-fragments [touch]="touches.screencolorplate" [sublimerefresh]="sublimerefreshcolorplate">
+    <div matRipple matRippleColor="#00000011" (click)="setColorTablet('#c0c0c0')">
+      <div class="icon-tablet">
+        <div class="tablet-demo" style="background-color:#C0C0C0">
+          <div class="tablet-gradient"></div>
+        </div>
+      </div>
+      <div class="text-platform">{{ locationService.translate('Pure silver', 'Чистое серебро') }}</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setColorTablet('#69abce')">
+      <div class="icon-tablet">
+        <div class="tablet-demo" style="background-color:#69abce">
+          <div class="tablet-gradient"></div>
+        </div>
+      </div>
+      <div class="text-platform">{{ locationService.translate('Sierra blue', 'Сьерра синий') }}</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setColorTablet('#005f56')">
+      <div class="icon-tablet">
+        <div class="tablet-demo" style="background-color:#005f56">
+          <div class="tablet-gradient"></div>
+        </div>
+      </div>
+      <div class="text-platform">{{ locationService.translate('Alpine green', 'Альпийский зеленый') }}</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setColorTablet('#FFDF4F')">
+      <div class="icon-tablet">
+        <div class="tablet-demo" style="background-color:#FFDF4F">
+          <div class="tablet-gradient"></div>
+        </div>
+      </div>
+      <div class="text-platform">{{ locationService.translate('Shining gold', 'Сияющее золото') }}</div>
+    </div>
+    <div matRipple matRippleColor="#00000011" (click)="setColorTablet('#2b2031')">
+      <div class="icon-tablet" style="transform:translateY(180deg)">
+        <div class="tablet-demo" style="background-color:#2b2031">
+          <div class="tablet-gradient"></div>
+        </div>
+      </div>
+      <div class="text-platform">{{ locationService.translate('Dark matter', 'Тёмная материя') }}</div>
+    </div>
+  </app-touch-scroll-fragments>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screenrecordvideo === 'open'" [touch]="touches.screenrecordvideo" [backable]="true" [scrollable]="false" (close)="closerecordvideo()">
+  <app-web-camera [setinit]="initrecordvideo" (save)="saverecordvideo($event)"></app-web-camera>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screenwatchvideo === 'open'" [touch]="touches.screenwatchvideo" [backable]="true" [scrollable]="false" (close)="closewatchvideo()">
+  <app-touch-watch [active]="activewatchvideo" [video]="activeGift?.value"></app-touch-watch>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screentakephoto === 'open'" [touch]="touches.screentakephoto" [backable]="true" [scrollable]="false" (close)="closetakephoto()">
+  <app-touch-take-picture [active]="activetakephoto" (save)="savephoto($event)"></app-touch-take-picture>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screensignphoto === 'open'" [backable]="false" [scrollable]="false" (close)="closesignphoto()">
+  <app-touch-sign-photo [active]="activesignphoto" [tool]="signgreetingtool" [color]="signgreetingcolor" [gift]="activeGift" [sublimereset]="signphotosublimereset" [sublimesave]="signphotosublimesave" (close)="closesignturegreeting()" (save)="savegreetingsign($event)" ></app-touch-sign-photo>
+</app-touch-screen>
+
+<app-touch-screen [show]="stats.screenhowitworks === 'open'" [touch]="touches.screenhowitworks" [backable]="true" [scrollable]="true" (close)="closehowitworks()">
+  <div *ngIf="activeGift?.type === 'greetingcard'" class="dialog">
+    <div class="dialog-title">{{ locationService.translate('What it is?', 'Что это?') }}</div>
+    <div class="dialog-text">{{ locationService.translate('This is an greeting card that we used to gift on various occasions. The cover for which you choose yourself. On the reverse side, write your wishes in poetic form. And most importantly -', 'Это открытка которую мы привыкли дарить по различным поводам: день рождения, свадьба, 8 марта и т.д. Создайте свою открытку. Выберите подходящую обложку, напишите слова пожелания в стихотворной форме и что самое душевное,') }} <b>{{ locationService.translate('you can sign it with YOUR OWN HAND', 'вы можете подписать её СОБСТВЕННОЙ РУКОЙ') }}</b>.</div>
+    <div class="dialog-title">{{ locationService.translate('Setting the cover', 'Выбор обложки') }}</div>
+    <div class="dialog-text">{{ locationService.translate('Imagine the situation you want to give a gift to your girlfriend, and you want to add a greeting card with a love poem to the gift box, let\'s first choose a cover. For example this one:', 'Представим ситуацию: вы хотите сделать подарок вашей девушке и в подарочную коробку хотите положить открытку. Давайте для начала выберем обложку, например я выбрал такую:') }}</div>
+    <img *ngIf="locationService.location().country.code === 'us'" width="70%" class="dialog-img" src="assets/greetingcard/front/12.png" />
+    <img *ngIf="locationService.location().country.code === 'ru'" width="70%" class="dialog-img" src="assets/greetingcard/front/26.png" />
+    <div class="dialog-title">{{ locationService.translate('Let\'s write a poem', 'Напишем стихотворение') }}</div>
+    <div class="dialog-text">{{ locationService.translate('We also need some kind of poem that we will write on the back side, for example, I get it from the internet, not bad, right?', 'Также нам нужно какое-нибудь стихотворение. Например, напишем такое стихотворение (я украл у Александра Сергеевича):') }}</div>
+    <div class="dialog-quote">
+      {{ locationService.translate('Amazing and beautiful,', 'Пред ней задумчиво стою,') }}<br/>
+      {{ locationService.translate('not a flower or a tree.', 'Свести очей с нее нет силы;') }}<br/>
+      {{ locationService.translate('Much prettier than that,', 'И говорю ей: как вы милы!') }}<br/>
+      {{ locationService.translate('and only I can see.', 'И мыслю: как тебя люблю!') }}<br/>
+    </div>
+    <div class="dialog-text">{{ locationService.translate('What does it look like:', 'Вот как это выглядит:') }}</div>
+    <img *ngIf="locationService.location().country.code === 'us'" width="70%" class="dialog-img" src="assets/greetingcard/example1.png" />
+    <img *ngIf="locationService.location().country.code === 'ru'" width="70%" class="dialog-img" src="assets/greetingcard/example3.png" />
+    <div class="dialog-title">{{ locationService.translate('The most magic', 'Самое волшебство') }}</div>
+    <div class="dialog-text">{{ locationService.translate('For a congratulation to be truly sincere, it must be signed, otherwise it looks like it was written by a robot, you can pass the captcha, right?', 'Чтобы поздравления были по-настоящему искренними нужно обязательно подписать открытку собственной рукой. Например, я нарисовал сердечки и чёрточки, этого вполне достаточно.') }}</div>
+    <img *ngIf="locationService.location().country.code === 'us'" width="70%" class="dialog-img" src="assets/greetingcard/example2.png" />
+    <img *ngIf="locationService.location().country.code === 'ru'" width="70%" class="dialog-img" src="assets/greetingcard/example4.png" />
+    <div class="dialog-text">{{ locationService.translate('Wow this looks really great, the recipient is sure to be delighted.', 'ВАУ!!! Это выглядит потрясающе, мне кажется получатель точно будет рад.') }}</div>
+  </div>
+  <div *ngIf="activeGift?.type === 'game'" class="dialog">
+    <div class="dialog-title">{{ locationService.translate('What it is?', 'Что это?') }}</div>
+    <div class="dialog-text">{{ locationService.translate('This is a video game box. If the recipient loves games, you can gift a video game redeem key, which he/she can enter and get a video game.', 'Это коробка с видеоигрой. Если человек, которому вы хотите сделать подарок, любит играть в игры, вы можете подарить ему/ей активационный ключ игры, который он/она сможет ввести и получить игру.') }}</div>
+    <div class="dialog-title">{{ locationService.translate('Redeem key', 'Активационный ключ') }}</div>
+    <div class="dialog-warning">{{ locationService.translate('!!! IMPORTANT !!! To gift a game, you need a redeem key. You must buy a card. On the back side, erase the area where you can find the key and enter it on our site so that we transfer it to your recipient.', '!!! ВНИМАНИЕ !!! Чтобы подарить игру, вам для начала нужно купить активационный ключ в любом магазине (например DNS, Мвидео и т. д.), вы должны будете стереть защитный слой и ввести ключ на сайте, который получатель прочитает и ввёдет самостоятельно. Вводите ключ именно на этом сайте, нигде не активируйте игру.') }}</div>
+    <div class="dialog-text">{{ locationService.translate('This is what redeem key looks like:', 'Примерно так выглядит карточка с активацонным ключом для игры:') }}</div>
+    <img width="80%" class="dialog-img" src="assets/game/example1.png" />
+    <div class="dialog-text">{{ locationService.translate('If you bought a game for playstation or xbox or nintendo switch, we will tell the recipient how to activate the game. In other cases, we will ask you to write instructions on how to activate the game. The instructions are almost always written on the back of the card.', 'Если вы купите игру для playstation, xbox или nintendo switch, то мы сами расскажем получателю как активировать игру. В другом случае мы попросим вас написать инструкцию по активации ключа, почти всегда она написана на задней стороне карточки и состоит из 3-5 шагов.') }}</div>
+    <div class="dialog-text">{{ locationService.translate('Let\'s say i bought the game \'little nightmares\' for playstation 5. I entered the redeem key:', 'Давайте представим я купил ключ к игре \'little nightmares\'. И сразу ввожу код:') }}</div>
+    <img *ngIf="locationService.location().country.code === 'us'" width="80%" class="dialog-img" src="assets/game/example5.png" />
+    <img *ngIf="locationService.location().country.code === 'ru'" width="80%" class="dialog-img" src="assets/game/example7.png" />
+    <div class="dialog-title">{{ locationService.translate('Set cover', 'Установим обложку') }}</div>
+    <div class="dialog-text">{{ locationService.translate('Now i need to set cover. I google \'little nightmares cover\' and download the picture.', 'Далее нам нужна подходящая обложка. В гугл поиске ввожу \'little nightmares обложка\' и скачиваю картинку.') }}</div>
+    <img *ngIf="locationService.location().country.code === 'us'" width="90%" class="dialog-img" src="assets/game/example2.png" />
+    <img *ngIf="locationService.location().country.code === 'ru'" width="90%" class="dialog-img" src="assets/game/example6.png" />
+    <div class="dialog-text">{{ locationService.translate('Now just install it. Here\'s what we got:', 'Теперь устанавливаем обложку. Вот что у меня получилось:') }}</div>
+    <div class="dialog-row">
+      <img *ngIf="locationService.location().country.code === 'us'" width="80%" class="dialog-img" src="assets/game/example3.png" />
+      <img *ngIf="locationService.location().country.code === 'ru'" width="80%" class="dialog-img" src="assets/game/example8.png" />
+      <img width="80%" class="dialog-img" src="assets/game/example4.png" />
+    </div>
+    <div class="dialog-text">{{ locationService.translate('That\'s all, you can gift the game.', 'На этом всё, теперь вы можете подарить игру.') }}</div>
+  </div>
+  <div *ngIf="activeGift?.type === 'speaker'" class="dialog">
+    <div class="dialog-title">{{ locationService.translate('What it is?', 'Что это?') }}</div>
+    <div class="dialog-text">{{ locationService.translate('This is a speaker where you can record your own greeting voice (any other sound can also be recorded up to 50 seconds).', 'Это колонка. С помощью неё вы можете записать свой голос с поздравлениями или же любой другой звук. (максимальная длина записи 50 сек.)') }}</div>
+    <div class="dialog-warning">{{ locationService.translate('For this gift you will need a microphone. If you use a phone or laptop, it is already built into your device.', 'Для данного подарка, у вас должен быть рабочий микрофон. Если вы используете ноутбук или телефон/планшет, то у вас уже он встроен.') }}</div>
+    <div class="dialog-title">{{ locationService.translate('Sound recording', 'Запись звука') }}</div>
+    <div class="dialog-text">{{ locationService.translate('All you need is to record the sound you want to send to the recipient. This is what the settings panel for sound recording looks like:', 'Все что вам нужно, это записать звук, который вы хотите отправить получателю. Вот как выглядит панель для записи голоса:') }}</div>
+    <img *ngIf="locationService.location().country.code === 'us'" width="80%" class="dialog-img" src="assets/speaker/example1.png" />
+    <img *ngIf="locationService.location().country.code === 'ru'" width="80%" class="dialog-img" src="assets/speaker/example2.png" />
+  </div>
+  <div *ngIf="activeGift?.type === 'tablet'" class="dialog">
+    <div class="dialog-title">{{ locationService.translate('What it is?', 'Что это?') }}</div>
+    <div class="dialog-text">{{ locationService.translate('Here you can record video with congratulations. All this will be designed as a tablet on which the recipient can watch your self made video (maximum duration up to 30 seconds).', 'Это планшет, на который вы можете записать видеопоздравление. (максимальная длина 30 сек.)') }}</div>
+    <div class="dialog-warning">{{ locationService.translate('For this gift you will need a microphone and webcam. If you use a phone or laptop, it is already built into your device.', 'Для данного подарка вам нужны микрофон и вебкамера. Если вы используете ноутбук или телефон/планшет, то у вас уже они встроены.') }}</div>
+    <img width="80%" class="dialog-img" src="assets/tablet/example1.png" />
+  </div>
+  <div *ngIf="activeGift?.type === 'photo'" class="dialog">
+    <div class="dialog-title">{{ locationService.translate('What it is?', 'Что это?') }}</div>
+    <div class="dialog-text">{{ locationService.translate('This is a photo taken by you. And most importantly, on the back side, ', 'Это фотография, на задней стороне которой вы можете') }} <b>{{ locationService.translate('you can sign it with YOUR OWN HAND', 'расписаться СОБТВЕННОЙ РУКОЙ') }}</b>.</div>
+    <div class="dialog-warning">{{ locationService.translate('For this gift you will need a webcam. If you use a phone or laptop, it is already built into your device.', 'Для этого подарка вам нужна веб камера. Если вы используете ноутбук или телефон/планшет, то у вас уже она встроена.') }}</div>
+    <div class="dialog-title">{{ locationService.translate('Take a photo', 'Фотография') }}</div>
+    <div class="dialog-text">{{ locationService.translate('Imagine that you want to give your boyfriend a gift and put your photo there. First, let\'s take a photo, you can make it on this web-site. (Attention! this photo is just an example). Here\'s what we got:', 'Давайте представим вы хотите сделать подарок вашему парню и хотите вложить туда свою фотографию. Давайте для начала сделаем фото. (Внимание! Это не моё фото я его просто взял с pixabay.com):') }}</div>
+    <img width="60%" class="dialog-img" src="assets/photo/example1.png" />
+    <div class="dialog-title">{{ locationService.translate('Sign with all your heart', 'Распишемся от всего сердца') }}</div>
+    <div class="dialog-text">{{ locationService.translate('Now to make the photo really worthwhile, let\'s sign it on the back side with our own hand. Here\'s what it looks like:', 'Теперь сделаем это фото стоящим. Распишемся на задней стороне. Вот что у меня получилось:') }}</div>
+    <img width="60%" class="dialog-img" src="assets/photo/example2.png" />
+    <div class="dialog-text">{{ locationService.translate('Wow this looks very attractive the recipient will definitely be pleased.', 'Вау! Это выглядит очень привлекательно! Получатель обязательно будет доволен.') }}</div>
+  </div>
+</app-touch-screen>

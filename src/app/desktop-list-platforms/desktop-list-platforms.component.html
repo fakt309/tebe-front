@@ -1,0 +1,24 @@
+<div @opacity class="list-platforms-background"></div>
+<div @slideRight class="list-platforms-display">
+  <div class="list-platforms-display__close" (click)="choose.emit('')"></div>
+  <div matRipple matRippleColor="#00000022" class="list-platforms-display__option" (click)="choose.emit('pc')">
+    <div class="list-platforms-display__icon list-platforms-display__icon_pc"></div>
+    <div class="list-platforms-display__text">PC</div>
+  </div>
+  <div matRipple matRippleColor="#00000022" class="list-platforms-display__option" (click)="choose.emit('ps')">
+    <div class="list-platforms-display__icon list-platforms-display__icon_playstation"></div>
+    <div class="list-platforms-display__text">Playstation</div>
+  </div>
+  <div matRipple matRippleColor="#00000022" class="list-platforms-display__option" (click)="choose.emit('xbox')">
+    <div class="list-platforms-display__icon list-platforms-display__icon_xbox"></div>
+    <div class="list-platforms-display__text">Xbox</div>
+  </div>
+  <div matRipple matRippleColor="#00000022" class="list-platforms-display__option" (click)="choose.emit('switch')">
+    <div class="list-platforms-display__icon list-platforms-display__icon_nintendo-switch"></div>
+    <div class="list-platforms-display__text">Nintendo switch</div>
+  </div>
+  <div matRipple matRippleColor="#00000022" class="list-platforms-display__option" (click)="choose.emit('custom')">
+    <div class="list-platforms-display__icon list-platforms-display__icon_custom"></div>
+    <div class="list-platforms-display__text">Custom</div>
+  </div>
+</div>

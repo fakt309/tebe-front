@@ -1,0 +1,14 @@
+<div
+class="front"
+[style.width]="width+'px'"
+[style.height]="height+'px'"
+[style.transform]="'translateZ('+(depth/2)+'px)'">
+  <div class="photo" [style.backgroundImage]="'url('+photo+')'"></div>
+</div>
+<div
+class="back"
+[style.width]="width+'px'"
+[style.height]="height+'px'"
+[style.transform]="'translateZ('+(-depth/2)+'px)'">
+  <div class="sign"></div>
+</div>

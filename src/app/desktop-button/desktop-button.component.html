@@ -1,0 +1,9 @@
+<div *ngIf="!disabled" class="wrap" [style.background-color]="background" matRipple [matRippleColor]="colorRipple">
+  <div [class]="icon === '' ? 'button__icon button__icon_empty' : 'button__icon'" [style.backgroundImage]="'url('+icon+')'"></div>
+  <div [class]="text === '' ? 'button__text button__text_empty' : 'button__text'" [style.color]="color">{{ text }}</div>
+</div>
+
+<div *ngIf="disabled" class="wrap disabled" [style.background-color]="background">
+  <div [class]="icon === '' ? 'button__icon button__icon_empty' : 'button__icon'" [style.backgroundImage]="'url('+icon+')'"></div>
+  <div [class]="text === '' ? 'button__text button__text_empty' : 'button__text'" [style.color]="color">{{ text }}</div>
+</div>

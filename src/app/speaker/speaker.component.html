@@ -1,0 +1,156 @@
+<div
+class="round"
+[style.width.px]="depth"
+[style.height.px]="height"
+[style.transform]="'translateX('+(-width/2)+'px) translateY('+(height*0.15)+'px) rotateY(90deg)'"
+></div>
+
+<div
+class="round"
+[style.width.px]="depth"
+[style.height.px]="height"
+[style.transform]="'translateX('+(width/2)+'px) translateY('+(height*0.15)+'px) rotateY(-90deg)'"
+></div>
+
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(height/2)+'px) translateZ('+0+'px) rotateX('+(90-18)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(3*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(4*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div
+class="button next"
+[style.width.px]="0.8*heightSide"
+[style.height.px]="0.8*heightSide"
+[style.margin]="'0px '+(0.1*heightSide)+'px'"
+[style.backgroundColor]="color"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <polygon points="20,30 50,50 20,70" fill="#000000">
+      <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="0.2s" begin="indefinite" repeatCount="1" />
+    </polygon>
+    <polygon points="50,30 80,50 50,70" fill="#000000">
+      <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="0.2s" begin="indefinite" repeatCount="1" />
+    </polygon>
+  </svg>
+</div>
+<div
+class="button prev"
+[style.width.px]="0.8*heightSide"
+[style.height.px]="0.8*heightSide"
+[style.margin]="'0px '+(0.1*heightSide)+'px'"
+[style.backgroundColor]="color"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <polygon points="20,50 50,30 50,70" fill="#000000">
+      <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="0.2s" begin="indefinite" repeatCount="1" />
+    </polygon>
+    <polygon points="50,50 80,30 80,70" fill="#000000">
+      <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="0.2s" begin="indefinite" repeatCount="1" />
+    </polygon>
+  </svg>
+</div>
+<div
+class="button pause"
+[style.width.px]="0.8*heightSide"
+[style.height.px]="0.8*heightSide"
+[style.margin]="'0px '+(0.1*heightSide)+'px'"
+[style.backgroundColor]="color"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <polygon points="20,20 40,20 40,80 20,80" fill="#000000">
+      <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="2s" begin="indefinite" repeatCount="indefinite" />
+    </polygon>
+    <polygon points="60,20 80,20 80,80 60,80" fill="#000000">
+    <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="2s" begin="indefinite" repeatCount="indefinite" />
+    </polygon>
+  </svg>
+</div>
+<div
+class="button play"
+[style.width.px]="0.8*heightSide"
+[style.height.px]="0.8*heightSide"
+[style.margin]="'0px '+(0.1*heightSide)+'px'"
+[style.backgroundColor]="color"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <polygon points="20,20 80,50 20,80" fill="#000000">
+      <animate attributeName="fill" values="#000000; #ffffff; #000000" dur="2s" begin="indefinite" repeatCount="indefinite" />
+    </polygon>
+  </svg>
+</div>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(5*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div [class]="timer === null ? 'timer hidden' : 'timer'">{{ timer === null ? '0' : timer }}</div>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(6*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(7*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(8*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(9*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(10*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(11*heightSide)+'px'"></div>
+<div
+class="side"
+[style.width.px]="width"
+[style.height.px]="heightSide"
+[style.transform]="'translateY('+(-heightSide)+'px) translateZ('+0+'px) rotateX('+(-36)+'deg)'"
+>
+<div class="grill" [style.width.px]="width" [style.height.px]="heightSide" [style.backgroundImage]="'url('+grill+')'" [style.backgroundPosition]="'center '+(12*heightSide)+'px'"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,125 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all ease 0.3s;
+  > .loading {
+    width: 100px;
+    height: 100px;
+    background-image: url(../../assets/loading.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 100;
+  }
+  > .timer {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    color: #fff;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    z-index: 10;
+    transition: all ease 0.3s;
+  }
+  > .timer.hidden {
+    opacity: 0;
+  }
+  > .timer.hurryup {
+    animation-name: hurryup;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    color: #d93025;
+  }
+  > .preview, > .result {
+    position: absolute;
+    transition: all ease 0.3s;
+  }
+  > .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    > .icon {
+      width: 100px;
+      height: 100px;
+      margin: 50px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-image: url(../../assets/cross.svg);
+    }
+    > .text {
+      font-size: 14px;
+      color: #000;
+      text-align: center;
+    }
+  }
+  > .hint {
+    opacity: 0;
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    > .rec {
+      width: 30px;
+      height: 30px;
+      margin: 10px;
+    }
+    > .text {
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+      user-select: none;
+    }
+  }
+  > .wrap-progress {
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    > .progress {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: flex-start;
+      margin: 20px;
+      background-color: #00000033;
+      border-radius: 10px;
+      height: 6px;
+      flex: 1;
+      cursor: pointer;
+      > .progress-past {
+        background-color: #ffffff;
+        border-radius: 10px;
+        width: 0%;
+      }
+    }
+  }
+  @keyframes hurryup {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}

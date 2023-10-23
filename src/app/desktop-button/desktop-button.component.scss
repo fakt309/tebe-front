@@ -1,0 +1,51 @@
+:host {
+  > .wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #333333;
+    opacity: 0.7;
+    transition: all ease 0.3s;
+    > .button__icon {
+      margin: 10px;
+      width: 24px;
+      height: 24px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    > .button__icon.button__icon_empty {
+      display: none;
+    }
+    > .button__text {
+      margin: 10px;
+      margin-left: 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      font-size: 16px;
+      color: #ffffff;
+    }
+    > .button__text.button__text_empty {
+      display: none;
+    }
+  }
+  > .wrap:hover {
+    opacity: 1;
+    > .button__text {
+      user-select: none;
+    }
+  }
+  > .wrap.disabled {
+    filter: blur(2px);
+    cursor: default;
+  }
+  > .wrap.disabled:hover {
+    opacity: 0.7;
+  }
+}

@@ -1,0 +1,15 @@
+<div class="wrap" [attr.type]="display" matRipple matRippleColor="#00000011">
+  <div
+  class="display">
+    <!-- <app-greeting-card *ngIf="display == 'greetingcard'" [size]="141"></app-greeting-card>
+    <app-game *ngIf="display == 'game'" [size]="142"></app-game>
+    <app-speaker *ngIf="display == 'speaker'" [size]="200"></app-speaker> -->
+
+  </div>
+  <div class="title">
+    <ng-content select=".title"></ng-content>
+  </div>
+  <div class="description">
+    <ng-content select=".description"></ng-content>
+  </div>
+</div>

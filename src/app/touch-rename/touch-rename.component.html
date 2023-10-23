@@ -1,0 +1,10 @@
+<textarea class="value" (input)="refresh($event)"></textarea>
+<div class="maxlength" [style.color]="(value.length < min || value.length > max) ? '#f44336' : '#4caf50'">
+  <div *ngIf="min > 0" class="current">{{ min }}</div>
+  <div *ngIf="min > 0" class="more">&lt;</div>
+  <div class="current">{{ value.length }}</div>
+  <div class="more">&lt;</div>
+  <div class="outof">{{ max }}</div>
+</div>
+<div class="hint">{{ locationService.translate('press', 'нажмите') }} {{ this.enterable ? '#' : 'enter' }} {{ locationService.translate('to save', 'чтобы сохранить') }}</div>
+<div *ngIf="title !== ''" class="title">{{ title }}</div>

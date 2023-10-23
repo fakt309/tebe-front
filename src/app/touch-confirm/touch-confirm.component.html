@@ -1,0 +1,8 @@
+<div class="display" [style.transform]="'translateY('+ycoord+'px)'">
+  <div class="reject">
+    <div class="text">{{ locationService.translate('swipe up to close', 'свайп вверх чтобы отменить') }}</div>
+    <div class="icon"></div>
+  </div>
+  <div class="text">{{ value }}</div>
+  <div class="agree">{{ locationService.translate('tap to agree', 'нажать чтобы подтвердить') }}</div>
+</div>

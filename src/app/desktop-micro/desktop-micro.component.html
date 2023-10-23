@@ -1,0 +1,36 @@
+<!-- <div [class]="timer > 0 ? (timer <= 5 ? 'timer hurryup' : 'timer') : 'timer hidden'"> {{ timer }} </div>
+<div *ngIf="error === ''" [class]="status === 'recording' ? 'wrapMicro recording' : 'wrapMicro'" [style.animationName]="status === 'recording' ? 'shadow' : 'none'">
+  <app-svg-micro [recording]="status === 'recording'"></app-svg-micro>
+</div>
+<div *ngIf="error !== ''" class="error"></div>
+<div class="hint">{{ error === '' ? (status === 'recording' ? 'Tap to stop' : 'Tap to start' ) : error }}</div>
+<div class="track">
+  <div *ngFor="let sound of sounds" class="sound" [style.height.px]="sound"></div>
+</div>
+<app-touch-confirm [value]="confirm" (result)="resultconfirm($event)"></app-touch-confirm> -->
+
+<div #confirm class="confirm" [@popup]="showConfirm">
+  <div class="confirm__text">{{ locationService.translate('Overwrite?', 'Перезаписать?') }}</div>
+  <div class="confirm__buttons">
+    <div class="confirm__button" [style.color]="'#f44336'" (click)="resultconfirm('reject')">{{ locationService.translate('no', 'нет') }}</div>
+    <div class="confirm__button" [style.color]="'#4caf50'" (click)="resultconfirm('agree')">{{ locationService.translate('yes', 'да') }}</div>
+  </div>
+</div>
+<app-desktop-button
+  [icon]="status === 'recording' ? '../../assets/stop.svg' : '../../assets/record.svg'"
+  [background]="'#fafafa'"
+  [disabled]="playing || showConfirm === 'open'"
+  (click)="switchRecord()"
+></app-desktop-button>
+<app-desktop-button
+  [icon]="playing ? '../../assets/pause-icon.svg' : '../../assets/play-icon.svg'"
+  [background]="'#fafafa'"
+  [disabled]="!chunks[0] || status === 'recording' || showConfirm === 'open'"
+  (click)="switchPlay()"
+></app-desktop-button>
+<div #progress class="track" (mousedown)="onMouseDownTrack($event)" (mouseup)="onMouseUpTrack($event)" (mousemove)="onMouseMoveTrack($event)" (mouseleave)="onMouseLeave()">
+  <div class="progress" [style.width.px]="widthProgress"></div>
+  <div *ngFor="let sound of sounds" class="sound" [style.height.px]="sound"></div>
+</div>
+<div *ngIf="status === 'recording'" class="timer">{{ timer }}</div>
+<app-desktop-error [text]="textError" [color]="'#f44336'"></app-desktop-error>

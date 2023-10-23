@@ -1,0 +1,31 @@
+<div [class]="timer > 0 ? (timer <= 5 ? 'timer hurryup' : 'timer') : 'timer hidden'"> {{ timer }} </div>
+<video
+@verticalShow
+*ngIf="error === '' && screen === 'recording'"
+class="preview"
+[attr.width]="width+'px'"
+[attr.height]="height+'px'"
+autoplay
+[muted]="'muted'"></video>
+<video
+@verticalShow
+*ngIf="error === '' && screen === 'watching'"
+class="result"
+[attr.width]="width+'px'"
+[attr.height]="height+'px'"></video>
+<div *ngIf="loading && !error" class="loading"></div>
+<div *ngIf="error !== ''" class="error">
+  <div class="icon"></div>
+  <div class="text">{{ error }}</div>
+</div>
+<div @verticalShow *ngIf="screen === 'watching'" class="wrap-progress">
+  <app-desktop-button
+    [icon]="playing ? '../../assets/pause-icon-white.svg' : '../../assets/play-icon-white.svg'"
+    [background]="'#00000033'"
+    [color]="'#333333'"
+    (click)="switchPlaying()"
+  ></app-desktop-button>
+  <div #progressRef class="progress" (mousedown)="onMouseDownProgress($event)">
+    <div class="progress-past" [style.width]="(progress.value*100)+'%'"></div>
+  </div>
+</div>

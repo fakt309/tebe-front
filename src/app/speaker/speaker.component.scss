@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "digital";
+  src: url("../../assets/digital.ttf");
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotateX(0deg) rotateY(180deg);
+  transform-style: preserve-3d;
+  .side {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center bottom;
+    transform-style: preserve-3d;
+    background-image: url(../../assets/speaker/grill.jpg);
+    background-repeat: repeat;
+    background-position: center;
+    background-size: 20%;
+    flex-shrink: 0;
+    .timer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      font-weight: bold;
+      color: #00bcd4;
+      text-shadow: 0px 0px 4px #00bcd4;
+      text-align: center;
+      transition: all ease;
+      transform: rotateY(180deg);
+      font-family: digital;
+    }
+    .timer.hidden {
+      opacity: 0;
+    }
+    > .grill {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 0;
+      opacity: 0.3;
+      background-repeat: repeat;
+      background-position: auto 0px;
+      background-size: 100% auto;
+      transform: rotateY(180deg);
+    }
+  }
+  .round {
+    position: absolute;
+    border-radius: 1000px;
+    background-color: #666;
+    background-image: url(../../assets/speaker/speaker.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  .button {
+    background: #ff5722;
+    z-index: 1;
+    transform: rotateY(180deg);
+  }
+}
+:host(.smooth) {
+  transition: all ease 0.2s;
+  * {
+    transition: all ease 0.2s;
+  }
+}
+
+@media (pointer:coarse) {
+  :host(.smooth) {
+    transition: none;
+    * {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<div
+  *ngFor="let obj of objects"
+  class="object"
+  [style.transform]="'translateX('+obj.x+'px) translateY('+obj.y+'px) translateZ('+obj.z+'px)'"
+  [style.width.px]="obj.width"
+  [style.height.px]="obj.height"
+  [style.background-image]="'url('+typesObject[obj.type].src+')'"
+></div>

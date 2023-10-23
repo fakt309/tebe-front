@@ -1,0 +1,10 @@
+<app-touch-refresh class="refresh" [touch]="touchRefresh"></app-touch-refresh>
+<div class="back">
+  <div class="ico"></div>
+  <div class="text">{{ locationService.translate('back', 'назад') }}</div>
+</div>
+<div *ngIf="title !== ''" class="title">{{ title }}</div>
+<div class="content">
+  <ng-content></ng-content>
+</div>
+<div class="hint">{{ locationService.translate('swipe up/down', 'свайп вверх/вниз') }}</div>

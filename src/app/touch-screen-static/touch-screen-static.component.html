@@ -1,0 +1,8 @@
+<app-touch-refresh class="refresh" [touch]="touchRefresh"></app-touch-refresh>
+<div class="content" [style.transition]="animate ? 'all ease 0.2s' : 'none'" [style.transform]="'translateX('+translateX+'px)'">
+  <div *ngIf="backable" class="back">
+    <div class="ico"></div>
+    <div class="text">{{ locationService.translate('back', 'назад') }}</div>
+  </div>
+  <ng-content></ng-content>
+</div>

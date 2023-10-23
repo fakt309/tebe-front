@@ -1,0 +1,10 @@
+<app-svg-handle [bind]="bindhandle" [refresh]="refreshhandle"></app-svg-handle>
+<div class="content">
+  <app-touch-scroll [touch]="touchlist" [scrolltocenter]='doscrolltocenter'>
+    <div *ngFor="let option of options" class="option" matRipple matRippleColor="#00000011" [attr.value]="option.value" >
+      <div class="ico" [style.background-image]="'url('+option.ico+')'"></div>
+      <div class="title">{{ option.title }}</div>
+    </div>
+  </app-touch-scroll>
+</div>
+<div class="back"></div>
