@@ -1,0 +1,22 @@
+<app-box
+	class="box"
+	[packed]="box.packed"
+	[animate]="box.animate"
+	[wrapped]="box.wrapped"
+	[tapped]="box.tapped"
+	[w]="box.size.w"
+	[h]="box.size.h"
+	[d]="box.size.d"
+	[package]="box.package"
+  	[tape]="box.tape"
+	[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+box.rotate.x+'deg) rotateY('+box.rotate.y+'deg) rotateZ('+box.rotate.z+'deg)'"
+></app-box>
+
+<app-touch-draw-svg
+	class="draw"
+	[touch]="touches.draw"
+	[width]="draw.size.w"
+	[height]="draw.size.h"
+	[ban]="draw.ban"
+	[style.transform]="'translateX('+draw.coord.x+'px) translateY('+draw.coord.y+'px)'"
+></app-touch-draw-svg>

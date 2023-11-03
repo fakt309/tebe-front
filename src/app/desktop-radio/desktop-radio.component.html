@@ -1,0 +1,15 @@
+<div
+	*ngFor="let option of options"
+	class="option"
+	[class.option_checked]="option.value === value"
+	(click)="setOptions(option.value)"
+>
+	<div
+		class="checkmark"
+		[class.checkmark_checked]="option.value === value"
+	></div>
+	<div
+		class="title"
+		[class.title_checked]="option.value === value"
+	>{{ option.title }}</div>
+</div>

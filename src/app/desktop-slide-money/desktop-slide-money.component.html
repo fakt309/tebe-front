@@ -1,0 +1,24 @@
+<div class="wrap-cursor">
+	<div
+		class="cursor"
+		[style.transform]="'translateX(calc('+position+'px - 50%))'"
+		(mousedown)="onMouseDownCursor($event)"
+	>
+		<div class="cursor__text">{{ textCursor }}</div>
+		<div class="square"></div>
+	</div>
+</div>
+
+<div class="ticks">
+	<div
+		*ngFor="let option of options"
+		class="tick"
+	></div>
+</div>
+
+<div class="line-back"></div>
+
+<div class="wrap-minmax">
+	<div class="wrap-minmax__text wrap-minmax__text_left">{{ numberService.easyAppearence(options[0]) }}</div>
+	<div class="wrap-minmax__text wrap-minmax__text_right">{{ numberService.easyAppearence(options[options.length-1]) }}</div>
+</div>

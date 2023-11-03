@@ -1,0 +1,778 @@
+<div class="side front"
+[style]="{
+  'width': width+'px',
+  'height': height+'px',
+  'background-color': color,
+  'transform': 'translateZ('+depth/2+'px) rotateX('+(unbox ? -90 : 0)+'deg)'}"
+>
+  <div class="wrap" [style.width]="width+'px'" [style.height]="height+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(0deg)'" [style.backgroundImage]="'url('+sides[3]+')'"></div>
+  <div class="сlip" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height)+'px', 'transform': 'translateX('+(width/2+(0.4*height/5)/2)+'px) rotateY('+(bind2 || !unbox ? 90 : 0)+'deg)'}">
+    <div class="triangle first" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+(-0.4*height/2+(0.4*height/5)/2)+'px) rotateX('+(bind1 ? 90 : 0)+'deg)'}">
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', 'transform': 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(0.25*(0.4*height/5))+'px) rotateZ(45deg)'}">
+        <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+      </div>
+    </div>
+    <div class="middle" [style]="{'width': 0.4*height/5+'px', 'height': 0.4*height-2*0.4*height/5+'px'}"></div>
+    <div class="triangle second" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+((0.4*height)/2-(0.4*height/5)/2)+'px) rotateX('+(bind1 ? -90 : 0)+'deg)'}" >
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', transform: 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(-0.25*(0.4*height/5))+'px) rotateZ(-45deg)'}"><div class="darkness" [style.backgroundColor]="'#00000022'"></div></div>
+    </div>
+  </div>
+  <div class="сlip" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height)+'px', 'transform': 'translateX('+(-width/2+(0.4*height/5)/2)+'px) rotateZ(180deg) rotateY('+(bind2 || !unbox ? 90 : 0)+'deg)'}">
+    <div class="triangle first" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+(-0.4*height/2+(0.4*height/5)/2)+'px) rotateX('+(bind1 ? 90 : 0)+'deg)'}">
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', 'transform': 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(0.25*(0.4*height/5))+'px) rotateZ(45deg)'}">
+        <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+      </div>
+    </div>
+    <div class="middle" [style]="{'width': 0.4*height/5+'px', 'height': 0.4*height-2*0.4*height/5+'px'}"></div>
+    <div class="triangle second" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+((0.4*height)/2-(0.4*height/5)/2)+'px) rotateX('+(bind1 ? -90 : 0)+'deg)'}" >
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', transform: 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(-0.25*(0.4*height/5))+'px) rotateZ(-45deg)'}"><div class="darkness" [style.backgroundColor]="'#00000022'"></div></div>
+    </div>
+  </div>
+</div>
+<div class="side back"
+[style]="{
+  'width': width+'px',
+  'height': height+'px',
+  'background-color': color,
+  'transform': 'translateZ('+(-depth/2)+'px) rotateY(180deg) rotateX('+(unbox ? -90 : 0)+'deg)'}"
+>
+  <div class="wrap" [style.width]="width+'px'" [style.height]="height+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(180deg)'" [style.backgroundImage]="'url('+sides[1]+')'"></div>
+  <div class="сlip" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height)+'px', 'transform': 'translateX('+(width/2+(0.4*height/5)/2)+'px) rotateY('+(bind2 || !unbox ? 90 : 0)+'deg)'}">
+    <div class="triangle first" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+(-0.4*height/2+(0.4*height/5)/2)+'px) rotateX('+(bind1 ? 90 : 0)+'deg)'}">
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', 'transform': 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(0.25*(0.4*height/5))+'px) rotateZ(45deg)'}">
+        <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+      </div>
+    </div>
+    <div class="middle" [style]="{'width': 0.4*height/5+'px', 'height': 0.4*height-2*0.4*height/5+'px'}"></div>
+    <div class="triangle second" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+((0.4*height)/2-(0.4*height/5)/2)+'px) rotateX('+(bind1 ? -90 : 0)+'deg)'}" >
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', transform: 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(-0.25*(0.4*height/5))+'px) rotateZ(-45deg)'}"><div class="darkness" [style.backgroundColor]="'#00000022'"></div></div>
+    </div>
+  </div>
+  <div class="сlip" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height)+'px', 'transform': 'translateX('+(-width/2+(0.4*height/5)/2)+'px) rotateZ(180deg) rotateY('+(bind2 || !unbox ? 90 : 0)+'deg)'}">
+    <div class="triangle first" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+(-0.4*height/2+(0.4*height/5)/2)+'px) rotateX('+(bind1 ? 90 : 0)+'deg)'}">
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', 'transform': 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(0.25*(0.4*height/5))+'px) rotateZ(45deg)'}">
+        <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+      </div>
+    </div>
+    <div class="middle" [style]="{'width': 0.4*height/5+'px', 'height': 0.4*height-2*0.4*height/5+'px'}"></div>
+    <div class="triangle second" [style]="{'width': (0.4*height/5)+'px', 'height': (0.4*height/5)+'px', 'transform': 'translateY('+((0.4*height)/2-(0.4*height/5)/2)+'px) rotateX('+(bind1 ? -90 : 0)+'deg)'}" >
+      <div class="fill" [style]="{'width': ((0.4*height/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*height/5)*(math.pow(2,(1/2))))/2+'px', transform: 'translateX('+(-0.25*(0.4*height/5))+'px) translateY('+(-0.25*(0.4*height/5))+'px) rotateZ(-45deg)'}"><div class="darkness" [style.backgroundColor]="'#00000022'"></div></div>
+    </div>
+  </div>
+</div>
+<div class="side left"
+[style]="{
+  'width': depth+'px',
+  'height': height+'px',
+  'background-color': color,
+  'transform': 'translateX('+(-width/2)+'px) rotateY(-90deg) rotateX('+(unbox ? -90 : 0)+'deg)'}"
+>
+  <div class="wrap" [style.width]="height+'px'" [style.height]="depth+'px'" [style.transform]="'translateZ(-1px) rotateY(180deg) rotateZ(90deg)'" [style.backgroundImage]="'url('+sides[0]+')'"></div>
+  <div class="darkness" [style.backgroundColor]="'#00000011'"></div>
+</div>
+<div class="side right"
+[style]="{
+  'width': depth+'px',
+  'height': height+'px',
+  'background-color': color,
+  'transform': 'translateX('+(width/2)+'px) rotateY(90deg) rotateX('+(unbox ? -90 : 0)+'deg)'}">
+  <div class="wrap" [style.width]="height+'px'" [style.height]="width+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(90deg)'" [style.backgroundImage]="'url('+sides[4]+')'"></div>
+  <div class="darkness" [style.backgroundColor]="'#00000011'"></div>
+  <div class="side top" [style]="{
+    'width': width+'px',
+    'height': depth+'px',
+    'background-color': color,
+    'transform': 'translateX('+(width/2)+'px) translateY('+(-height/2)+'px) rotateX('+(unbox ? 0 : 90)+'deg) rotateZ(-90deg)'}"
+  >
+  <div class="wrap" [style.width]="width+'px'" [style.height]="depth+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(0deg)'" [style.backgroundImage]="'url('+sides[5]+')'"></div>
+  <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+  <div class="сlip" [style]="{'width': (0.4*depth/5)+'px', 'height': (0.4*depth)+'px', 'transform': 'translateX('+(width/2+(0.4*depth/5)/2-1)+'px) rotateY('+(bind2 || !unbox ? 90 : 0)+'deg)'}">
+    <div class="triangle first" [style]="{'width': (0.4*depth/5)+'px', 'height': (0.4*depth/5)+'px', 'transform': 'translateY('+(-0.4*depth/2+(0.4*depth/5)/2)+'px) rotateX('+(bind1 ? 90 : 0)+'deg)'}">
+      <div class="fill" [style]="{'width': ((0.4*depth/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*depth/5)*(math.pow(2,(1/2))))/2+'px', 'transform': 'translateX('+(-0.25*(0.4*depth/5))+'px) translateY('+(0.25*(0.4*depth/5))+'px) rotateZ(45deg)'}">
+        <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+      </div>
+    </div>
+    <div class="middle" [style]="{'width': 0.4*depth/5+'px', 'height': 0.4*depth-2*0.4*depth/5+'px'}"></div>
+    <div class="triangle second" [style]="{'width': (0.4*depth/5)+'px', 'height': (0.4*depth/5)+'px', 'transform': 'translateY('+((0.4*depth)/2-(0.4*depth/5)/2)+'px) rotateX('+(bind1 ? -90 : 0)+'deg)'}" >
+      <div class="fill" [style]="{'width': ((0.4*depth/5)*(math.pow(2,(1/2))))+'px', 'height': ((0.4*depth/5)*(math.pow(2,(1/2))))/2+'px', transform: 'translateX('+(-0.25*(0.4*depth/5))+'px) translateY('+(-0.25*(0.4*depth/5))+'px) rotateZ(-45deg)'}"><div class="darkness" [style.backgroundColor]="'#00000022'"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="side bottom" [style]="{'width': width+'px', 'height': depth+'px', 'background-color': color, 'transform': 'translateY('+(height/2)+'px) rotateX(-90deg)'}">
+  <div class="wrap" [style.width]="width+'px'" [style.height]="depth+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(0deg)'" [style.backgroundImage]="'url('+sides[2]+')'"></div>
+  <div class="darkness" [style.backgroundColor]="'#00000022'"></div>
+  <ng-content></ng-content>
+</div>
+
+<div class="packageSide bottom"
+[style.width]="(width+2*margin)+'px'"
+[style.height]="(depth+2*margin)+'px'"
+[style.transform]="'translateY('+(showPackage ? (height/2+margin)+'px' : '150vh')+') rotateX(90deg)'"
+[style.display]="displayPackage"
+>
+  <div class="image" [style.transform]="'translateZ(-0.1px)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 0px bottom '+(-(height/2+2*margin)%50)+'px'"></div>
+  <div class="packageSide centerside"
+  [style.transformOrigin]="'center bottom'"
+  [style.width]="(depth+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+(width+2*margin)/2+'px) translateY('+(-(height/2+2*margin)/2)+'px) rotateZ(90deg) rotateX('+(wrapbind2 ? '-90' : '0')+'deg)'"
+  >
+    <div class="image" [style.transform]="'translateZ(-0.1px) rotateZ(180deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left '+(-(height/2+2*margin)%50-9)+'px top '+(-(width+2*margin)%50)+'px'"></div>
+  </div>
+  <div class="packageSide centerside"
+  [style.transformOrigin]="'center bottom'"
+  [style.width]="(depth+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+(-(width+2*margin)/2)+'px) translateY('+(-(height/2+2*margin)/2)+'px) rotateZ(90deg) rotateX('+(wrapbind2 ? '-90' : '-180')+'deg)'"
+  >
+    <div class="image" [style.transform]="'translateZ(0.1px) rotateZ(180deg) rotateX(180deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left '+(-(height/2+2*margin)%50-10)+'px top '+((height/2+2*margin)%50)+'px'"></div>
+  </div>
+</div>
+<div class="packageSide front1"
+[style.transformOrigin]="'center bottom'"
+[style.width]="(width+2*margin)+'px'"
+[style.height]="(height/2+2*margin)+'px'"
+[style.transform]="'translateY('+(showPackage ? (height/2-(height/2+2*margin)/2+margin)+'px' : '147vh')+') translateZ('+(depth/2+margin)+'px) rotateX('+(wrapbind1 ? '0' : '-90')+'deg)'"
+[style.display]="displayPackage"
+>
+  <div class="image" [style.transform]="'translateZ(0.1px) rotateY(180deg) rotateZ(180deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 0px bottom 0px'"></div>
+  <div class="packageCorner"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height/2+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+((width+2*margin)/2+(height/2+2*margin)/2+0.1)+'px) rotateY('+(wrapbind3 ? '90' : '0')+'deg)'"
+  >
+    <div class="packageTriangle"
+    [style.transformOrigin]="'left bottom'"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+      <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right 1px top 2px'"></div>
+      </div>
+    </div>
+    <div class="packageTriangle"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ(180deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 2px bottom 2px'"></div>
+      </div>
+    </div>
+  </div>
+  <div class="packageCorner"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height/2+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+(-(width+2*margin)/2+(height/2+2*margin)/2-0.1)+'px) rotateY('+(wrapbind3 ? '-90' : '0')+'deg) rotateZ(180deg) rotateX(180deg)'"
+  >
+    <div class="packageTriangle"
+    [style.transformOrigin]="'left bottom'"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+      <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right 12px top 2px'"></div>
+      </div>
+    </div>
+    <div class="packageTriangle"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ(180deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 2px bottom -11px'"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="packageSide back"
+[style.transformOrigin]="'center bottom'"
+[style.width]="(width+2*margin)+'px'"
+[style.height]="(height+2*margin)+'px'"
+[style.transform]="'translateY('+(showPackage ? (height/2-(height+2*margin)/2+margin)+'px' : '145vh')+') translateZ('+(-depth/2-margin)+'px) rotateX('+(wrapbind1 ? '0' : '90')+'deg)'"
+[style.display]="displayPackage"
+>
+  <div class="image" [style.transform]="'translateZ(-0.1px)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 0px bottom '+(-(height/2+2*margin+depth+2*margin)%50)+'px'"></div>
+  <div class="packageCorner"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height/2+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+(-(width+2*margin)/2+(height/2+2*margin)/2-0.5)+'px) translateY('+(-(height/2+2*margin)+(height/2+2*margin)/2)+'px) rotateY('+(wrapbind3 ? '90' : '0')+'deg) rotateX(0deg) rotateZ(180deg)'"
+  >
+    <div class="packageTriangle"
+    [style.transformOrigin]="'left bottom'"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+      </div>
+    </div>
+    <div class="packageTriangle"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ(180deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+      </div>
+    </div>
+  </div>
+  <div class="packageCorner"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height/2+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+((width+2*margin)/2+(height/2+2*margin)/2+0.1)+'px) translateY('+((height/2+2*margin)-(height/2+2*margin)/2)+'px) rotateY('+(wrapbind3 ? '-90' : '0')+'deg)'"
+  >
+    <div class="packageTriangle"
+    [style.transformOrigin]="'left bottom'"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+      </div>
+    </div>
+    <div class="packageTriangle"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ(180deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+      </div>
+    </div>
+  </div>
+  <div class="packageCorner"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height/2+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+((width+2*margin)/2+(height/2+2*margin)/2+0.5)+'px) translateY('+(-(height/2+2*margin)+(height/2+2*margin)/2)+'px) rotateY('+(wrapbind3 ? '-90' : '0')+'deg) rotateX(180deg)'"
+  >
+    <div class="packageTriangle"
+    [style.transformOrigin]="'left bottom'"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+      </div>
+    </div>
+    <div class="packageTriangle"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ(180deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+      </div>
+    </div>
+  </div>
+  <div class="packageCorner"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height/2+2*margin)+'px'"
+  [style.height]="(height/2+2*margin)+'px'"
+  [style.transform]="'translateX('+(-(width+2*margin)/2+(height/2+2*margin)/2-0.1)+'px) translateY('+((height/2+2*margin)-(height/2+2*margin)/2)+'px) rotateY('+(wrapbind3 ? '90' : '0')+'deg) rotateX(180deg) rotateZ(180deg)'"
+  >
+    <div class="packageTriangle"
+    [style.transformOrigin]="'left bottom'"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top -11px'"></div>
+      </div>
+    </div>
+    <div class="packageTriangle"
+    [style.width]="(height/2+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'rotateZ(180deg)'"
+    >
+      <div class="packageFill"
+      [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+      [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+      [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+      >
+        <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px bottom -11px'"></div>
+      </div>
+    </div>
+  </div>
+  <div class="packageSide top"
+  [style.transformOrigin]="'center bottom'"
+  [style.width]="(width+2*margin)+'px'"
+  [style.height]="(depth+2*margin)+'px'"
+  [style.transform]="'translateY('+(-(height+2*margin)/2-(depth+2*margin)/2)+'px) rotateX('+(wrapbind1 ? '-90' : '0')+'deg)'"
+  >
+    <div class="image" [style.transform]="'translateZ(-0.1px)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 0px bottom '+(-(height/2+2*margin+depth+2*margin+height+2*margin)%50)+'px'"></div>
+    <div class="packageSide centerside"
+    [style.transformOrigin]="'center bottom'"
+    [style.width]="(depth+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'translateX('+(width+2*margin)/2+'px) translateY('+(-(height/2+2*margin)/2)+'px) rotateZ(90deg) rotateX('+(wrapbind2 ? '-90' : '0')+'deg)'"
+    >
+      <div class="image" [style.transform]="'translateZ(-0.1px) rotateZ(180deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left '+(-(height/2+2*margin+depth+2*margin+height+2*margin)%50-11)+'px top '+(-(width+2*margin)%50)+'px'"></div>
+    </div>
+    <div class="packageSide centerside"
+    [style.transformOrigin]="'center bottom'"
+    [style.width]="(depth+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'translateX('+(-(width+2*margin)/2)+'px) translateY('+(-(height/2+2*margin)/2)+'px) rotateZ(90deg) rotateX('+(wrapbind2 ? '-90' : '-180')+'deg)'"
+    >
+      <div class="image" [style.transform]="'translateZ(0.1px) rotateZ(180deg) rotateX(180deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left '+(-(height/2+2*margin+depth+2*margin+height+2*margin)%50-10)+'px top '+((height/2+2*margin)%50)+'px'"></div>
+    </div>
+    <div class="packageSide front2"
+    [style.transformOrigin]="'center bottom'"
+    [style.width]="(width+2*margin)+'px'"
+    [style.height]="(height/2+2*margin)+'px'"
+    [style.transform]="'translateY('+(-(depth+2*margin)/2-(height/2+2*margin)/2)+'px) rotateX('+(wrapbind1 ? '-90' : '0')+'deg)'"
+    >
+      <div class="image" [style.transform]="'translateZ(-0.1px)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'left 0px bottom '+(-(height/2+2*margin+depth+2*margin+height+2*margin+depth+2*margin)%50)+'px'"></div>
+      <div class="packageCorner"
+      [style.transformOrigin]="'left center'"
+      [style.width]="(height/2+2*margin)+'px'"
+      [style.height]="(height/2+2*margin)+'px'"
+      [style.transform]="'translateX('+(-(width+2*margin)/2+(height/2+2*margin)/2-0.1)+'px) rotateY('+(wrapbind3 ? '90' : '0')+'deg) rotateX(180deg) rotateZ(180deg)'"
+      >
+        <div class="packageTriangle"
+        [style.transformOrigin]="'left bottom'"
+        [style.width]="(height/2+2*margin)+'px'"
+        [style.height]="(height/2+2*margin)+'px'"
+        [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+        >
+          <div class="packageFill"
+          [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+          [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+          [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+          >
+            <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+          </div>
+        </div>
+        <div class="packageTriangle"
+        [style.width]="(height/2+2*margin)+'px'"
+        [style.height]="(height/2+2*margin)+'px'"
+        [style.transform]="'rotateZ(180deg)'"
+        >
+          <div class="packageFill"
+          [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+          [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+          [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+          >
+            <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+          </div>
+        </div>
+      </div>
+      <div class="packageCorner"
+      [style.transformOrigin]="'left center'"
+      [style.width]="(height/2+2*margin)+'px'"
+      [style.height]="(height/2+2*margin)+'px'"
+      [style.transform]="'translateX('+((width+2*margin)/2+(height/2+2*margin)/2+0.1)+'px) rotateY('+(wrapbind3 ? '-90' : '0')+'deg)'"
+      >
+        <div class="packageTriangle"
+        [style.transformOrigin]="'left bottom'"
+        [style.width]="(height/2+2*margin)+'px'"
+        [style.height]="(height/2+2*margin)+'px'"
+        [style.transform]="'rotateZ('+(wrapbind2 ? '-90' : '0')+'deg)'"
+        >
+          <div class="packageFill"
+          [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+          [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+          [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+          >
+            <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+          </div>
+        </div>
+        <div class="packageTriangle"
+        [style.width]="(height/2+2*margin)+'px'"
+        [style.height]="(height/2+2*margin)+'px'"
+        [style.transform]="'rotateZ(180deg)'"
+        >
+          <div class="packageFill"
+          [style.width]="((height/2+2*margin)*math.sqrt(2))+'px'"
+          [style.height]="((height/2+2*margin)*math.sqrt(2)/2)+'px'"
+          [style.transform]="'translateX(18%) translateY(34%) rotateZ(-45deg)'"
+          >
+            <div class="image" [style.width]="(height/2+2*margin)+'px'" [style.height]="(height/2+2*margin)+'px'" [style.transform]="'translateZ(0.1px) translateY(-34%) rotateZ(-45deg)'" [style.backgroundImage]="'url('+package+')'" [style.backgroundPosition]="'right '+(-(height/2+2*margin+depth+2*margin)%50+14)+'px top '+((depth+2*margin)%50-16)+'px'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tape bottom1"
+[style.width]="(width+4*margin)+'px'"
+[style.height]="widthTape+'px'"
+[style.transform]="'translateY('+(tapeshow ? (height/2+2*margin)+'px' : '150vh')+') rotateX(90deg)'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.display]="tapedisplay">
+  <div class="tape left"
+  [style.transformOrigin]="'right center'"
+  [style.width]="(height+4*margin)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.transform]="'translateX('+(-(width/2+2*margin+height/2+2*margin))+'px) rotateY('+(tapebind1 ? '90' : '0')+'deg)'"
+  [style.backgroundImage]="'url('+tape+')'">
+    <div class="tape top11"
+    [style.transformOrigin]="'right center'"
+    [style.width]="(width/2+3*margin)+'px'"
+    [style.height]="widthTape+'px'"
+    [style.transform]="'translateX('+(-(height+4*margin)/2-(width/2+3*margin)/2)+'px) rotateY('+(tapebind1 ? '90' : '0')+'deg)'"
+    [style.backgroundImage]="'url('+tape+')'">
+    </div>
+  </div>
+  <div class="tape right"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(height+4*margin)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.transform]="'translateX('+((width/2+2*margin+height/2+2*margin))+'px) rotateY('+(tapebind1 ? '-90' : '0')+'deg)'"
+  [style.backgroundImage]="'url('+tape+')'">
+    <div class="tape top11"
+    [style.transformOrigin]="'left center'"
+    [style.width]="(width/2+3*margin)+'px'"
+    [style.height]="widthTape+'px'"
+    [style.transform]="'translateX('+((height+4*margin)/2+(width/2+3*margin)/2)+'px) rotateY('+(tapebind1 ? '-90' : '0')+'deg)'"
+    [style.backgroundImage]="'url('+tape+')'">
+    </div>
+  </div>
+  <div class="tape bottom2"
+  [style.width]="(width+4*margin)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.transform]="'rotateZ(90deg)'"
+  [style.backgroundImage]="'url('+tape+')'">
+    <div class="tape front"
+    [style.transformOrigin]="'left center'"
+    [style.width]="(height+4*margin)+'px'"
+    [style.height]="widthTape+'px'"
+    [style.transform]="'translateX('+((width/2+2*margin+height/2+2*margin))+'px) rotateY('+(tapebind1 ? '-90' : '0')+'deg)'"
+    [style.backgroundImage]="'url('+tape+')'">
+      <div class="tape front"
+      [style.transformOrigin]="'left center'"
+      [style.width]="(depth/2+4*margin)+'px'"
+      [style.height]="widthTape+'px'"
+      [style.transform]="'translateX('+((height+4*margin)/2+(depth/2+4*margin)/2)+'px) rotateY('+(tapebind1 ? '-90' : '0')+'deg)'"
+      [style.backgroundImage]="'url('+tape+')'">
+      </div>
+    </div>
+    <div class="tape back"
+    [style.transformOrigin]="'right center'"
+    [style.width]="(height+4*margin)+'px'"
+    [style.height]="widthTape+'px'"
+    [style.transform]="'translateX('+(-(width/2+2*margin+height/2+2*margin))+'px) rotateY('+(tapebind1 ? '90' : '0')+'deg)'"
+    [style.backgroundImage]="'url('+tape+')'">
+      <div class="tape front"
+      [style.transformOrigin]="'right center'"
+      [style.width]="(depth/2+4*margin)+'px'"
+      [style.height]="widthTape+'px'"
+      [style.transform]="'translateX('+(-(height+4*margin)/2-(depth/2+4*margin)/2)+'px) rotateY('+(tapebind1 ? '90' : '0')+'deg)'"
+      [style.backgroundImage]="'url('+tape+')'">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX('+(widthTape/2)+'px) translateY('+(bowshow ? (-((height+4*margin)/2)+'px') : '-150vh')+') rotateX(90deg) rotateY(-10deg)'"
+[style.display]="bowdisplay"
+>
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateY(10px) rotateY(10deg) rotateZ(-90deg) rotateX(0deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-10deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-30deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-40deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-28deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(0deg)'">
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateY(-10px) rotateY(10deg) rotateZ(90deg) rotateX(0deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-10deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-30deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-40deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-28deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(0deg)'">
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'rotateY(20deg) rotateZ(180deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-10deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-30deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-40deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-28deg)'">
+  <div class="bow"
+  [style.transformOrigin]="'left center'"
+  [style.width]="(20)+'px'"
+  [style.height]="widthTape+'px'"
+  [style.backgroundImage]="'url('+tape+')'"
+  [style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(0deg)'">
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-10deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-30deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-40deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-50deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(-28deg)'">
+<div class="bow"
+[style.transformOrigin]="'left center'"
+[style.width]="(20)+'px'"
+[style.height]="widthTape+'px'"
+[style.backgroundImage]="'url('+tape+')'"
+[style.transform]="'translateX(20px) translateY(0px) translateZ(0px) rotateY(0deg)'">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> -->

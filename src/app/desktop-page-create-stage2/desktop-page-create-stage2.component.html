@@ -1,0 +1,69 @@
+<div class="content">
+	<div class="text margin">
+    {{ locationService.translate('Specify the value of the gift?', 'Указать стоимость подарка?') }}
+  </div>
+  <app-desktop-radio
+    class="margin"
+    [formControl]="firstControl"
+    [options]="[{ title: locationService.translate('yes', 'да'), value: 'yes' }, { title: locationService.translate('not', 'нет'), value: 'no' }, { title: locationService.translate('hint', 'намекнуть'), value: 'hint' }]"
+  ></app-desktop-radio>
+  <div class="expand" [class.expand_hidden]="firstControl.value === 'no'">
+    <div class="text margin">
+      {{ locationService.translate('Which currency?', 'В какой валюте?') }}
+    </div>
+    <app-desktop-select
+      class="margin input"
+      [withoutNumber]="true"
+      [formControl]="secondControl"
+      [options]="[{ title: locationService.translate('dollar', 'доллар'), value: 'dollar' }, { title: locationService.translate('euro', 'евро'), value: 'euro' }, { title: locationService.translate('ruble', 'рубль'), value: 'ruble' }, { title: locationService.translate('yen', 'йена'), value: 'yen' }, { title: locationService.translate('pound', 'фунт стерлингов'), value: 'pound' }]"
+    ></app-desktop-select>
+  </div>
+  <div class="expand" [class.expand_hidden]="firstControl.value === 'no' || secondControl.value === '' || isDefaultSign(secondControl.value)">
+    <div class="text margin">
+      {{ locationService.translate('Rate? 1 $ = ??? '+getValuePostfix(this.secondControl.value), 'Курс? 1 $ = ??? '+getValuePostfix(this.secondControl.value)) }}
+    </div>
+    <app-desktop-input-number
+      class="margin input"
+      [formControl]="thirdControl"
+      [postfix]="getValuePostfix(this.secondControl.value)"
+    ></app-desktop-input-number>
+  </div>
+  <div class="expand" [class.expand_hidden]="firstControl.value === 'no' || firstControl.value === 'hint' || secondControl.value === '' || (thirdControl.value === 0 && !isDefaultSign(secondControl.value))">
+    <div class="text margin">
+      {{ locationService.translate('What is the price?', 'Сколько стоит?') }}
+    </div>
+    <app-desktop-input-number
+      class="margin input"
+      [formControl]="fourthControl"
+      [postfix]="getValuePostfix(this.secondControl.value)"
+    ></app-desktop-input-number>
+  </div>
+  <div class="expand" [class.expand_hidden]="firstControl.value === 'no' || firstControl.value === 'yes' || secondControl.value === ''  || (thirdControl.value === 0 && !isDefaultSign(secondControl.value))">
+    <div class="text margin">
+      {{ locationService.translate('What is the price?', 'Сколько стоит?') }}
+    </div>
+    <app-desktop-slide-money
+      class="margin slide-money"
+      [formControl]="fifthControl"
+      [options]="currencyOption(secondControl.value, thirdControl.value)"
+      [sign]="getValuePostfix(this.secondControl.value)"
+    >
+    </app-desktop-slide-money>
+  </div>
+  <app-desktop-button
+    class="button-next-stage"
+    [text]="locationService.translate('next', 'следующий этап')"
+    background="#e91e63"
+    color="#ffffff"
+  ></app-desktop-button>
+</div>
+
+<div #moneyRef class="stage2-money">
+  <div
+    *ngFor="let coin of coins"
+    [class]="'stage2-coin stage2-coin_'+coin.type"
+    [style.margin-left]="coin.x+'px'"
+    [style.margin-top]="coin.y+'px'"
+    [style.animation-duration]="coin.speed+'s'"
+  >{{ coinContent(coin.type) }}</div>
+</div>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { BrowserModule } from '@angular/platform-browser'
 import { MatRippleModule } from '@angular/material/core'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { MatSliderModule } from '@angular/material/slider'
 
@@ -67,7 +67,14 @@ import { TouchPageCreateStage2Component } from './touch-page-create-stage2/touch
 import { TouchScreenStaticComponent } from './touch-screen-static/touch-screen-static.component'
 import { TouchScrollFragmentsComponentRefresh } from './touch-scroll-fragments-refresh/touch-scroll-fragments-refresh.component';
 import { TouchMoneyPackComponent } from './touch-money-pack/touch-money-pack.component';
-import { TouchSlideMoneyComponent } from './touch-slide-money/touch-slide-money.component'
+import { TouchSlideMoneyComponent } from './touch-slide-money/touch-slide-money.component';
+import { DesktopPageCreateStage2Component } from './desktop-page-create-stage2/desktop-page-create-stage2.component';
+import { DesktopRadioComponent } from './desktop-radio/desktop-radio.component';
+import { DesktopSelectComponent } from './desktop-select/desktop-select.component';
+import { DesktopInputNumberComponent } from './desktop-input-number/desktop-input-number.component';
+import { DesktopSlideMoneyComponent } from './desktop-slide-money/desktop-slide-money.component';
+import { TouchPageCreateStage3Component } from './touch-page-create-stage3/touch-page-create-stage3.component';
+import { BoxComponent } from './box/box.component'
 
 @NgModule({
   declarations: [
@@ -131,7 +138,14 @@ import { TouchSlideMoneyComponent } from './touch-slide-money/touch-slide-money.
     TouchScreenStaticComponent,
     TouchScrollFragmentsComponentRefresh,
     TouchMoneyPackComponent,
-    TouchSlideMoneyComponent
+    TouchSlideMoneyComponent,
+    DesktopPageCreateStage2Component,
+    DesktopRadioComponent,
+    DesktopSelectComponent,
+    DesktopInputNumberComponent,
+    DesktopSlideMoneyComponent,
+    TouchPageCreateStage3Component,
+    BoxComponent
   ],
   imports: [
     BrowserModule,
@@ -140,7 +154,8 @@ import { TouchSlideMoneyComponent } from './touch-slide-money/touch-slide-money.
     BrowserAnimationsModule,
     FormsModule,
     DragDropModule,
-    MatSliderModule
+    MatSliderModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

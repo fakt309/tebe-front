@@ -34,6 +34,9 @@
     > .button__text.button__text_empty {
       display: none;
     }
+    > .button__text.button__text_with-margin-left {
+      margin-left: 10px;
+    }
   }
   > .wrap:hover {
     opacity: 1;

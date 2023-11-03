@@ -1,0 +1,16 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+
+	.input {
+		padding: 10px;
+		font-size: 14px;
+		color: #333333;
+		font-family: "Comfortaa", cursive;
+		border: 1px solid #00000033;
+		border-radius: 15px;
+		outline: none;
+	}
+}

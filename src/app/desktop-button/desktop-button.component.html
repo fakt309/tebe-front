@@ -1,9 +1,40 @@
-<div *ngIf="!disabled" class="wrap" [style.background-color]="background" matRipple [matRippleColor]="colorRipple">
-  <div [class]="icon === '' ? 'button__icon button__icon_empty' : 'button__icon'" [style.backgroundImage]="'url('+icon+')'"></div>
-  <div [class]="text === '' ? 'button__text button__text_empty' : 'button__text'" [style.color]="color">{{ text }}</div>
+<div
+  *ngIf="!disabled"
+  class="wrap"
+  [style.background-color]="background"
+  matRipple [matRippleColor]="colorRipple"
+>
+  <div
+    class="button__icon"
+    [class.button__icon_empty]="icon === ''"
+    [style.backgroundImage]="'url('+icon+')'"
+  ></div>
+  <div
+    class="button__text"
+    [class.button__text_empty]="text === ''"
+    [class.button__text_with-margin-left]="icon === ''"
+    [style.color]="color"
+  >
+    {{ text }}
+  </div>
 </div>
 
-<div *ngIf="disabled" class="wrap disabled" [style.background-color]="background">
-  <div [class]="icon === '' ? 'button__icon button__icon_empty' : 'button__icon'" [style.backgroundImage]="'url('+icon+')'"></div>
-  <div [class]="text === '' ? 'button__text button__text_empty' : 'button__text'" [style.color]="color">{{ text }}</div>
+<div
+  *ngIf="disabled"
+  class="wrap disabled"
+  [style.background-color]="background"
+>
+  <div
+    class="button__icon"
+    [class.button__icon_empty]="icon === ''"
+    [style.backgroundImage]="'url('+icon+')'"
+  ></div>
+  <div
+    class="button__text"
+    [class.button__text_empty]="text === ''"
+    [class.button__text_with-margin-left]="icon === ''"
+    [style.color]="color"
+  >
+    {{ text }}
+  </div>
 </div>

@@ -1,0 +1,33 @@
+<div
+	class="option-active"
+	[class.option-active_hide]="!show"
+>
+	<input
+		class="input-active"
+		[class.input-active_hide]="!show"
+		type="text" [formControl]="control"
+		[attr.placeholder]="locationService.translate('choose', 'выбрать')"
+		(click)="show = true"
+		(input)="show = true"
+	/>
+	<div
+		class="icon icon_arrow"
+		[class.icon_hide]="!show"
+		(click)="show = !show"
+	></div>
+</div>
+
+<div
+	#listOptionsRef
+	class="list-options"
+	[class.list-options_hide]="!show"
+>
+	<div
+		*ngFor="let option of filteredOptions"
+		class="option"
+		[class.option_hide]="!show"
+		(click)="setOptions(option.value)"
+	>
+		{{ option.title }}
+	</div>
+</div>

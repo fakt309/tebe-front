@@ -1,0 +1,123 @@
+:host {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	.margin {
+		margin: 10px;
+	}
+
+	.content {
+		min-width: 500px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		border-radius: 15px;
+		background-color: #ffffff33;
+		backdrop-filter: blur(2px);
+	}
+
+	.button-next-stage {
+		margin: 10px;
+		align-self: flex-end;
+	}
+
+	.stage2-money {
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    top: 0px;
+	    left: 0px;
+	    overflow: hidden;
+	    z-index: -1;
+
+	    > .stage2-coin {
+		  position: absolute;
+		  width: 20px;
+		  height: 20px;
+		  border-radius: 100px;
+		  color: #ffffff;
+		  display: flex;
+		  flex-direction: column;
+		  align-items: center;
+		  justify-content: center;
+		  font-size: 12px;
+		  text-align: center;
+		  border: 2px dashed #ffffff;
+		  box-shadow: 2px 2px 5px #00000066;
+		  opacity: 0;
+		  background-color: #000000;
+		  animation-name: coin;
+		  animation-duration: 2s;
+		  animation-timing-function: linear;
+		  animation-iteration-count: 1;
+		}
+		> .stage2-coin_dollar {
+		  background-color: #4caf50;
+		}
+		> .stage2-coin_euro {
+		  background-color: #2196f3;
+		}
+		> .stage2-coin_ruble {
+		  background-color: #ff9800;
+		}
+		> .stage2-coin_yen {
+		  background-color: #e91e63;
+		}
+		> .stage2-coin_pound {
+		  background-color: #795548;
+		}
+	}
+
+	.slide-money {
+		margin: 10px;
+		margin-right: 50px;
+		width: 400px;
+	}
+
+	.input {
+		width: 200px;
+	}
+
+	.expand {
+		max-height: 300px;
+		overflow: hidden;
+		// transform: translateY(0%) scaleY(1);
+		transition: all ease 0.2s;
+	}
+
+	.expand_hidden {
+		max-height: 0px;
+		// transform: translateY(-50%) scaleY(0);
+	}
+
+	@keyframes coin {
+	    0% {
+	      transform: translateY(0px) scale(0.1);
+	      opacity: 0;
+	    }
+	    5% {
+	      transform: translateY(5px) scale(1);
+	      opacity: 1;
+	    }
+	    50% {
+	      transform: translateY(50px) scale(1);
+	      opacity: 1;
+	    }
+	    95% {
+	      transform: translateY(95px) scale(1);
+	      opacity: 1;
+	    }
+	    100% {
+	      transform: translateY(100px) scale(0.1);
+	      opacity: 0;
+	    }
+	}
+}
