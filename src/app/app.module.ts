@@ -74,7 +74,9 @@ import { DesktopSelectComponent } from './desktop-select/desktop-select.componen
 import { DesktopInputNumberComponent } from './desktop-input-number/desktop-input-number.component';
 import { DesktopSlideMoneyComponent } from './desktop-slide-money/desktop-slide-money.component';
 import { TouchPageCreateStage3Component } from './touch-page-create-stage3/touch-page-create-stage3.component';
-import { BoxComponent } from './box/box.component'
+import { BoxComponent } from './box/box.component';
+import { TouchContextDirective } from './directives/touch-context.directive';
+import { DesktopPageCreateStage3Component } from './desktop-page-create-stage3/desktop-page-create-stage3.component'
 
 @NgModule({
   declarations: [
@@ -145,7 +147,9 @@ import { BoxComponent } from './box/box.component'
     DesktopInputNumberComponent,
     DesktopSlideMoneyComponent,
     TouchPageCreateStage3Component,
-    BoxComponent
+    BoxComponent,
+    TouchContextDirective,
+    DesktopPageCreateStage3Component
   ],
   imports: [
     BrowserModule,

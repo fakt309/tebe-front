@@ -76,7 +76,8 @@
   'height': height+'px',
   'background-color': color,
   'transform': 'translateX('+(width/2)+'px) rotateY(90deg) rotateX('+(unbox ? -90 : 0)+'deg)'}">
-  <div class="wrap" [style.width]="height+'px'" [style.height]="width+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(90deg)'" [style.backgroundImage]="'url('+sides[4]+')'"></div>
+  <!-- [style.width]="height+'px'" [style.height]="width+'px'" -->
+  <div class="wrap" [style.width]="height+'px'" [style.height]="depth+'px'" [style.transform]="'translateZ(-1px) rotateX(180deg) rotateZ(90deg)'" [style.backgroundImage]="'url('+sides[4]+')'"></div>
   <div class="darkness" [style.backgroundColor]="'#00000011'"></div>
   <div class="side top" [style]="{
     'width': width+'px',
@@ -486,8 +487,8 @@
     [style.backgroundImage]="'url('+tape+')'">
     </div>
   </div>
-  <div class="tape bottom2"
-  [style.width]="(width+4*margin)+'px'"
+  <!-- <div class="tape bottom2"
+  [style.width]="(depth+4*margin)+'px'"
   [style.height]="widthTape+'px'"
   [style.transform]="'rotateZ(90deg)'"
   [style.backgroundImage]="'url('+tape+')'">
@@ -495,7 +496,7 @@
     [style.transformOrigin]="'left center'"
     [style.width]="(height+4*margin)+'px'"
     [style.height]="widthTape+'px'"
-    [style.transform]="'translateX('+((width/2+2*margin+height/2+2*margin))+'px) rotateY('+(tapebind1 ? '-90' : '0')+'deg)'"
+    [style.transform]="'translateX('+((width/2+2*margin+height/2+2*margin+10))+'px) rotateY('+(tapebind1 ? '-90' : '0')+'deg)'"
     [style.backgroundImage]="'url('+tape+')'">
       <div class="tape front"
       [style.transformOrigin]="'left center'"
@@ -509,7 +510,7 @@
     [style.transformOrigin]="'right center'"
     [style.width]="(height+4*margin)+'px'"
     [style.height]="widthTape+'px'"
-    [style.transform]="'translateX('+(-(width/2+2*margin+height/2+2*margin))+'px) rotateY('+(tapebind1 ? '90' : '0')+'deg)'"
+    [style.transform]="'translateX('+(-(width/2+2*margin+height/2+2*margin+10))+'px) rotateY('+(tapebind1 ? '90' : '0')+'deg)'"
     [style.backgroundImage]="'url('+tape+')'">
       <div class="tape front"
       [style.transformOrigin]="'right center'"
@@ -519,7 +520,7 @@
       [style.backgroundImage]="'url('+tape+')'">
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <!-- <div class="bow"

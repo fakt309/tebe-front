@@ -1,0 +1,264 @@
+:host {
+	$widthGiftMenu: min(500px, 40%);
+
+	.display {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		transition: all ease 0.2s;
+	}
+
+	.display_shifted {
+		width: calc(100% - $widthGiftMenu);
+	}
+
+	.gifts, .wraps {
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		width: $widthGiftMenu;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		background-color: #ffffff;
+		border: 1px solid #00000033;
+		transform: translateX(0%);
+		overflow-y: auto;
+		transition: all ease 0.2s;
+	}
+
+	.wraps {
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.gifts_hidden, .wraps_hidden {
+		transform: translateX(100%);
+	}
+
+	.gift-option::ng-deep {
+		user-select: none;
+
+		.icon {
+			border-radius: 15px;
+			border: 1px solid #00000000;
+			cursor: grab;
+			transition: border ease 0.2s;
+		}
+
+		.icon:hover {
+			border: 1px solid #00000033;
+		}
+
+	}
+
+	.drag-gift {
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		z-index: 999;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		transform: translateX(-50%) translateY(-50%);
+	}
+
+	.drag-gift__not-allowed {
+		width: 100%;
+		height: 100%;
+		background-color: #ff000033;
+		border-radius: 20px;
+	}
+
+	.drag-gift_animated {
+		transition: all ease 0.2s;
+	}
+
+	.gift {
+		cursor: grab;
+	}
+
+	.gift_hidden {
+		display: none;
+	}
+
+	.back-drag-gift {
+    position: absolute;
+    left: 0px;
+    height: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000aa;
+    z-index: 10;
+  }
+
+  .back-drag-gift__window {
+    position: absolute;
+    backdrop-filter: brightness(2);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    border: 1px solid #ffffff66;
+  }
+
+  .grid__row {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .grid__option {
+    flex: 1;
+    border-right: 1px solid #ffffff66;
+    border-bottom: 1px solid #ffffff66;
+  }
+
+  .grid__row:last-child .grid__option {
+    border-bottom: 1px solid #ffffff00;
+  }
+
+  .grid__option:last-child {
+    border-right: 1px solid #ffffff00;
+  }
+
+  .button-next-stage {
+  	display: flex;
+  	flex-direction: row;
+  	align-items: center;
+  	justify-content: center;
+  	position: fixed;
+  	right: calc($widthGiftMenu / 2);
+  	bottom: 50%;
+  	margin: 0px;
+  	transform: translateX(50%) translateY(50%);
+  	z-index: 10;
+  	transition: all ease 0.2s;
+  }
+
+  .button-next-stage__option:first-child {
+  	margin-right: 20px;
+  }
+
+	.button-next-stage_on-display {
+		right: calc(min(500px, 40%) / 2 + 50%);
+		bottom: 20px;
+		transform: translateX(50%);
+	}
+
+  .button-next-stage_disabled {
+  	position: fixed;
+  	right: 0px;
+  	left: auto;
+  	bottom: 0px;
+  	margin: 20px;
+  	transform: translateX(0%) translateY(0%);
+  	z-index: 10;
+  }
+
+  .button-next-stage_hidden {
+  	right: -50%;
+  	left: auto;
+  	bottom: 20px;
+  }
+
+  .list-images-option {
+		margin: 30px;
+		width: 150px;
+		height: 150px;
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		flex-shrink: 0;
+  }
+
+  .list-images-option__image {
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .list-images-option_mini {
+  	> .list-images-option__image {
+  		width: 30px;
+  		height: 30px;
+  	}
+  }
+
+  > .screen-image-upload {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    > .screen-image-upload__close {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      margin: 20px;
+      width: 40px;
+      height: 40px;
+      z-index: 15;
+      cursor: pointer;
+      border-radius: 100px;
+      background-image: url(../../assets/cross_white.svg);
+      background-position: center;
+      background-size: 70%;
+      background-repeat: no-repeat;
+    }
+    > .screen-image-upload__close_background {
+      background-color: #00000066;
+    }
+    > .screen-image-upload__menu {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px #00000033;
+      background-color: #fff;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      z-index: 15;
+      > * {
+        margin: 10px;
+        margin-left: 0px;
+      }
+      > *:first-child {
+        margin-left: 10px;
+      }
+      > .input-color-sign-greetingcard {
+        margin: 0px;
+        width: 0px;
+        height: 0px;
+        border: none;
+        outline: none;
+        transform: translateX(-90px);
+      }
+    }
+  }
+
+  .error {
+  	z-index: 20;
+  }
+
+}

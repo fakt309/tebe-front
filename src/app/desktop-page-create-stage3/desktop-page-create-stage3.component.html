@@ -1,0 +1,506 @@
+<app-desktop-error
+	class="error"
+	[text]="textError"
+></app-desktop-error>
+
+<div class="display" [class.display_shifted]="showGifts || showWrap || showTape">
+	<div class="wrap" [class.wrap_animated]="wrap.animated" [style.transform]="'translateX('+wrap.x+'px) translateY('+wrap.y+'px) scale('+wrap.scale+')'">
+		<app-box
+			#boxRef
+			class="box"
+			[packed]="box.packed"
+			[animate]="box.animate"
+			[wrapped]="box.wrapped"
+			[tapped]="box.tapped"
+			[w]="box.size.w"
+			[h]="box.size.h"
+			[d]="box.size.d"
+			[inside]="box.inside"
+			[package]="box.package"
+		  	[tape]="box.tape"
+			[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+(box.rotate.x+box.shiftRotate.x)+'deg) rotateY('+(box.rotate.y+box.shiftRotate.y)+'deg) rotateZ('+box.rotate.z+'deg) scale('+box.scale+')'"
+		>
+			<ng-container *ngFor="let idGift of inBox">
+				<ng-container *ngIf="getGiftById(idGift) as gift">
+					<app-greeting-card
+						*ngIf="gift.type === 'greetingcard'"
+						class="gift"
+						[class.gift_hidden]="hiddenGifts.get(gift.id)"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[front]="gift.front"
+						[back]="gift.back"
+						[text]="gift.text"
+						[color]="gift.color"
+						[sign]="gift.sign">
+					</app-greeting-card>
+					<app-game
+						*ngIf="gift.type === 'game'"
+						[hidden]="hiddenGifts.get(gift.id)"
+						class="gift"
+						[class.gift_hidden]="hiddenGifts.get(gift.id)"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[color]="gift.color"
+						[front]="gift.front"
+						[inside]="gift.inside"
+						[side]="gift.side"
+						[code]="gift.code">
+					</app-game>
+					<app-speaker
+						*ngIf="gift.type === 'speaker'"
+						class="gift"
+						[class.gift_hidden]="hiddenGifts.get(gift.id)"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(0deg) rotateZ(90deg)'"
+						[size]="getSizeGift(gift)"
+						[grill]="gift.grill"
+						[color]="gift.color"
+						[style.animationName]="'rotPlus180'">
+					</app-speaker>
+					<app-tablet
+						*ngIf="gift.type === 'tablet'"
+						class="gift"
+						[class.gift_hidden]="hiddenGifts.get(gift.id)"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[color]="gift.color">
+					</app-tablet>
+					<app-photo
+						*ngIf="gift.type === 'photo'"
+						class="gift"
+						[class.gift_hidden]="hiddenGifts.get(gift.id)"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[photo]="gift.photo"
+						[sign]="gift.sign">
+					</app-photo>
+				</ng-container>
+			</ng-container>
+		</app-box>
+	</div>
+</div>
+
+<div class="gifts" [class.gifts_hidden]="!showGifts">
+	<ng-container *ngFor="let gift of gifts">
+		<app-desktop-gift-list-option
+			*ngIf="!isGiftInBox(gift) && dragGift.id !== gift.id"
+			class="gift-option"
+			[scaleIcon]="0.6"
+			[gift]="gift"
+			[showButtons]="false"
+			[attr.giftid]="gift.id"
+		></app-desktop-gift-list-option>
+	</ng-container>
+</div>
+
+<div class="wraps" [class.wraps_hidden]="!showWrap">
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="showUploadImagePackage()">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/image.svg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/1.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/1.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/2.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/2.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/3.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/3.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/4.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/4.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/5.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/5.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/6.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/6.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/7.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/7.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/8.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/8.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/9.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/9.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/10.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/10.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/11.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/11.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/12.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/12.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/13.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/13.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/14.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/14.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/15.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/15.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/16.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/16.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/17.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/17.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/18.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/18.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/19.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/19.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option" matRipple matRippleColor="#00000022" (click)="setPackageBox('../../assets/box/package/20.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/package/20.jpg)"
+		></div>
+	</div>
+
+</div>
+
+<div class="wraps" [class.wraps_hidden]="!showTape">
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="showUploadImageTape()">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/image.svg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/1.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/1.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/2.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/2.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/3.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/3.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/4.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/4.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/5.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/5.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/6.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/6.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/7.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/7.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/8.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/8.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/9.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/9.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/10.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/10.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/11.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/11.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/12.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/12.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/13.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/13.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/14.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/14.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/15.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/15.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/16.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/16.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/17.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/17.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/18.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/18.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/19.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/19.jpg)"
+		></div>
+	</div>
+	<div class="list-images-option list-images-option_mini" matRipple matRippleColor="#00000022" (click)="setTapeBox('../../assets/box/tape/20.jpg')">
+		<div
+			class="list-images-option__image"
+			style="background-image: url(../../assets/box/tape/20.jpg)"
+		></div>
+	</div>
+
+</div>
+
+<div
+	class="button-next-stage button-next-stage_on-display"
+	[class.button-next-stage_hidden]="!showGifts"
+>
+	<app-desktop-button
+		class="button-next-stage__option"
+		[text]="locationService.translate('back to price', 'назад к цене')"
+		icon="/assets/arrow-left3.svg"
+		[color]="'#333333'"
+		[background]="'#ffffff'"
+		(click)="backToPrice()"
+	></app-desktop-button>
+	<app-desktop-button
+		class="button-next-stage__option"
+		[text]="locationService.translate('to pack', 'упаковать')"
+		icon="/assets/arrow-right3.svg"
+		[color]="'#333333'"
+		[background]="'#ffffff'"
+		[disabled]="inBox.length < gifts.length"
+		(click)="trySetStage2()"
+	></app-desktop-button>
+</div>
+
+<div
+	class="button-next-stage button-next-stage_on-display"
+	[class.button-next-stage_hidden]="!showWrap"
+>	
+	<app-desktop-button
+		class="button-next-stage__option"
+		[text]="locationService.translate('back to gifts', 'назад к подаркам')"
+		icon="/assets/arrow-left3.svg"
+		[color]="'#333333'"
+		[background]="'#ffffff'"
+		(click)="setStage1From2()"
+	></app-desktop-button>
+	<app-desktop-button
+		class="button-next-stage__option"
+		[text]="locationService.translate('tie a gift', 'завязать лентой')"
+		icon="/assets/arrow-right3.svg"
+		[color]="'#333333'"
+		[background]="'#ffffff'"
+		(click)="setStage3()"
+	></app-desktop-button>
+</div>
+
+
+<div
+	class="button-next-stage button-next-stage_on-display"
+	[class.button-next-stage_hidden]="!showTape"
+>	
+	<app-desktop-button
+		class="button-next-stage__option"
+		[text]="locationService.translate('back to package', 'назад к упаковки')"
+		icon="/assets/arrow-left3.svg"
+		[color]="'#333333'"
+		[background]="'#ffffff'"
+		(click)="setStage2From3()"
+	></app-desktop-button>
+	<app-desktop-button
+		class="button-next-stage__option"
+		[text]="locationService.translate('complete', 'завершить')"
+		icon="/assets/checkmark.svg"
+		[color]="'#333333'"
+		[background]="'#ffffff'"
+		(click)="completeStage()"
+	></app-desktop-button>
+</div>
+
+<div
+	*ngIf="dragGift.img"
+	class="drag-gift"
+	[class.drag-gift_animated]="dragGift.animated"
+	[style.background-image]="'url('+dragGift.img+')'"
+	[style.left.px]="dragGift.position.x"
+	[style.top.px]="dragGift.position.y"
+	[style.width.px]="dragGift.size.w"
+	[style.height.px]="dragGift.size.h"
+>
+	<div *ngIf="!dragGift.allowed" class="drag-gift__not-allowed"></div>
+</div>
+
+<ng-container *ngIf="cellBoxDragging(0, 0)?.rectAllowed as rect">
+	<div *ngIf="dragGift.img" class="back-drag-gift">
+		<div
+			class="back-drag-gift__window"
+			[style.left.px]="rect.x"
+			[style.top.px]="rect.y"
+			[style.width.px]="rect.w"
+			[style.height.px]="rect.h"
+		>
+			<div *ngFor="let item of [].constructor(grid.h)" class="grid__row">
+				<div *ngFor="let item of [].constructor(grid.w)" class="grid__option"></div>
+			</div>
+		</div>
+	</div>
+</ng-container>
+
+<div *ngIf="imageUpload.visible" class="screen-image-upload" @verticalShow>
+  <app-desktop-trim
+    [img]="imageUpload.img"
+    [ratio]="imageUpload.ratio"
+    [mode]="imageUpload.mode"
+    [sublimesave]="imageUpload.sublimesave"
+    (save)="saveUploadImage($event)"
+  ></app-desktop-trim>
+  <div class="screen-image-upload__close" [class.screen-image-upload__close_background]="imageUpload.mode === 'usual'" (click)="imageUpload.visible = false"></div>
+  <div class="screen-image-upload__menu">
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'usual'"
+      [text]="locationService.translate('trim', 'обрезать')"
+      [icon]="'../../assets/scissors.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="imageUpload.mode = 'trim'"
+    ></app-desktop-button>
+    <!-- <app-desktop-button
+      *ngIf="!noListUploadImage() && imageUpload.mode === 'usual'"
+      [text]="locationService.translate('change', 'изменить')"
+      [icon]="'../../assets/image.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="imageUpload.showList = true"
+    ></app-desktop-button> -->
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'usual'"
+      [text]="locationService.translate('upload', 'загрузить')"
+      [icon]="'../../assets/upload-mini.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="inputUploadImage.click()"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'trim'"
+      [text]="locationService.translate('save', 'сохранить')"
+      [icon]="'../../assets/checkmark.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="imageUpload.sublimesave = !imageUpload.sublimesave"
+    ></app-desktop-button>
+    <app-desktop-button
+      *ngIf="imageUpload.mode === 'trim'"
+      [text]="locationService.translate('cancel', 'отменить')"
+      [icon]="'../../assets/cross.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      (click)="cancelTrim()"
+    ></app-desktop-button>
+  </div>
+</div>
+
+<input #inputUploadImage style="display:none" type="file" accept="image/png, image/jpeg" (input)="tryuploadimage($event)" />

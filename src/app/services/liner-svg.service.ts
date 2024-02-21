@@ -25,6 +25,8 @@ export class LinerSvgService {
       path.setAttribute('stroke', color)
       path.setAttribute('stroke-width', `${0.01*w}`)
       path.setAttribute('fill', 'transparent')
+      path.setAttribute('stroke-linecap', 'round')
+      path.setAttribute('stroke-linejoin', 'round')
       svg.appendChild(path)
     }
 

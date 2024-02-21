@@ -16,6 +16,9 @@ export class DesktopGiftListOptionComponent implements OnInit, OnChanges {
   @Input() sublimeStartRotate: boolean = false
   @Input() sublimeStopRotate: boolean = false
 
+  @Input() showButtons: boolean = true
+  @Input() scaleIcon: number = 1
+
   @Output() startMove: EventEmitter<any> = new EventEmitter<any>()
   @Output() edit: EventEmitter<any> = new EventEmitter<any>()
   @Output() delete: EventEmitter<any> = new EventEmitter<any>()

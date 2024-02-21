@@ -288,6 +288,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     gift.type = t
 
     this.gifts.push(gift)
+
+    this.saveUpdate()
   }
 
   setdisableds(t: Touch): void {
@@ -628,6 +630,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     let g = this.gifts[event.previousIndex]
     this.gifts.splice(event.previousIndex, 1)
     this.gifts.splice(event.currentIndex, 0, g)
+
+    this.saveUpdate()
   }
 
   closesignturegreeting(): void {
@@ -660,6 +664,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     } else if (this.activeGift.type === 'photo') {
       this.signgreetingcolor = e.target.value
     }
+
+    this.saveUpdate()
   }
 
   menuwaschoosen(val: string): void {
@@ -1111,6 +1117,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
   saveaudio(chunks: Array<any>): void {
     this.activeGift.value = chunks
     if (this.stats.screenviewgift === 'open') this.setmenuviewgift()
+
+    this.saveUpdate()
   }
 
   setmenuviewgift(): void {
@@ -1291,6 +1299,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     } else if (this.renamewhat === 'gamecode') {
       this.activeGift.code = value
     }
+
+    this.saveUpdate()
   }
 
   closetrim(): void {
@@ -1315,6 +1325,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     }
 
     this.refreshsnapshots = !this.refreshsnapshots
+
+    this.saveUpdate()
   }
 
   async uploadImageTrim(img: string): Promise<void> {
@@ -1382,6 +1394,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
   savegreetingsign(points: Array<any>): void {
     this.activeGift.sign = [...points]
     this.sublimerefreshviewgift = !this.sublimerefreshviewgift
+
+    this.saveUpdate()
   }
 
   setPlatformGame(platform: string): void {
@@ -1411,11 +1425,15 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     }
     this.refreshsnapshots = !this.refreshsnapshots
     this.setmenuviewgift()
+
+    this.saveUpdate()
   }
 
   setColorTablet(color: string) {
     this.activeGift.color = color
     this.closescreencolorplate()
+
+    this.saveUpdate()
   }
 
   screenplatformgamewasclose(): void {
@@ -1438,6 +1456,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
 
   saverecordvideo(video: any): void {
     this.activeGift.value = URL.createObjectURL(video[0])
+
+    this.saveUpdate()
   }
 
   closewatchvideo(): void {
@@ -1456,6 +1476,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
   savephoto(photo: string): void {
     this.activeGift.photo = photo
     this.refreshsnapshots = !this.refreshsnapshots
+
+    this.saveUpdate()
   }
 
   closesignphoto(): void {
@@ -1479,6 +1501,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
         break
       }
     }
+
+    this.saveUpdate()
   }
 
   resultConfirm(res: any) {
@@ -1491,7 +1515,16 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     this.confirm.type = ''
   }
 
+  saveUpdate(): void {
+    console.log(this.gifts)
+
+    window.localStorage.setItem('gifts', JSON.stringify(this.gifts))
+  }
+
   ngOnInit(): void {
+    
+    this.gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
+
     this.subs.push(
       this.touchservice.stream$.subscribe((e: Touch) => { this.processtouch(e) })
     )

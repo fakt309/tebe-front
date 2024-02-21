@@ -15,7 +15,7 @@ export class TouchDrawSvgComponent implements OnInit {
   @Input() touch: any = null
   @Input() points: Array<any> = []
   @Input() tool: 'pen' | 'eraser' = 'pen'
-  @Input() color: string = '#000'
+  @Input() color: string = '#000000'
   @Input() ban: any = []
   @Input() sublimereset: boolean = false
   @Input() sublimesave: boolean = false
@@ -24,6 +24,8 @@ export class TouchDrawSvgComponent implements OnInit {
   private cachedPoints: Array<any> = []
 
   public inn: any = ''
+
+  private stopDrawing: boolean = false
 
   constructor(
     private linerSvgService: LinerSvgService,
@@ -84,38 +86,52 @@ export class TouchDrawSvgComponent implements OnInit {
 
     const bounding = this.host.nativeElement.getBoundingClientRect()
 
-    if (this.touch.action === 'start') {
-      const x = (this.touch.x-bounding.x)/this.width
-      const y = (this.touch.y-bounding.y)/this.height
+    if (this.touch.action === 'start' && !this.stopDrawing) {
+      // const x = (this.touch.x-bounding.x)/this.width
+      // const y = (this.touch.y-bounding.y)/this.height
+      const x = (this.touch.x-bounding.x)/bounding.width
+      const y = (this.touch.y-bounding.y)/bounding.height
 
       if (this.tool === 'pen') {
         this.points.push([this.color])
         if (this.checkBan(x, y)) {
           this.points[this.points.length-1].push([x+3/this.width, y])
           this.points[this.points.length-1].push([x, y])
+        } else {
+          this.stopDrawing = true
         }
       } else if (this.tool === 'eraser') {
         this.doErase(x, y)
       }
       this.setImage()
     }
-    if (this.touch.action === 'move') {
-      const x = (this.touch.x-bounding.x)/this.width
-      const y = (this.touch.y-bounding.y)/this.height
+    if (this.touch.action === 'move' && !this.stopDrawing) {
+      // const x = (this.touch.x-bounding.x)/this.width
+      // const y = (this.touch.y-bounding.y)/this.height
+      const x = (this.touch.x-bounding.x)/bounding.width
+      const y = (this.touch.y-bounding.y)/bounding.height
+      
       if (this.tool === 'pen') {
-        if (this.checkBan(x, y)) this.points[this.points.length-1].push([x, y])
+        if (this.checkBan(x, y)) {
+          this.points[this.points.length-1].push([x, y])
+        } else {
+          this.stopDrawing = true
+        }
       } else if (this.tool === 'eraser') {
         this.doErase(x, y)
       }
       this.setImage()
     }
     if (this.touch.action === 'end') {
+      this.stopDrawing = false
+      this.points = this.points.filter((p) => p.length > 1)
       let svgs = this.host.nativeElement.querySelectorAll('svg')
       for (let i = 0; i < svgs.length-1; i++) { svgs[i].remove() }
     }
   }
 
   setImage(): void {
+    this.points = this.points.filter((p) => p.length > 1)
     let svg = this.linerSvgService.getSvg(this.width, this.height, this.points)
     svg.style.width = `${this.width}px`
     svg.style.height = `${this.height}px`

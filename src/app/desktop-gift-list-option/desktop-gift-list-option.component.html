@@ -1,9 +1,13 @@
-<div class="icon">
+<div
+  class="icon"
+  [style.width.px]="200*scaleIcon"
+  [style.height.px]="200*scaleIcon"
+>
   <app-greeting-card
     *ngIf="gift.type === 'greetingcard'"
     [class.gift-animated]="animateGifts"
     [style.transform]="'rotateY('+rotateGifts+'deg)'"
-    [size]="190*(297/420)"
+    [size]="190*(297/420)*scaleIcon"
     [front]="gift.front"
     [back]="gift.back"
     [text]="gift.text"
@@ -14,7 +18,7 @@
     *ngIf="gift.type === 'game'"
     [class.gift-animated]="animateGifts"
     [style.transform]="'rotateY('+rotateGifts+'deg)'"
-    [size]="190*(135/190)"
+    [size]="190*(135/190)*scaleIcon"
     [color]="gift.color"
     [front]="gift.front"
     [inside]="gift.inside"
@@ -25,7 +29,7 @@
     *ngIf="gift.type === 'speaker'"
     [class.gift-animated]="animateGifts"
     [style.transform]="'rotateY('+(rotateGifts+180)+'deg)'"
-    [size]="170"
+    [size]="170*scaleIcon"
     [grill]="gift.grill"
     [color]="gift.color"
     [style.animationName]="'rotPlus180'"
@@ -36,7 +40,7 @@
     [class.gift-animated]="animateGifts"
     [style.transform]="'rotateY('+rotateGifts+'deg)'"
     [color]="gift.color"
-    [size]="190">
+    [size]="190*scaleIcon">
   </app-tablet>
   <app-photo
     *ngIf="gift.type === 'photo'"
@@ -44,11 +48,11 @@
     [style.transform]="'rotateY('+rotateGifts+'deg)'"
     [photo]="gift.photo"
     [sign]="gift.sign"
-    [size]="190*(48/64)">
+    [size]="190*(48/64)*scaleIcon">
   </app-photo>
 </div>
 <div class="title">{{ gift.title }}</div>
-<div class="buttons">
+<div *ngIf="showButtons" class="buttons">
   <div *ngIf="showMove" class="move-button" [style.filter]="buttonsDisabled ? 'blur(2px)' : ''" [style.cursor]="buttonsDisabled ? 'default' : 'pointer'" (mousedown)="!buttonsDisabled ? pushMove($event) : null"></div>
   <app-desktop-button
     class="button-edit"

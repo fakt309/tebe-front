@@ -222,6 +222,7 @@ export class BoxComponent implements OnInit {
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes['animate'] && changes['animate'].previousValue != changes['animate'].currentValue) {
       this.animateClass = this.animate
     }

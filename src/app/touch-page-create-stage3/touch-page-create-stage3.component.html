@@ -1,22 +1,307 @@
-<app-box
-	class="box"
-	[packed]="box.packed"
-	[animate]="box.animate"
-	[wrapped]="box.wrapped"
-	[tapped]="box.tapped"
-	[w]="box.size.w"
-	[h]="box.size.h"
-	[d]="box.size.d"
-	[package]="box.package"
-  	[tape]="box.tape"
-	[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+box.rotate.x+'deg) rotateY('+box.rotate.y+'deg) rotateZ('+box.rotate.z+'deg)'"
-></app-box>
+<app-touch-error [value]="valerror"></app-touch-error>
 
-<app-touch-draw-svg
-	class="draw"
-	[touch]="touches.draw"
-	[width]="draw.size.w"
-	[height]="draw.size.h"
-	[ban]="draw.ban"
-	[style.transform]="'translateX('+draw.coord.x+'px) translateY('+draw.coord.y+'px)'"
-></app-touch-draw-svg>
+<app-touch-menu [touch]="touches.menu" [options]="menu" [sublimeshow]="menusublimeshow" (action)="actionmenu($event)" (choose)="menuwaschoosen($event)" ></app-touch-menu>
+
+<div class="wrap" [class.wrap_animated]="wrap.animated" [style.transform]="'translateX('+wrap.x+'px) translateY('+wrap.y+'px) scale('+wrap.scale+')'">
+	<app-box
+		class="box"
+		[packed]="box.packed"
+		[animate]="box.animate"
+		[wrapped]="box.wrapped"
+		[tapped]="box.tapped"
+		[w]="box.size.w"
+		[h]="box.size.h"
+		[d]="box.size.d"
+		[inside]="box.inside"
+		[package]="box.package"
+  	[tape]="box.tape"
+		[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+(box.rotate.x+box.shiftRotate.x)+'deg) rotateY('+(box.rotate.y+box.shiftRotate.y)+'deg) rotateZ('+box.rotate.z+'deg) scale('+box.scale+')'"
+	>
+		<ng-container *ngFor="let idGift of inBox">
+			<ng-container *ngIf="getGiftById(idGift) as gift">
+				<app-greeting-card
+					*ngIf="gift.type === 'greetingcard'"
+					class="gift"
+					[class.gift_hidden]="hiddenGifts.get(gift.id)"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[front]="gift.front"
+					[back]="gift.back"
+					[text]="gift.text"
+					[color]="gift.color"
+					[sign]="gift.sign">
+				</app-greeting-card>
+				<app-game
+					*ngIf="gift.type === 'game'"
+					[hidden]="hiddenGifts.get(gift.id)"
+					class="gift"
+					[class.gift_hidden]="hiddenGifts.get(gift.id)"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[color]="gift.color"
+					[front]="gift.front"
+					[inside]="gift.inside"
+					[side]="gift.side"
+					[code]="gift.code">
+				</app-game>
+				<app-speaker
+					*ngIf="gift.type === 'speaker'"
+					class="gift"
+					[class.gift_hidden]="hiddenGifts.get(gift.id)"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(0deg) rotateZ(90deg)'"
+					[size]="getSizeGift(gift)"
+					[grill]="gift.grill"
+					[color]="gift.color"
+					[style.animationName]="'rotPlus180'">
+				</app-speaker>
+				<app-tablet
+					*ngIf="gift.type === 'tablet'"
+					class="gift"
+					[class.gift_hidden]="hiddenGifts.get(gift.id)"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[color]="gift.color">
+				</app-tablet>
+				<app-photo
+					*ngIf="gift.type === 'photo'"
+					class="gift"
+					[class.gift_hidden]="hiddenGifts.get(gift.id)"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[photo]="gift.photo"
+					[sign]="gift.sign">
+				</app-photo>
+			</ng-container>
+		</ng-container>
+	</app-box>
+
+	<div
+		*ngIf="stage === 1"
+		appTouchContext
+		[contextOptions]="contextOptions"
+		(contextOpen)="onOpenContext()"
+		(contextClose)="onCloseContext($event)"
+		class="wrap-draw"
+	>
+		<input #colorDrawRef type="color" style="display: none;" [formControl]="colorDrawControl">
+		<app-touch-draw-svg
+			class="draw"
+			[touch]="touches.draw"
+			[width]="draw.size.w"
+			[height]="draw.size.h"
+			[tool]="toolDraw"
+			[color]="colorDrawControl.value"
+			[ban]="draw.ban"
+			[style.transform]="'translateX('+draw.coord.x+'px) translateY('+draw.coord.y+'px)'"
+			[sublimesave]="sublimeSaveDrawInside"
+			(save)="saveDrawInside($event)"
+		></app-touch-draw-svg>
+	</div>
+</div>
+
+<div class="waiting" [class.waiting_hidden]="transition === false">{{ locationService.translate('wait', 'подождите') }}</div>
+
+<div *ngIf="transition === false && stage === 1" class="top-menu">
+	<div class="tool">
+		<div class="tool__icon" [style.background-image]="'url('+getIconTool()+')'"></div>
+		<div class="tool__text">{{ getNameTool() }}</div>
+	</div>
+	<div class="menu">
+		<div class="menu__icon"></div>
+		<div class="menu__text">{{ locationService.translate('hold', 'удерживайте') }}</div>
+	</div>
+</div>
+
+<!-- <div class="hint" [class.hint_center]="stage <= 1" [class.hint_hidden]="stage > 1">
+	<div class="hint__text">{{ locationService.translate('put the gifts in the box', 'осталось положить подарки в коробку') }}</div>
+</div> -->
+
+
+<div class="top-menu" [class.top-menu_hidden]="transition === true || stage !== 2">
+	<div class="tool">
+		<div class="tool__icon"></div>
+		<div class="tool__text"></div>
+	</div>
+	<div class="menu">
+		<div class="menu__icon"></div>
+		<div class="menu__text">{{ locationService.translate('tap', 'нажать') }}</div>
+	</div>
+</div>
+
+<div class="hint" [class.hint_hidden]="stage !== 0">
+	<div class="hint__text">{{ locationService.translate('click to continue', 'нажмите, чтобы продолжить') }}</div>
+</div>
+
+<div class="hint" [class.hint_center]="stage === 0" [class.hint_hidden]="(stage !== 2 && stage !== 0) || stats.screenadd === 'open' || inBox.length === gifts.length || dragGift.img">
+	<div class="hint__text">{{ locationService.translate('put all the gifts in a box', 'положите все подарки в коробку') }}</div>
+</div>
+
+<div class="hint" [class.hint_hidden]="stage !== 2 || stats.screenadd === 'close' || inBox.length === gifts.length">
+	<div class="hint__text">{{ locationService.translate('press and hold on the gift', 'нажмите на подарок и удерживайте') }}</div>
+</div>
+
+<div class="hint" [class.hint_hidden]="stage !== 2 || stats.screenadd === 'open' || inBox.length < gifts.length || dragGift.img">
+	<div class="hint__text">{{ locationService.translate('go to the next step in the menu', 'переходите на следующий этап в меню') }}</div>
+</div>
+
+<div class="top-menu" [class.top-menu_hidden]="transition === true || stage !== 3">
+	<div class="tool">
+		<div class="tool__icon" [style.background-image]="'url(/assets/menu.svg)'"></div>
+		<div class="tool__text">{{ locationService.translate('hold', 'удерживать') }}</div>
+	</div>
+	<div class="tool">
+		<div class="tool__icon tool__icon_image" [style.background-image]="'url(/assets/image.svg)'"></div>
+		<div class="tool__text">{{ locationService.translate('tap', 'нажать') }}</div>
+	</div>
+</div>
+
+<div class="hint" [class.hint_hidden]="stage !== 3 || stats.screentrim === 'open' || stats.screenlisttrim === 'open' || stats.chooseNext === 'open'">
+	<div class="hint__text">{{ locationService.translate('select packaging', 'выберите упаковку') }}</div>
+</div>
+
+<div class="top-menu" [class.top-menu_hidden]="transition === true || stage !== 4">
+	<div class="tool">
+		<div class="tool__icon" [style.background-image]="'url(/assets/menu.svg)'"></div>
+		<div class="tool__text">{{ locationService.translate('hold', 'удерживать') }}</div>
+	</div>
+	<div class="tool">
+		<div class="tool__icon tool__icon_image" [style.background-image]="'url(/assets/image.svg)'"></div>
+		<div class="tool__text">{{ locationService.translate('tap', 'нажать') }}</div>
+	</div>
+</div>
+
+<div class="hint" [class.hint_hidden]="stage !== 4 || stats.screentrim === 'open' || stats.screenlisttrim === 'open' || stats.chooseNext === 'open'">
+	<div class="hint__text">{{ locationService.translate('select tape', 'выберите ленту') }}</div>
+</div>
+
+<div *ngIf="showLoupeHint" class="loupe"> 
+	<div class="loupe__bar">
+		<div class="loupe__progress" [style.height.%]="(wrap.scale/3)*100"></div>
+	</div>
+	<div class="loupe__right">
+		<div class="loupe__percentage">{{ math.round(wrap.scale*100) }} %</div>
+	</div>
+</div>
+
+<app-touch-screen [touch]="touches.screenadd" [show]="stats.screenadd == 'open' ? true : false" [doscrolltocenter]="doscrolltocenterAddGift" [refreshable]="true" (close)="onCloseScreenScreenAdd()">
+	<ng-container *ngFor="let gift of gifts">
+		<app-touch-giftslist-option *ngIf="!isGiftInBox(gift)" class="giftlist-option" [gift]="gift" [refresh]="false" [attr.giftid]="gift.id">
+	    	<div class="placeholder-list-gift" *cdkDragPlaceholder></div>
+			{{ gift.title | textMore:20 }}
+		</app-touch-giftslist-option>
+	</ng-container>
+	<div *ngIf="inBox.length === gifts.length" matRipple matRippleColor="#00000011" class="button-forward">
+		<div class="button-forward__icon"></div>
+		<div class="button-forward__text">{{ locationService.translate('next stage', 'далее') }}</div>
+	</div>
+	<div matRipple matRippleColor="#00000011" class="button-back">
+		<div class="button-back__icon"></div>
+		<div class="button-back__text">{{ locationService.translate('back to price', 'назад к цене') }}</div>
+	</div>
+</app-touch-screen>
+
+<div
+	*ngIf="dragGift.img"
+	class="drag-gift"
+	[class.drag-gift_animated]="dragGift.animated"
+	[style.background-image]="'url('+dragGift.img+')'"
+	[style.left.px]="dragGift.position.x"
+	[style.top.px]="dragGift.position.y"
+	[style.width.px]="dragGift.size.w"
+	[style.height.px]="dragGift.size.h"
+>
+	<div *ngIf="!dragGift.allowed" class="drag-gift__not-allowed"></div>
+</div>
+
+<ng-container *ngIf="cellBoxDragging(0, 0).rectAllowed as rect">
+	<div *ngIf="dragGift.img" class="back-drag-gift">
+		<div
+			class="back-drag-gift__window"
+			[style.left.px]="rect.x"
+			[style.top.px]="rect.y"
+			[style.width.px]="rect.w"
+			[style.height.px]="rect.h"
+		>
+			<div *ngFor="let item of [].constructor(grid.h)" class="grid__row">
+				<div *ngFor="let item of [].constructor(grid.w)" class="grid__option"></div>
+			</div>
+		</div>
+	</div>
+</ng-container>
+
+<app-touch-screen [touch]="touches.screentrim" [show]="stats.screentrim === 'open'" [scrollable]="false" [backable]="modetrim === 'usual' && stats.menu === 'close'" (close)="closescreentrim()">
+  <app-touch-trim [touch]="touches.screentrim" [ratio]="ratiotrim" [img]="imgtrim" [mode]="modetrim" [sublimesave]="sublimesavetrim" (closetrim)="closetrim()" (save)="savetrim($event)" ></app-touch-trim>
+</app-touch-screen>
+
+<input style="display:none;" type="file" id="inputuploadtrim" accept="image/png, image/jpeg, image/webp, image/x-icon, image/gif" (change)="tryuploadimage($event)">
+<app-touch-screen [touch]="touches.screenlisttrim" [show]="stats.screenlisttrim === 'open'" [scrollable]="true" [backable]="true" (close)="closescreentrimlist()">
+  <div *ngIf="listtrim === 'wrapbox'" class="listimages">
+    <app-touch-option-trimlist [value]="'../../assets/upload.svg'" (click)="inputUploadImageTrim()"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/1.jpg'" (click)="setImageTrim('../../assets/box/package/1.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/2.jpg'" (click)="setImageTrim('../../assets/box/package/2.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/3.jpg'" (click)="setImageTrim('../../assets/box/package/3.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/4.jpg'" (click)="setImageTrim('../../assets/box/package/4.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/5.jpg'" (click)="setImageTrim('../../assets/box/package/5.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/6.jpg'" (click)="setImageTrim('../../assets/box/package/6.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/7.jpg'" (click)="setImageTrim('../../assets/box/package/7.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/8.jpg'" (click)="setImageTrim('../../assets/box/package/8.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/9.jpg'" (click)="setImageTrim('../../assets/box/package/9.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/10.jpg'" (click)="setImageTrim('../../assets/box/package/10.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/11.jpg'" (click)="setImageTrim('../../assets/box/package/11.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/12.jpg'" (click)="setImageTrim('../../assets/box/package/12.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/13.jpg'" (click)="setImageTrim('../../assets/box/package/13.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/14.jpg'" (click)="setImageTrim('../../assets/box/package/14.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/15.jpg'" (click)="setImageTrim('../../assets/box/package/15.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/16.jpg'" (click)="setImageTrim('../../assets/box/package/16.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/17.jpg'" (click)="setImageTrim('../../assets/box/package/17.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/18.jpg'" (click)="setImageTrim('../../assets/box/package/18.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/19.jpg'" (click)="setImageTrim('../../assets/box/package/19.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/package/20.jpg'" (click)="setImageTrim('../../assets/box/package/20.jpg')"></app-touch-option-trimlist>
+  </div>
+  <div *ngIf="listtrim === 'tapebox'" class="listimages">
+    <app-touch-option-trimlist [value]="'../../assets/upload.svg'" (click)="inputUploadImageTrim()"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/1.jpg'" (click)="setImageTrim('../../assets/box/tape/1.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/2.jpg'" (click)="setImageTrim('../../assets/box/tape/2.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/3.jpg'" (click)="setImageTrim('../../assets/box/tape/3.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/4.jpg'" (click)="setImageTrim('../../assets/box/tape/4.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/5.jpg'" (click)="setImageTrim('../../assets/box/tape/5.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/6.jpg'" (click)="setImageTrim('../../assets/box/tape/6.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/7.jpg'" (click)="setImageTrim('../../assets/box/tape/7.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/8.jpg'" (click)="setImageTrim('../../assets/box/tape/8.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/9.jpg'" (click)="setImageTrim('../../assets/box/tape/9.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/10.jpg'" (click)="setImageTrim('../../assets/box/tape/10.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/11.jpg'" (click)="setImageTrim('../../assets/box/tape/11.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/12.jpg'" (click)="setImageTrim('../../assets/box/tape/12.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/13.jpg'" (click)="setImageTrim('../../assets/box/tape/13.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/14.jpg'" (click)="setImageTrim('../../assets/box/tape/14.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/15.jpg'" (click)="setImageTrim('../../assets/box/tape/15.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/16.jpg'" (click)="setImageTrim('../../assets/box/tape/16.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/17.jpg'" (click)="setImageTrim('../../assets/box/tape/17.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/18.jpg'" (click)="setImageTrim('../../assets/box/tape/18.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/19.jpg'" (click)="setImageTrim('../../assets/box/tape/19.jpg')"></app-touch-option-trimlist>
+    <app-touch-option-trimlist [value]="'../../assets/box/tape/20.jpg'" (click)="setImageTrim('../../assets/box/tape/20.jpg')"></app-touch-option-trimlist>
+  </div>
+</app-touch-screen>
+
+<app-touch-screen [touch]="touches.chooseNext" [show]="stats.chooseNext === 'open'" [doscrolltocenter]="doscrolltocenterNextChoose" [scrollable]="true" [backable]="true" (close)="closeScreenChooseNext()">
+	<ng-container *ngIf="stage === 3">
+		<div matRipple matRippleColor="#00000011" class="button-forward">
+			<div class="button-forward__icon"></div>
+			<div class="button-forward__text">{{ locationService.translate('next stage', 'далее') }}</div>
+		</div>
+		<div matRipple matRippleColor="#00000011" class="button-back">
+			<div class="button-back__icon"></div>
+			<div class="button-back__text">{{ locationService.translate('back to gifts', 'назад к подаркам') }}</div>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="stage === 4">
+		<div matRipple matRippleColor="#00000011" class="button-forward">
+			<div class="button-forward__icon button-forward__icon_complete"></div>
+			<div class="button-forward__text">{{ locationService.translate('complete', 'завершить') }}</div>
+		</div>
+		<div matRipple matRippleColor="#00000011" class="button-back">
+			<div class="button-back__icon"></div>
+			<div class="button-back__text">{{ locationService.translate('back to packaging', 'назад к упаковке') }}</div>
+		</div>
+	</ng-container>
+</app-touch-screen>
