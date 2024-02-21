@@ -806,6 +806,8 @@ export class DesktopPageCreateStage3Component implements OnInit {
 
     this.setStage1()
 
+    window.localStorage.setItem('gifts', JSON.stringify([{"id":1,"title":"Игра","color":"#003791","front":"../../assets/game/example.jpg","inside":"../../assets/game/game.png","side":"../../assets/game/gameleft.png","code":"WERB-NBHP-DXCV-ZZKL-UIFM","platform":"ps","open":false,"type":"game"},{"id":3,"title":"Открытка","front":"../../assets/greetingcard/front/21.png","back":"../../assets/greetingcard/back/5.jpg","text":"Желаю счастья, радости, любви,\nЕще мечты заветной исполненья,\nЗдоровья крепкого, удач всегда во всем\nИ добрых слов не только в день рожденья!","sign":[],"color":"#ffffff","type":"greetingcard"},{"id":2,"title":"Аудиозапись","grill":"../../assets/speaker/grill/0.png","color":"#ff5722","value":[],"type":"speaker"}]))
+
     this.gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
 
     this.setBoxSizeAndGrid()
