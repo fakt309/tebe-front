@@ -5,8 +5,10 @@ import { MatRippleModule } from '@angular/material/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { MatSliderModule } from '@angular/material/slider'
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component'
+// import { ServiceWorkerModule } from '@angular/service-worker'
 import { TouchPageCreateStage1Component } from './touch-page-create-stage1/touch-page-create-stage1.component'
 import { TouchScrollComponent } from './touch-scroll/touch-scroll.component'
 import { TouchGiftslistOptionComponent } from './touch-giftslist-option/touch-giftslist-option.component'
@@ -76,7 +78,20 @@ import { DesktopSlideMoneyComponent } from './desktop-slide-money/desktop-slide-
 import { TouchPageCreateStage3Component } from './touch-page-create-stage3/touch-page-create-stage3.component';
 import { BoxComponent } from './box/box.component';
 import { TouchContextDirective } from './directives/touch-context.directive';
-import { DesktopPageCreateStage3Component } from './desktop-page-create-stage3/desktop-page-create-stage3.component'
+import { DesktopPageCreateStage3Component } from './desktop-page-create-stage3/desktop-page-create-stage3.component';
+import { TouchPageBoxComponent } from './touch-page-box/touch-page-box.component';
+import { PageBoxComponent } from './page-box/page-box.component';
+import { DesktopPageBoxComponent } from './desktop-page-box/desktop-page-box.component';
+import { PageHomeComponent } from './page-home/page-home.component';
+import { PageViewComponent } from './page-view/page-view.component';
+import { PageRefreshComponent } from './page-refresh/page-refresh.component';
+import { TouchPageViewComponent } from './touch-page-view/touch-page-view.component';
+import { TouchLockComponent } from './touch-lock/touch-lock.component';
+import { TouchTextCopyComponent } from './touch-text-copy/touch-text-copy.component';
+import { DesktopPageViewComponent } from './desktop-page-view/desktop-page-view.component';
+import { DesktopLockComponent } from './desktop-lock/desktop-lock.component';
+import { DesktopPageCreateStage4Component } from './desktop-page-create-stage4/desktop-page-create-stage4.component';
+import { TouchPageCreateStage4Component } from './touch-page-create-stage4/touch-page-create-stage4.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +164,20 @@ import { DesktopPageCreateStage3Component } from './desktop-page-create-stage3/d
     TouchPageCreateStage3Component,
     BoxComponent,
     TouchContextDirective,
-    DesktopPageCreateStage3Component
+    DesktopPageCreateStage3Component,
+    TouchPageBoxComponent,
+    PageBoxComponent,
+    DesktopPageBoxComponent,
+    PageHomeComponent,
+    PageViewComponent,
+    PageRefreshComponent,
+    TouchPageViewComponent,
+    TouchLockComponent,
+    TouchTextCopyComponent,
+    DesktopPageViewComponent,
+    DesktopLockComponent,
+    DesktopPageCreateStage4Component,
+    TouchPageCreateStage4Component
   ],
   imports: [
     BrowserModule,
@@ -159,7 +187,8 @@ import { DesktopPageCreateStage3Component } from './desktop-page-create-stage3/d
     FormsModule,
     DragDropModule,
     MatSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

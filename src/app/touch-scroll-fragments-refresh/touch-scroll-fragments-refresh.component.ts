@@ -194,10 +194,8 @@ export class TouchScrollFragmentsComponentRefresh implements OnInit, AfterViewIn
   ngOnInit(): void {}
 
   async ngOnDestroy(): Promise<void> {
-    console.log('one')
     await this.smoothClose()
     await this.asyncService.delay(3000)
-    console.log('two')
     return new Promise(res => res())
   }
 

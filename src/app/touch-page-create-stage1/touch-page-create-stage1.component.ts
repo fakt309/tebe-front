@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core'
+import { Component, OnInit, ElementRef, OnDestroy, Output, EventEmitter, HostBinding } from '@angular/core'
 import { TouchService, Touch } from '../touch.service'
 import { OptionMenu } from '../touch-menu/touch-menu.component'
 import { GetTargetHtmlService } from '../services/get-target-html.service'
@@ -9,15 +9,50 @@ import { Subscription } from 'rxjs'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { LocationService } from '../services/location.service'
 import { ActivatedRoute, Params } from '@angular/router'
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations'
 
 @Component({
   selector: 'app-touch-page-create-stage1',
   templateUrl: './touch-page-create-stage1.component.html',
-  styleUrls: ['./touch-page-create-stage1.component.scss']
+  styleUrls: ['./touch-page-create-stage1.component.scss'],
+  animations: [
+    trigger('emptyBlock', [
+      transition(':enter', [
+        query('.main', [
+          style({ transform: 'scale(0.1)', opacity: '0' })
+        ]),
+        query('.hint', [
+          style({ transform: 'scale(0.1)', opacity: '0' })
+        ]),
+        query('.main', [
+          animate('0.5s ease', style({ transform: 'scale(1)', opacity: '1' }))
+        ]),
+        query('.hint', [
+          animate('0.5s ease', style({ transform: 'scale(1)', opacity: '1' }))
+        ])
+      ])
+    ]),
+    trigger('slideTopGiftBlock', [
+      transition(':enter', [
+        style({ transform: 'translateY(100vh)', opacity: '0' }),
+        animate('0.5s {{delay}} ease', style({ transform: 'translateY(0px)', opacity: '1' }))
+      ])
+    ]),
+    trigger('hostAimation', [
+      transition(':leave', [
+        style({ opacity: '1' }),
+        animate('0.5s ease', style({ opacity: '0' }))
+      ])
+    ])
+  ]
 })
 export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
 
   private subs: Array<Subscription> = []
+
+  @Output() changeGlobalStage: EventEmitter<number> = new EventEmitter<number>()
+
+  @HostBinding('@hostAimation') hostAimation: string = ''
 
   public touches: any = {
     giftslist: null,
@@ -135,6 +170,8 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     value: '',
     type: ''
   }
+
+  // firstShow: boolean = true
 
   public showSelectLanguage: boolean = false
 
@@ -293,7 +330,7 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
   }
 
   setdisableds(t: Touch): void {
-     if (this.stats.menu === 'open') {
+    if (this.stats.menu === 'open') {
       this.disableds.giftslist = true
       this.disableds.screenadd = true
       this.disableds.screenviewgift = true
@@ -1049,6 +1086,10 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
         this.sublimerefreshplatform = !this.sublimerefreshplatform
         this.menu = []
       }
+    } else if (val === 'accept') {
+      if (!this.activeGift) {
+        this.changeGlobalStage.emit(2)
+      }
     }
   }
 
@@ -1454,8 +1495,13 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     this.setmenuviewgift()
   }
 
+  getVideo(): any {
+    return (this.activeGift && this.activeGift.value) ? URL.createObjectURL(this.activeGift.value) : null
+  }
+
   saverecordvideo(video: any): void {
-    this.activeGift.value = URL.createObjectURL(video[0])
+    this.activeGift.value = video[0]
+    this.activeGift.urlVideo = URL.createObjectURL(video[0])
 
     this.saveUpdate()
   }
@@ -1515,15 +1561,149 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
     this.confirm.type = ''
   }
 
-  saveUpdate(): void {
-    console.log(this.gifts)
+  blobToBase64(file: Blob): Promise<string> {
+    if (!(file instanceof Blob)) return new Promise(res => res(''))
 
-    window.localStorage.setItem('gifts', JSON.stringify(this.gifts))
+    return new Promise(res => {
+      const reader = new FileReader()
+      reader.onloadend = () => res(reader.result as string)
+      reader.readAsDataURL(file)
+    })
+  }
+
+  async saveUpdate(): Promise<void> {
+    // console.log(this.gifts)
+
+    const gifts = [...this.gifts]
+
+    for (let i = 0; i < gifts.length; i++) {
+
+      let gift = gifts[i]
+
+      if (gift.type === 'speaker') {
+
+        const value = await this.blobToBase64(gift.value[0])
+        gifts[i] = { ...gift, value }
+        continue
+
+      }
+
+      if (gift.type === 'tablet') {
+
+        // this place
+
+        const value = await this.blobToBase64(gift.value)
+        gifts[i] = { ...gift, value }
+        continue
+
+      }
+
+      gifts[i] = { ...gift }
+    }
+
+    window.localStorage.setItem('gifts', JSON.stringify(gifts))
+
+    return new Promise(res => res())
+  }
+
+  convertURIToBinary(dataURI: any): any {
+    let BASE64_MARKER = ';base64,'
+    let base64Index = dataURI.indexOf(BASE64_MARKER)+BASE64_MARKER.length
+    let base64 = dataURI.substring(base64Index)
+    let raw = window.atob(base64)
+    let rawLength = raw.length
+    let arr = new Uint8Array(new ArrayBuffer(rawLength))
+
+    for (let i = 0; i < rawLength; i++) {
+      arr[i] = raw.charCodeAt(i)
+    }
+    return arr
+  }
+
+  async refreshAudioInGifts(gifts: Array<any>): Promise<Array<any>> {
+    // const gifts = [...this.gifts]
+
+    for (let i = 0; i < gifts.length; i++) {
+
+      let gift = gifts[i]
+
+      if (gift.type === 'speaker') {
+
+        const value = await this.convertURIToBinary(gift.value)
+
+        let blob = new Blob([value], {
+          type: 'audio/webm' // ;codecs=opus
+        })
+
+        gifts[i] = { ...gift, value: [blob] }
+
+        continue
+      }
+
+      gifts[i] = { ...gift }
+    }
+
+    // this.gifts = gifts
+
+    // console.log(this.gifts)
+
+    return new Promise(res => res(gifts))
+  }
+
+  async refreshVideoInGifts(gifts: Array<any>): Promise<Array<any>> {
+
+    for (let i = 0; i < gifts.length; i++) {
+
+      let gift = gifts[i]
+
+      if (gift.type === 'tablet') {
+
+        const value = await this.convertURIToBinary(gift.value)
+
+        let blob = new Blob([value], {
+          type: 'video/webm' // ;codecs=vp8,opus;
+        })
+
+        gifts[i] = { ...gift, value: [blob], urlVideo: URL.createObjectURL(blob) }
+
+        continue
+      }
+
+      gifts[i] = { ...gift }
+    }
+
+    return new Promise(res => res(gifts))
+  }
+
+  async setGifts(): Promise<void> {
+
+    let gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
+
+    gifts = await this.refreshAudioInGifts(gifts)
+    gifts = await this.refreshVideoInGifts(gifts)
+
+    this.gifts = gifts
+
+    this.setmenuhome()
+
+    return new Promise(res => res())
   }
 
   ngOnInit(): void {
+
+    this.setGifts()
     
-    this.gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
+    // let gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
+
+    // this.gifts = this.setAudioAndVideoOnGifts(gifts)
+
+    // this.refreshAudioInGifts()
+    // this.refreshVideoInGifts()
+
+    // setTimeout(() => {
+    //   this.firstShow = false
+    // }, 2000)
+    
 
     this.subs.push(
       this.touchservice.stream$.subscribe((e: Touch) => { this.processtouch(e) })
@@ -1537,16 +1717,16 @@ export class TouchPageCreateStage1Component implements OnInit, OnDestroy {
         } else {
           this.showSelectLanguage = false
         }
-        this.menu = [
-          {
-            title: this.locationService.translate('add', 'добавить'),
-            ico: '../../assets/plus.svg',
-            value: 'add'
-          }
-        ]
+        this.setmenuhome()
+        // this.menu = [
+        //   {
+        //     title: this.locationService.translate('add', 'добавить'),
+        //     ico: '../../assets/plus.svg',
+        //     value: 'add'
+        //   }
+        // ]
       })
     )
-
 
     // let svg = this.linersvgservice.getSvg(100, 100, [ ['#000', [5, 5], [5, 10], [16, 28]], ['#cc0000', [80, 50], [55, 40], [90, 90]] ])
     // this.host.nativeElement.appendChild(svg)

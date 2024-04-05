@@ -1,5 +1,7 @@
 <app-touch-error [value]="valerror"></app-touch-error>
 
+<app-touch-confirm [value]="confirm.value" (result)="resultConfirm($event)"></app-touch-confirm>
+
 <app-touch-menu [touch]="touches.menu" [options]="menu" [sublimeshow]="menusublimeshow" (action)="actionmenu($event)" (choose)="menuwaschoosen($event)" ></app-touch-menu>
 
 <div class="wrap" [class.wrap_animated]="wrap.animated" [style.transform]="'translateX('+wrap.x+'px) translateY('+wrap.y+'px) scale('+wrap.scale+')'">
@@ -128,11 +130,11 @@
 	</div>
 </div>
 
-<div class="hint" [class.hint_hidden]="stage !== 0">
+<div @hintTextAnimation class="hint" [class.hint_hidden]="stage !== 0">
 	<div class="hint__text">{{ locationService.translate('click to continue', 'нажмите, чтобы продолжить') }}</div>
 </div>
 
-<div class="hint" [class.hint_center]="stage === 0" [class.hint_hidden]="(stage !== 2 && stage !== 0) || stats.screenadd === 'open' || inBox.length === gifts.length || dragGift.img">
+<div @previewTextAnimation class="hint" [class.hint_center]="stage === 0" [class.hint_hidden]="(stage !== 2 && stage !== 0) || stats.screenadd === 'open' || inBox.length === gifts.length || dragGift.img">
 	<div class="hint__text">{{ locationService.translate('put all the gifts in a box', 'положите все подарки в коробку') }}</div>
 </div>
 
@@ -213,7 +215,8 @@
 	<div *ngIf="!dragGift.allowed" class="drag-gift__not-allowed"></div>
 </div>
 
-<ng-container *ngIf="cellBoxDragging(0, 0).rectAllowed as rect">
+<!-- *ngIf="cellBoxDragging(0, 0).rectAllowed as rect -->
+<ng-container *ngIf="cellInfoForBack.rectAllowed as rect">
 	<div *ngIf="dragGift.img" class="back-drag-gift">
 		<div
 			class="back-drag-gift__window"

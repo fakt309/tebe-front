@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ComponentRef, ViewContainerRef, ViewChild, ComponentFactory, ElementRef, HostListener, ViewChildren, QueryList } from '@angular/core'
+import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ComponentRef, ViewContainerRef, ViewChild, ComponentFactory, ElementRef, HostListener, ViewChildren, QueryList, EventEmitter, Output } from '@angular/core'
 import { trigger, state, style, animate, transition, stagger, query, group } from '@angular/animations'
 import { AsyncService } from '../async.service'
 import { DesktopGiftListOptionComponent } from '../desktop-gift-list-option/desktop-gift-list-option.component'
@@ -48,6 +48,8 @@ import { ActivatedRoute, Params } from '@angular/router'
   ]
 })
 export class DesktopPageCreateStage1Component implements OnInit, OnDestroy {
+
+  @Output() changeGlobalStage: EventEmitter<number> = new EventEmitter<number>()
 
   @ViewChildren(DesktopGiftListOptionComponent) optionsGifts!: QueryList<DesktopGiftListOptionComponent>
   @ViewChild('moveGift', { read: ViewContainerRef }) moveGiftContainerTemplate!: ViewContainerRef
@@ -159,10 +161,14 @@ export class DesktopPageCreateStage1Component implements OnInit, OnDestroy {
     }
   }
 
-  mixxxx(): void {
-    const tmp = this.gifts[0]
-    this.gifts[0] = this.gifts[1]
-    this.gifts[1] = tmp
+  // mixxxx(): void {
+  //   const tmp = this.gifts[0]
+  //   this.gifts[0] = this.gifts[1]
+  //   this.gifts[1] = tmp
+  // }
+
+  onClickNextStage(): void {
+    this.changeGlobalStage.emit(2)
   }
 
   startScrolling(vector: string = 'down'): void {
@@ -194,8 +200,14 @@ export class DesktopPageCreateStage1Component implements OnInit, OnDestroy {
     this.sublimeStartRotate = !this.sublimeStartRotate
   }
 
+  changeEditGift(): void {
+    this.saveUpdate()
+  }
+
   deleteGift(gift: any): void {
     this.gifts = this.gifts.filter((g: any) => g.id !== gift.id)
+
+    this.saveUpdate()
   }
 
   stopScrolling(): void {
@@ -282,6 +294,8 @@ export class DesktopPageCreateStage1Component implements OnInit, OnDestroy {
       }, 300)
     }
 
+    this.saveUpdate()
+
     return new Promise(res => res())
   }
 
@@ -311,7 +325,140 @@ export class DesktopPageCreateStage1Component implements OnInit, OnDestroy {
     this.removeGift(data.gift.id)
   }
 
+  blobToBase64(file: Blob): Promise<string> {
+    if (!(file instanceof Blob)) return new Promise(res => res(''))
+
+    return new Promise(res => {
+      const reader = new FileReader()
+      reader.onloadend = () => res(reader.result as string)
+      reader.readAsDataURL(file)
+    })
+  }
+
+  async saveUpdate(): Promise<void> {
+    const gifts = [...this.gifts]
+
+    for (let i = 0; i < gifts.length; i++) {
+
+      let gift = gifts[i]
+
+      if (gift.type === 'speaker') {
+
+        const value = await this.blobToBase64(gift.value[0])
+        gifts[i] = { ...gift, value }
+        continue
+
+      }
+
+      if (gift.type === 'tablet') {
+
+        const value = await this.blobToBase64(gift.value[0])
+        gifts[i] = { ...gift, value }
+        continue
+
+      }
+
+      gifts[i] = { ...gift }
+    }
+
+    window.localStorage.setItem('gifts', JSON.stringify(gifts))
+
+    return new Promise(res => res())
+  }
+
+  convertURIToBinary(dataURI: any): any {
+    let BASE64_MARKER = ';base64,'
+    let base64Index = dataURI.indexOf(BASE64_MARKER)+BASE64_MARKER.length
+    let base64 = dataURI.substring(base64Index)
+    let raw = window.atob(base64)
+    let rawLength = raw.length
+    let arr = new Uint8Array(new ArrayBuffer(rawLength))
+
+    for (let i = 0; i < rawLength; i++) {
+      arr[i] = raw.charCodeAt(i)
+    }
+    return arr
+  }
+
+  async refreshAudioInGifts(gifts: Array<any>): Promise<Array<any>> {
+    // const gifts = [...this.gifts]
+
+    for (let i = 0; i < gifts.length; i++) {
+
+      let gift = gifts[i]
+
+      if (gift.type === 'speaker') {
+
+        const value = await this.convertURIToBinary(gift.value)
+
+        let blob = new Blob([value], {
+          type: 'audio/webm' // ;codecs=opus
+        })
+
+        gifts[i] = { ...gift, value: [blob] }
+
+        continue
+      }
+
+      gifts[i] = { ...gift }
+    }
+
+    // this.gifts = gifts
+
+    // console.log(this.gifts)
+
+    return new Promise(res => res(gifts))
+  }
+
+  async refreshVideoInGifts(gifts: Array<any>): Promise<Array<any>> {
+
+    for (let i = 0; i < gifts.length; i++) {
+
+      let gift = gifts[i]
+
+      if (gift.type === 'tablet') {
+
+        const value = await this.convertURIToBinary(gift.value)
+
+        let blob = new Blob([value], {
+          type: 'video/webm' // ;codecs=vp8,opus;
+        })
+
+        gifts[i] = { ...gift, value: [blob], urlVideo: URL.createObjectURL(blob) }
+
+        continue
+      }
+
+      gifts[i] = { ...gift }
+    }
+
+    return new Promise(res => res(gifts))
+  }
+
+  async setGifts(): Promise<void> {
+
+    let gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
+
+    gifts = await this.refreshAudioInGifts(gifts)
+    gifts = await this.refreshVideoInGifts(gifts)
+
+    this.gifts = gifts
+
+    return new Promise(res => res())
+  }
+
   ngOnInit(): void {
+
+    // this.gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
+
+    this.setGifts().then(() => {
+      if (this.gifts.length) {
+        setTimeout(() => {
+          this.sublimeStartRotate = !this.sublimeStartRotate
+        }, 1000)
+      }
+    })
+
     this.subs.push(
       this.route.queryParams.subscribe((params: Params) => {
         const country = params['l']

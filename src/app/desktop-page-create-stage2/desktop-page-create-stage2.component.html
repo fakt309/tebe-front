@@ -50,12 +50,22 @@
     >
     </app-desktop-slide-money>
   </div>
-  <app-desktop-button
-    class="button-next-stage"
-    [text]="locationService.translate('next', 'следующий этап')"
-    background="#e91e63"
-    color="#ffffff"
-  ></app-desktop-button>
+  <div class="row align-self_end">
+    <app-desktop-button
+      class="button-next-stage"
+      [text]="locationService.translate('back to gifts', 'назад к подаркам')"
+      background="#ffffff"
+      color="#333333"
+      (click)="toBackStage()"
+    ></app-desktop-button>
+    <app-desktop-button
+      class="button-next-stage"
+      [text]="locationService.translate('next', 'следующий этап')"
+      background="#e91e63"
+      color="#ffffff"
+      (click)="toNextStage()"
+    ></app-desktop-button>
+  </div>
 </div>
 
 <div #moneyRef class="stage2-money">

@@ -1,5 +1,6 @@
-import { Component, OnInit, HostBinding } from '@angular/core'
+import { Component, OnInit, HostBinding, Output, EventEmitter, ElementRef, ViewContainerRef } from '@angular/core'
 import { trigger, transition, style, animate, query } from '@angular/animations'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-desktop-select-location',
@@ -28,9 +29,19 @@ import { trigger, transition, style, animate, query } from '@angular/animations'
 })
 export class DesktopSelectLocationComponent implements OnInit {
 
+  @Output() select: EventEmitter<string> = new EventEmitter<string>()
+
   @HostBinding('@slideTop') slideTop: string = 'show'
 
-  constructor() { }
+  constructor(
+    public router: Router,
+    public host: ElementRef,
+    public viewContainerRef: ViewContainerRef
+  ) { }
+
+  setLang(lang: string): void {
+    this.select.emit(lang)
+  }
 
   ngOnInit(): void {
   }

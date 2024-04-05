@@ -45,7 +45,7 @@ export class DesktopSelectComponent implements OnInit, OnDestroy, AfterViewInit,
     let currTarget = e.target
 
     let insideSelect = false
-    while(currTarget.tagName !== 'BODY') {
+    while (currTarget && currTarget.tagName !== 'BODY') {
       if (currTarget.tagName === 'APP-DESKTOP-SELECT') {
         insideSelect = true
       }

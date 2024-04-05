@@ -20,9 +20,13 @@ export class SnapshotGiftService implements OnInit {
     if (gift.type == 'greetingcard') {
       let h = height
       let w = h*(297/420)
-      let front = gift.front || '../../assets/greetingcard/front/1.png'
 
-      const img = await this.readfileservice.getImageByUrl(front)
+      // let front = '../../assets/greetingcard/front/1.png'// gift.front || '../../assets/greetingcard/front/1.png'
+      // const img = await this.readfileservice.getImageByUrl(front)
+
+      let front = gift.front || '../../assets/greetingcard/front/1.png'
+      let img = await this.readfileservice.getBase64ByUrl(front)
+      img = await this.readfileservice.getImageByUrl(img)
 
       ctx!.drawImage(img, (width-w)/2, (height-h)/2, w, h)
     } else if (gift.type == 'game') {
@@ -30,9 +34,13 @@ export class SnapshotGiftService implements OnInit {
       let w = h*(135/190)
       let radius = 0.1*w
       let color = gift.color || '#003791'
-      let front = gift.front || '../../assets/game/example.jpg'
 
-      const img = await this.readfileservice.getImageByUrl(front)
+      // let front = '../../assets/game/example.jpg'// gift.front || '../../assets/game/example.jpg'
+      // const img = await this.readfileservice.getImageByUrl(front)
+
+      let front = gift.front || '../../assets/game/example.jpg'
+      let img = await this.readfileservice.getBase64ByUrl(front)
+      img = await this.readfileservice.getImageByUrl(img)
 
       ctx!.beginPath()
       ctx!.arc((width-w)/2+radius, (height-h)/2+radius, radius, 0, 2*Math.PI)
@@ -89,7 +97,6 @@ export class SnapshotGiftService implements OnInit {
         ctx!.globalAlpha = 1
       }
 
-
       const color = gift.color || '#ff5722'
       const sizeButton = 0.11*width
       const marginButtons = 0.05*width
@@ -113,9 +120,13 @@ export class SnapshotGiftService implements OnInit {
     } else if (gift.type == 'photo') {
       let h = 0.9*height
       let w = h*(48/64)
-      let photo = gift.photo || '../../assets/photo/example.jpg'
 
-      const img = await this.readfileservice.getImageByUrl(photo)
+      // let photo = '../../assets/photo/example.jpg' //gift.photo || '../../assets/photo/example.jpg'
+      // const img = await this.readfileservice.getImageByUrl(photo)
+
+      let photo = gift.photo || '../../assets/photo/example.jpg'
+      let img = await this.readfileservice.getBase64ByUrl(photo)
+      img = await this.readfileservice.getImageByUrl(img)
 
       const photoWidth = 0.9*w
       const photoHeight = 0.67*h

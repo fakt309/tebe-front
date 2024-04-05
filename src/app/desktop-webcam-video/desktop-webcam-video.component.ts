@@ -20,6 +20,7 @@ import { AsyncService } from '../async.service'
 })
 export class DesktopWebcamVideoComponent implements OnInit, OnDestroy {
 
+  @Input() withoutCamera: boolean = false
   @Input() recording: boolean = false
   @Input() screen: string = 'recording'
   @Input() duration: number = 0
@@ -255,6 +256,8 @@ export class DesktopWebcamVideoComponent implements OnInit, OnDestroy {
   }
 
   createVideo(): void {
+    this.backgroundColor = '#000000'
+    
     this.uninit()
     let vid = this.host.nativeElement.querySelector(".result")
     vid.setAttribute('control', '')
@@ -294,7 +297,19 @@ export class DesktopWebcamVideoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initRecord()
+
+    console.log(this.screen)
+
+    if (this.screen === 'recording') {
+      this.initRecord()
+    } else {
+      setTimeout(() => {
+        console.log(this.chunks)
+        this.createVideo()
+        this.loading = false
+      }, 100)
+    }
+
   }
 
   ngOnDestroy(): void {

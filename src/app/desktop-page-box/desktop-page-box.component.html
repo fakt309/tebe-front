@@ -1,0 +1,122 @@
+<app-desktop-error
+	class="error"
+	[text]="textError"
+></app-desktop-error>
+
+<div
+	class="preview"
+	[class.preview_top]="stage > 1"
+	[class.preview_bottom]="stage === 0"
+>
+	<div class="preview__description">{{ locationService.translate('come up with an original link that you will send', 'придумайте оригинальную ссылку, которую вы отправите') }}</div>
+
+	<div
+		class="search"
+		[style.width.px]="searchImage.w"
+		[style.height.px]="searchImage.h"
+	>
+		<div class="search__url">
+			<span class="search__base">{{ baseUrl+'/' }}</span>
+			<input
+				class="search__input"
+				[class.search__input_incorrect]="linkControl.errors !== null"
+				type="text"
+				[formControl]="linkControl"
+			/>
+			<!-- [attr.placeholder]="exampleUrl" -->
+			<!-- (keydown.enter)="sendLinkGift()" -->
+		</div>
+	</div>
+
+	<div class="row preview__row">
+
+		<div class="preview__error">
+			{{ linkControl.errors !== null ? linkControl.errors['text'] : '' }}
+			<a
+				*ngIf="showMyContantErrorLink"
+				class="preview__link"
+				href="https://t.me/gaiusdedeo"
+				target="_blank"
+			>@vgaidadei</a>
+		</div>
+
+		<app-desktop-button
+			class="preview__button"
+			[text]="locationService.translate('next', 'далее')"
+		  	[background]="'#4caf50'"
+		  	[color]="'#ffffff'"
+		  	[disabled]="linkControl.errors !== null"
+		></app-desktop-button>
+		<!-- (click)="sendLinkGift()" -->
+	</div>
+</div>
+
+<div
+	class="main"
+	[class.main_top]="stage > 2"
+	[class.main_bottom]="stage < 2"
+>
+	<div class="info">
+		<div class="main__title">{{ locationService.translate('gift #', 'подарок #') }} {{ general.id }}</div>
+		<ng-container *ngIf="general.code">
+			<div class="main__code">
+				<span class="main__code-value">{{ general.code }}</span>
+				<div
+					class="copy__icon"
+					[style.animation-name]="copies.copy1AnimateName"
+					(click)="onClickCopy(0)"
+				></div>
+			</div>
+			<div class="main__code-sub">{{ locationService.translate('send the code to the recipient immediately or save it somewhere, you won’t see it again', 'отправьте код получателю сразу или сохраните где-то, больше вы его не увидите') }}</div>
+		</ng-container>
+		<div class="box-wrap">
+			<app-box
+				[animate]="false"
+				[packed]="true"
+				[wrapped]="true"
+				[tapped]="true"
+				[w]="box.size.w"
+				[h]="box.size.h"
+				[d]="box.size.d"
+				[package]="box.package"
+		  		[tape]="box.tape"
+				[style.transform]="'translateX(0px) translateY(0px) translateZ(0px) rotateX(-15deg) rotateY(110deg) rotateZ(0deg) scale(1)'"
+			></app-box>
+		</div>
+		<div class="main__link">
+			<span class="main__base-url">{{ baseUrl+'/v/' }}</span>
+			<span class="main__path-url">{{ general.link }}</span>
+			<div
+				class="copy__icon"
+				[style.animation-name]="copies.copy2AnimateName"
+				(click)="onClickCopy(1)"
+			></div>
+		</div>
+		<div class="main__link-exp">
+			<span class="main__link-exp-value">{{ getExpareString() }}</span>
+		</div>
+		<app-desktop-button
+			class="main__button"
+			[text]="locationService.translate('preview', 'предпросмотр')"
+			[icon]="'/assets/eye.svg'"
+		  	[background]="'#ffffff'"
+		  	[color]="'#333333'"
+		  	(click)="goToView()"
+		></app-desktop-button>
+	</div>
+	<div
+		class="wrap-chat"
+		[style.width.px]="350"
+		[style.height.px]="350/(90/180)"
+	>
+		<div
+			#chatRef
+			class="chat"
+		>
+			<div class="chat__message chat__message_me" [class.chat__message_animated]="chat.animated">{{ locationService.translate('here is a gift for you', 'здарова, держи подарок') }}</div>
+			<div class="chat__message chat__message_me" [class.chat__message_animated]="chat.animated"><span class="chat__link">{{ 'https://'+baseUrl+'/v/'+general.link }}</span></div>
+			<div class="chat__message" [class.chat__message_animated]="chat.animated">{{ locationService.translate('WOWOWOWOOW', 'вау вау вау вау вау вау вау') }}</div>
+			<div class="chat__message chat__message_me" [class.chat__message_animated]="chat.animated" [style.margin-bottom.px]="chat.margin">{{ locationService.translate('code '+general.code, 'код '+general.code) }}</div>
+		</div>
+	</div>
+</div>

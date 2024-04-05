@@ -1,0 +1,349 @@
+:host {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	.preview {
+		position: absolute;
+		width: 100%;
+		max-width: 600px;
+		margin: 0px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		transition: all ease 0.2s;
+	}
+
+	.preview_top {
+		transform: translateY(-100vh);
+	}
+
+	.preview_bottom {
+		transform: translateY(100vh);
+	}
+
+	.preview__description {
+		margin: 20px;
+		text-align: center;
+		font-size: 18px;
+	}
+
+	.search {
+		margin: 20px;
+		background-image: url(/assets/search-google.png);
+		background-position: top center;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		overflow: hidden;
+		border-radius: 15px 15px 0px 0px;
+	}
+
+	.search__url {
+		margin-left: 30%;
+		margin-top: 10.4%;
+		font-size: min(20px, 3vw);
+		white-space: nowrap;
+	}
+
+	.search__base {
+		color: #999999;
+	}
+
+	.search__path {
+		color: #333333;
+		font-weight: 700;
+	}
+
+	.search__input {
+		border: 0px solid #00000033;
+		padding: 6px 0px;
+		background-color: unset;
+		color: #333333;
+		font-size: min(20px, 3vw);
+		outline: none;
+		font-family: "Comfortaa", cursive;
+		width: 73.3%;
+		background-color: #ff000000;
+		outline: 2px solid #f4433600;
+		transition: all ease 0.2s;
+	}
+
+	.search__input_incorrect {
+		// background-color: #f4433666;
+		outline: 2px solid #f4433699;
+		// outline-offset: -2px;
+	}
+
+	.search__input_incorrect:focus {
+		outline: 2px solid #f4433600;
+		background-color: #ff000000;
+	}
+
+	.search__input::placeholder {
+		color: #999999;
+	}
+
+	.search__input::-ms-input-placeholder {
+		color: #999999;
+	}
+
+	.preview__error {
+		margin: 0px 20px;
+		height: 14px;
+		color: #f44336;
+		font-size: 12px;
+		text-align: right;
+	}
+
+	.preview__link {
+		color: #03a9f4;
+		text-decoration: none;
+	}
+
+	.preview__button {
+		align-self: flex-end;
+		margin: 20px;
+	}
+
+	.preview__row {
+		align-self: flex-end;
+	}
+
+	.row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.main {
+		position: absolute;
+		width: 100%;
+		max-width: 800px;
+		margin: 0px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		transition: all ease 0.2s;
+	}
+
+	.main_top {
+		transform: translateY(-100vh);
+	}
+
+	.main_bottom {
+		transform: translateY(100vh);
+	}
+
+	.wrap-chat {
+		background-image: url(/assets/google-pixel-7.svg);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 210%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		overflow: hidden;
+		margin-left: 50px;
+	}
+
+	.chat {
+		width: 90%;
+		height: 80%;
+		margin: 10% 0px;
+		bottom: 40px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-end;
+		overflow: hidden;
+		transition: all ease 0.2s;
+	}
+
+	.chat_center {
+		transform: translateX(0%);
+	}
+
+	.chat_left {
+		transform: translateX(-100%);
+	}
+
+	.chat_right {
+		transform: translateX(100%);
+	}
+
+	.chat__message {
+		margin: 0px 10px;
+		margin-bottom: 20px;
+		padding: 20px;
+		font-size: 14px;
+		color: #333333;
+		border-radius: 15px;
+		background-color: #ffffff;
+		box-shadow: 0px 0px 5px #00000033;
+	}
+
+	.chat__message_animated {
+		transition: all ease 0.2s;
+	}
+
+	.chat__message_me {
+		background-color: #effdde;
+		align-self: flex-end;
+	}
+
+	.chat__link {
+		color: #168acd;
+	}
+
+	.info {
+		width: 50%;
+		bottom: 40px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		overflow: hidden;
+		transition: all ease 0.2s;
+	}
+
+	.box-wrap {
+		width: 200px;
+		height: 200px;
+		align-self: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.main__title {
+		margin: 20px;
+		font-size: 18px;
+		text-align: center;
+		align-self: center;
+		color: #333333;
+	}
+
+	.main__link {
+		margin: 0px 20px;
+		margin-top: 40px;
+		margin-bottom: 5px;
+		align-self: center;
+		text-align: center;
+		font-size: 14px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	.main__base-url, .main__query-url {
+		color: #999999;
+	}
+
+	.main__path-url {
+		color: #333333;
+	}
+
+	.main__link-exp {
+		margin: 20px;
+		margin-top: 40px;
+		align-self: center;
+		text-align: center;
+		font-size: 12px;
+		color: #f44336;
+	}
+
+	.main__link-exp-title {
+		// color: #999999;
+	}
+
+	.main__link-exp-value {
+		// color: #333333;
+	}
+
+	.main__code {
+		margin: 20px;
+		margin-bottom: 5px;
+		align-self: center;
+		text-align: center;
+		font-size: 26px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.main__code-title {
+		color: #999999;
+	}
+
+	.main__code-value {
+		color: #333333;
+	}
+
+	.main__code-sub {
+		margin: 20px;
+		margin-top: 0px;
+		align-self: center;
+		text-align: center;
+		font-size: 12px;
+		color: #f44336;
+	}
+
+	.copy {
+		margin: 10px;
+		margin-top: 0px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.copy__icon {
+		width: 30px;
+		height: 30px;
+		margin: 0px 10px;
+		margin-right: 0px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-image: url(/assets/copy.svg);
+		cursor: pointer;
+		animation-name: none;
+	    animation-timing-function: linear;
+		animation-duration: 0.2s;
+		animation-iteration-count: 1;
+		transition: all ease 0.2s;
+	}
+
+	.copy__text {
+		margin: 0px 10px;
+		font-size: 12px;
+		color: #333333
+	}
+
+	.main__button {
+		align-self: center;
+	}
+
+	@keyframes copyAnimation {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(0.5);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+}

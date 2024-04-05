@@ -189,7 +189,7 @@
     [options]="currency.options"
     [currencyName]="currency.sign"
     [touch]="touches.currencySlide"
-    (onChange)="currency.active = $event; currency.value = currency.options[$event]"
+    (onChange)="currency.active = $event; currency.value = currency.options[$event]; saveUpdate()"
     (complete)="onSaveCurrencySlide()"
   ></app-touch-slide-money>
 </app-touch-screen>

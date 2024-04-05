@@ -1,0 +1,465 @@
+<app-desktop-error class="error" [text]="textError" [color]="'#333333'"></app-desktop-error>
+
+<div
+	*ngIf="stage === 1"
+	[@mainText]="{value: '', params: { delay: 0+'ms'}}"
+	class="main-text"
+>{{ locationService.translate('here is the gift for you', 'для вас подарок') }}</div>
+
+<div
+	*ngIf="stage === 1"
+	class="hint"
+	[@mainText]="{value: '', params: { delay: 100+'ms'}}"
+>{{ locationService.translate('click to continue', 'кликните, чтобы продолжить') }}</div>
+
+<div
+	*ngIf="stage === 2"
+	class="row"
+	@topToBottom
+>
+	<app-desktop-lock
+		#lockRef
+		[disabled]="disabledCode"
+		[toReject]="toRejectCode"
+		[toAccept]="toAcceptCode"
+		[toInput]="toInputCode"
+		(input)="onInputLock($event)"
+	></app-desktop-lock>
+
+	<div class="column width-300">
+		<div *ngIf="triesCode > 0" class="title-code"> {{ locationService.translate('enter a code', 'введите код') }} </div>
+		<div class="attemts-code"> {{ locationService.translate('attempts left: ', 'осталось попыток') }} {{ triesCode }}</div>
+		<div
+			*ngIf="!triesCode"
+			class="attemts-code"
+		>
+			{{ locationService.translate('to restore the code, contact me:', 'чтобы восстановить код, свяжитесь со мной: ') }} <a class="attemts__link" href="https://t.me/gaiusdedeo" target="_blank">@gaiusdedeo</a>
+		</div>
+	</div>
+</div>
+
+<div
+	class="display"
+	[class.display_shifted]="showArchive"
+	[style.display]="wrap.show ? 'flex' : 'none'"
+>
+	<div
+		class="wrap"
+		[class.wrap_animated]="wrap.animated"
+		[style.transform]="'translateX('+(wrap.x+wrap.shift.x)+'px) translateY('+(wrap.y+wrap.shift.y)+'px) scale('+wrap.scale+')'"
+		[style.display]="wrap.show ? 'flex' : 'none'"
+	>
+		<app-box
+			#boxRef
+			class="box"
+			[packed]="box.packed"
+			[animate]="box.animate"
+			[wrapped]="box.wrapped"
+			[tapped]="box.tapped"
+			[w]="box.size.w"
+			[h]="box.size.h"
+			[d]="box.size.d"
+			[inside]="box.inside"
+			[package]="box.package"
+			[tape]="box.tape"
+			[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+(box.rotate.x+box.shiftRotate.x)+'deg) rotateY('+(box.rotate.y+box.shiftRotate.y)+'deg) rotateZ('+box.rotate.z+'deg) scale('+box.scale+')'"
+		>
+			<ng-container *ngFor="let idGift of inBox">
+				<ng-container *ngIf="getGiftById(idGift) as gift">
+					<app-greeting-card
+						*ngIf="gift.type === 'greetingcard'"
+						class="gift"
+						[class.gift_animated]="activeGift.animated"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY('+(180+gift.rotate.y)+'deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[front]="gift.front"
+						[back]="gift.back"
+						[text]="gift.text"
+						[color]="gift.color"
+						[sign]="gift.sign"
+						[smooth]="activeGift.animated"
+					>
+					</app-greeting-card>
+					<app-game
+						*ngIf="gift.type === 'game'"
+						class="gift"
+						[class.gift_animated]="activeGift.animated"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[color]="gift.color"
+						[front]="gift.front"
+						[inside]="gift.inside"
+						[side]="gift.side"
+						[code]="gift.code"
+						[open]="gift.open"
+						[smooth]="activeGift.animated"
+					>
+					</app-game>
+					<app-speaker
+						*ngIf="gift.type === 'speaker'"
+						class="gift"
+						[class.gift_animated]="activeGift.animated"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(0deg) rotateZ(90deg)'"
+						[size]="getSizeGift(gift)"
+						[grill]="gift.grill"
+						[color]="gift.color"
+						[smooth]="activeGift.animated"
+					>
+					</app-speaker>
+					<app-tablet
+						*ngIf="gift.type === 'tablet'"
+						class="gift"
+						[class.gift_animated]="activeGift.animated"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[color]="gift.color"
+						[smooth]="activeGift.animated"
+					>
+					</app-tablet>
+					<app-photo
+						*ngIf="gift.type === 'photo'"
+						class="gift"
+						[class.gift_animated]="activeGift.animated"
+						[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(180deg) rotateZ(-90deg)'"
+						[size]="getSizeGift(gift)"
+						[photo]="gift.photo"
+						[sign]="gift.sign"
+						[smooth]="activeGift.animated"
+					>
+					</app-photo>
+				</ng-container>
+			</ng-container>
+			<div
+				*ngIf="activeGift.id"
+				@activeBack
+				class="back-active"
+				[style.width.px]="getSizeBackActive().w"
+				[style.height.px]="getSizeBackActive().h"
+				[style.transform]="'translateZ(-'+box.size.h+'px)'"
+			></div>
+		</app-box>
+	</div>
+</div>
+
+<div class="archive" [class.archive_hidden]="!showArchive">
+	<div
+		*ngIf="inBox.length === 0"
+		class="gift-option-usable gi-button"
+		[class.gift-option-usable_active]="!activeGiftView"
+		(click)="showGeneralInfo()"
+	>
+		{{ locationService.translate('general info', 'общая информация') }}
+	</div>
+	<ng-container *ngFor="let gift of gifts">
+		<app-desktop-gift-list-option
+			*ngIf="!isGiftInBox(gift) && dragGift.id !== gift.id"
+			@optionGift
+			class="gift-option"
+			[class.gift-option-usable]="inBox.length === 0"
+			[class.gift-option-usable_active]="inBox.length === 0 && gift.id === activeGiftView?.id"
+			[scaleIcon]="0.6"
+			[gift]="gift"
+			[showButtons]="false"
+			[attr.giftid]="gift.id"
+			(click)="setActiveGiftView(gift.id)"
+		></app-desktop-gift-list-option>
+	</ng-container>
+</div>
+
+<div 
+	*ngIf="stage === 3 && activeGift.id"
+	@bottomPanel
+	class="buttom-panel"
+>	
+	<app-desktop-button
+		*ngIf="getTypeActiveGift() === 'game'"
+		[text]="locationService.translate('open/close', 'открыть/закрыть')"
+		[icon]="'../../assets/open-white.svg'"
+		[background]="'#ffffff00'"
+		[color]="'#ffffff'"
+		(click)="openGameGift()"
+	></app-desktop-button>
+	<app-desktop-button
+		[text]="locationService.translate('archive', 'в архив')"
+		[icon]="'../../assets/archive-white.svg'"
+		[background]="'#ffffff00'"
+		[color]="'#ffffff'"
+		(click)="putActiveGiftToArchive()"
+	></app-desktop-button>
+</div>
+
+<div 
+	*ngIf="stage === 3 && activeGift.id"
+	@bottomPanel
+	class="top-panel"
+>	
+	<div class="top-panel__icon top-panel__icon_lc-mouse"></div>
+	<div class="top-panel__text top-panel__text_white">
+		{{ locationService.translate('rotate', 'вращать') }}
+	</div>
+</div>
+
+<div 
+	*ngIf="stage === 3 && !activeGift.id"
+	@bottomPanel
+	class="buttom-panel"
+>
+	<div class="bottom-panel__text">
+		{{ locationService.translate('put all gifts in the archive', 'положите все подарки в архив') }}
+	</div>
+</div>
+
+<div
+	*ngIf="stage === 4 && inBox.length === 0"
+	@viewGiftDisplay
+	class="view-gift"
+>
+	<div class="inner-wrap-view-gift">
+
+		<div
+			*ngIf="!activeGiftView"
+			@optionViewGift
+			class="gi-box"
+		>
+	  	<app-box
+				class="box"
+				[packed]="true"
+				[animate]="false"
+				[wrapped]="true"
+				[tapped]="true"
+				[w]="box.size.w"
+				[h]="box.size.h"
+				[d]="box.size.d"
+				[package]="box.package"
+				[tape]="box.tape"
+				[style.transform]="'translateX(0px) translateY(0px) translateZ(0px) rotateX(-15deg) rotateY(75deg) rotateZ(0deg) scale(1)'"
+			></app-box>
+	  </div>
+
+	  <div
+	  	*ngIf="!activeGiftView"
+			@optionViewGift
+	  	class="gi-text"
+  	>
+  		{{ locationService.translate('gifts: ', 'подарков: ') }} {{ gifts.length }}
+  	</div>
+
+  	<div
+  		*ngIf="!activeGiftView"
+			@optionViewGift
+	  	class="gi-text"
+  	>
+  		{{ locationService.translate('cost: ', 'стоимость: ') }} {{ getPriceString() }}
+  	</div>
+
+		<div
+			*ngIf="activeGiftView"
+			class="display-gift"
+			(mousedown)="mouseDownIcon($event)"
+		>
+			<app-greeting-card
+				*ngIf="activeGiftView?.type === 'greetingcard'"
+				[style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+				[class.gift-animated]="rotateGift.animate"
+				[size]="390*(297/420)"
+				[front]="activeGiftView.front"
+				[back]="activeGiftView.back"
+				[text]="activeGiftView.text"
+				[color]="activeGiftView.color"
+				[sign]="activeGiftView.sign"
+			>
+			</app-greeting-card>
+			<app-game
+				*ngIf="activeGiftView?.type === 'game'"
+				[style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+				[class.gift-animated]="rotateGift.animate"
+				[size]="390*(135/190)"
+				[color]="activeGiftView.color"
+				[front]="activeGiftView.front"
+				[inside]="activeGiftView.inside"
+				[side]="activeGiftView.side"
+				[code]="activeGiftView.code"
+				[open]="activeGiftView.open"
+				[smooth]="rotateGift.animate"
+			>
+			</app-game>
+			<app-speaker
+				*ngIf="activeGiftView?.type === 'speaker'"
+				[style.transform]="'rotateY('+(rotateGift.angle+180)+'deg)'"
+				[class.gift-animated]="rotateGift.animate"
+				[size]="390-20"
+				[style.animationName]="'rotPlus180'"
+				[grill]="activeGiftView.grill"
+				[color]="activeGiftView.color"
+			>
+			</app-speaker>
+			<app-tablet
+				*ngIf="activeGiftView?.type === 'tablet'"
+				[style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+				[class.gift-animated]="rotateGift.animate"
+				[size]="390"
+				[color]="activeGiftView.color"
+			>
+			</app-tablet>
+			<app-photo
+				*ngIf="activeGiftView?.type === 'photo'"
+				[style.transform]="'rotateY('+rotateGift.angle+'deg)'"
+				[class.gift-animated]="rotateGift.animate"
+				[size]="390*(48/64)"
+				[photo]="activeGiftView.photo"
+				[sign]="activeGiftView.sign"
+			>
+			</app-photo>
+		</div>
+
+		<div
+			*ngIf="activeGiftView?.type === 'greetingcard'"
+			@optionViewGift
+			class="text-greeting-card"
+			[innerHTML]="getTextGreetingCard(activeGiftView)"
+		></div>
+
+		<div
+			*ngIf="activeGiftView?.type === 'game'"
+			@optionViewGift
+			class="buttons-panel-view-gift"
+		>
+			<div class="code-view-gift">{{ activeGiftView.code }}</div>
+			<app-desktop-button
+				[icon]="'../../assets/copy.svg'"
+				[background]="'#ffffff00'"
+				[color]="'#333333'"
+				(click)="copyCodeGiftView()"
+			></app-desktop-button>
+		</div>
+
+		<div
+			*ngIf="activeGiftView?.type === 'game'"
+			@optionViewGift
+			class="buttons-panel-view-gift"
+		>
+			<app-desktop-button
+				*ngIf="activeGiftView?.platform === 'ps' || activeGiftView?.platform === 'xbox'"
+				[text]="locationService.translate('how to activate', 'как активировать')"
+				[icon]="'../../assets/question-mark.svg'"
+				[background]="'#ffffff00'"
+				[color]="'#333333'"
+				(click)="showDialog()"
+			></app-desktop-button>
+			<app-desktop-button
+				[text]="locationService.translate('open/close', 'открыть/закрыть')"
+				[icon]="'../../assets/open.svg'"
+				[background]="'#ffffff00'"
+				[color]="'#333333'"
+				(click)="openGameGiftView()"
+			></app-desktop-button>
+		</div>
+
+		<div
+			*ngIf="activeGiftView?.type === 'speaker'"
+			@optionViewGift
+			class="buttons-panel-view-gift"
+		>
+			<app-desktop-micro
+				class="micro-speaker"
+				[withoutRecord]="true"
+				[sublimeValue]="activeGiftView.value"
+				[sublimeDuration]="activeGiftView.duration"
+				[sublimeSounds]="activeGiftView.sounds"
+				[sublimestop]="activeGiftView.sublimestop"
+			></app-desktop-micro>
+		</div>
+
+		<div
+			*ngIf="activeGiftView?.type === 'tablet'"
+			@optionViewGift
+			class="buttons-panel-view-gift"
+		>
+			<app-desktop-button
+				[text]="locationService.translate('watch', 'просмотр')"
+				[icon]="'../../assets/eye.svg'"
+				[background]="'#ffffff00'"
+				[color]="'#333333'"
+				(click)="showWebcamVideo()"
+			></app-desktop-button>
+		</div>
+	</div>
+
+</div>
+
+<app-desktop-dialog
+	*ngIf="dialogShow"
+	(close)="onCloseDialog()"
+>
+	<div *ngIf="activeGiftView?.platform === 'ps'" class="dialog">
+		<div class="dialog-title">{{ locationService.translate('How to activate a reedem key for playstation', 'Как активировать ключ для playstation') }}</div>
+		<div class="dialog-text">{{ locationService.translate('1. Select PlayStation Store and press the triangle button to bring up the menu.', '1. Выберите PlayStation Store и нажмите кнопку «треугольник» для вызова меню.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/ps1.png" />
+		<div class="dialog-text">{{ locationService.translate('2. Select... (more) > Redeem Codes.', '2. Выберите ... (еще) > Погашение кодов.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/ps2.png" />
+		<div class="dialog-text">{{ locationService.translate('3. Enter the 12-digit code and select Redeem. The funds or materials will be added to your account.', '3. Введите 12-значный код и выберите Погасить. Средства или материалы будут добавлены в вашу учетную запись.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/ps3.png" />
+		<div class="dialog-text">
+			{{ locationService.translate('See the official website for more details: ', 'Подробнее смотрите на официальном сайте: ') }}
+			<a class="dialog-link" href="https://www.playstation.com/ru-ru/support/store/redeem-ps-store-voucher-code/">https://www.playstation.com/ru-ru/support/store/redeem-ps-store-voucher-code/</a>
+		</div>
+	</div>
+	<div *ngIf="activeGiftView?.platform === 'xbox'" class="dialog">
+		<div class="dialog-title">{{ locationService.translate('How to activate a reedem key for xbox', 'Как активировать ключ для xbox') }}</div>
+		<div class="dialog-text">{{ locationService.translate('1. Press the Xbox button to open the guide, then select Store.', '1. Нажмите кнопку Xbox, чтобы открыть гид, а затем выберите Store.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/xbox1.png" />
+		<div class="dialog-text">{{ locationService.translate('2. Click the View button to open the side menu, and then select Activate.', '2. Нажмите кнопку Просмотр, чтобы открыть боковое меню, а затем выберите Активировать.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/xbox2.png" />
+		<div class="dialog-text">{{ locationService.translate('3. Enter the 25-digit code, click Next and follow the onscreen instructions.', '3. Введите 25-значный код, нажмите Далее и следуйте указаниям на экране.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/xbox3.png" />
+		<div class="dialog-text">
+			{{ locationService.translate('See the official website for more details: ', 'Подробнее смотрите на официальном сайте: ') }}
+			<a class="dialog-link" href="https://support.xbox.com/ru-RU/help/subscriptions-billing/redeem-codes-gifting/redeem-prepaid-codes">https://support.xbox.com/ru-RU/help/subscriptions-billing/redeem-codes-gifting/redeem-prepaid-codes</a>
+		</div>
+	</div>
+</app-desktop-dialog>
+
+<div
+	*ngIf="webcamVideo.visible"
+	class="screen-image-upload"
+	@verticalShow
+>
+	<app-desktop-webcam-video
+		[withoutCamera]="true"
+		[value]="activeGiftView.value"
+		[duration]="activeGiftView.duration"
+		[recording]="webcamVideo.recording"
+		[screen]="webcamVideo.screen"
+		[sublimeuninit]="webcamVideo.sublimeUninit"
+	></app-desktop-webcam-video>
+	<div
+		class="screen-image-upload__close screen-image-upload__close_background"
+		(click)="closeWebcamVideo()"
+	></div>
+  <div class="screen-image-upload__menu">
+    <!-- <app-desktop-button
+      [text]="webcamVideo.screen === 'recording' ? locationService.translate('to watching', 'к предпросмотру') : locationService.translate('to recording', 'к записи')"
+      [icon]="webcamVideo.screen === 'recording' ? '../../assets/eye.svg' : '../../assets/webcam.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      [disabled]="!activeGiftView.value[0] || webcamVideo.showConfirm === 'open' || webcamVideo.recording"
+      (click)="switchWebcamVideoMode() "
+    ></app-desktop-button> -->
+    <!-- <app-desktop-button
+      *ngIf="webcamVideo.screen === 'recording'"
+      [text]="webcamVideo.recording ? locationService.translate('stop', 'стоп') : locationService.translate('record', 'запись')"
+      [icon]="webcamVideo.recording ? '../../assets/stop.svg' : '../../assets/record.svg'"
+      [background]="'#ffffff'"
+      [color]="'#333333'"
+      [disabled]="webcamVideo.showConfirm === 'open'"
+      (click)="switchWebcamRecord()"
+    ></app-desktop-button> -->
+    <!-- <div #confirmWebcamVideo class="webcam-video-confirm" [@popup]="webcamVideo.showConfirm">
+      <div class="webcam-video-confirm__text">{{ locationService.translate('Overwrite?', 'Перезаписать?') }}</div>
+      <div class="webcam-video-confirm__buttons">
+        <div class="webcam-video-confirm__button" [style.color]="'#f44336'" (click)="resultWebcamConfirm('reject')">{{ locationService.translate('no', 'нет') }}</div>
+        <div class="webcam-video-confirm__button" [style.color]="'#4caf50'" (click)="resultWebcamConfirm('agree')">{{ locationService.translate('yes', 'да') }}</div>
+      </div>
+    </div> -->
+  </div>
+</div>

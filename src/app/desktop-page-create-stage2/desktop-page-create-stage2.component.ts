@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, EventEmitter, Output, HostBinding } from '@angular/core'
+import { trigger, state, transition, style, animate } from '@angular/animations'
 import { LocationService } from '../services/location.service'
 import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
@@ -6,9 +7,25 @@ import { Subscription } from 'rxjs'
 @Component({
   selector: 'app-desktop-page-create-stage2',
   templateUrl: './desktop-page-create-stage2.component.html',
-  styleUrls: ['./desktop-page-create-stage2.component.scss']
+  styleUrls: ['./desktop-page-create-stage2.component.scss'],
+  animations: [
+    trigger('stageAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateY(100vw)' }),
+        animate('0.2s ease', style({ transform: 'translateY(0vw)' }))
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0vw)' }),
+        animate('0.2s ease', style({ transform: 'translateY(100vw)' }))
+      ])
+    ])
+  ]
 })
 export class DesktopPageCreateStage2Component implements OnInit, OnDestroy {
+
+  @HostBinding('@stageAnimation') stageAnimation: string = ''
+
+  @Output() changeGlobalStage: EventEmitter<number> = new EventEmitter<number>()
 
   subs: Array<Subscription> = []
 
@@ -17,6 +34,8 @@ export class DesktopPageCreateStage2Component implements OnInit, OnDestroy {
   thirdControl: FormControl = new FormControl(0)
   fourthControl: FormControl = new FormControl(0)
   fifthControl: FormControl = new FormControl(0)
+
+  box: any = {}
 
   public activeCoin: number = 0
   public typesCoin: Array<string> = ['dollar', 'euro', 'ruble', 'yen', 'pound']
@@ -91,30 +110,72 @@ export class DesktopPageCreateStage2Component implements OnInit, OnDestroy {
     return false
   }
 
+  toBackStage(): void {
+    this.changeGlobalStage.emit(1)
+  }
+
+  toNextStage(): void {
+    this.changeGlobalStage.emit(3)
+  }
+
+  saveUpdate(): void {
+    const type = this.firstControl.value
+    const currency = type !== 'no' ? this.secondControl.value : null
+    const rate = this.isDefaultSign(currency) ? null : this.thirdControl.value
+
+    let price = null
+    if (type === 'yes') {
+      price = this.fourthControl.value
+    } else if (type === 'hint') {
+      const index = this.fifthControl.value
+      const options = this.currencyOption(currency, rate || 1)
+      price = [options[index], options[index+1] === options[index] && options[index+1] !== 0 ? 'infinity' : options[index+1]]
+    }
+
+    const cost = {
+      type,
+      currency,
+      rate,
+      price
+    }
+
+    console.log(cost)
+
+    window.localStorage.setItem('cost', JSON.stringify(cost))
+
+  }
+
   ngOnInit(): void {
     this.initCoins()
 
     this.subs.push(
       this.firstControl.valueChanges.subscribe((value: string) => {
-        // console.log(value)
+        this.saveUpdate()
       })
     )
 
     this.subs.push(
       this.secondControl.valueChanges.subscribe((value: string) => {
         this.thirdControl.setValue(0)
+        this.saveUpdate()
       })
     )
 
     this.subs.push(
       this.thirdControl.valueChanges.subscribe((value: string) => {
-        // console.log(value)
+        this.saveUpdate()
+      })
+    )
+
+    this.subs.push(
+      this.fourthControl.valueChanges.subscribe((value: string) => {
+        this.saveUpdate()
       })
     )
 
     this.subs.push(
       this.fifthControl.valueChanges.subscribe((value: string) => {
-        // console.log(value)
+        this.saveUpdate()
       })
     )
 

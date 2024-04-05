@@ -1,0 +1,89 @@
+<!-- <div class="content">
+	<input class="input-path" [formControl]="fullPathControl" type="text" />
+</div> -->
+
+<app-touch-error class="error" [value]="valerror"></app-touch-error>
+
+<app-touch-menu [touch]="touches.main" [options]="menu" (action)="actionMenu($event)" (choose)="menuWasChoosen($event)" ></app-touch-menu>
+
+<!-- <div
+	class="preview"
+	[class.preview_left]="this.stage > 1"
+	[class.preview_center]="this.stage === 1"
+	[class.preview_right]="this.stage < 1"
+>
+	<div class="search" [style.width.px]="searchImage.w" [style.height.px]="searchImage.h">
+		<div class="search__url">
+			<span class="search__base">{{ baseUrl+'/' }}</span><span class="search__path">{{ exampleUrl }}</span>
+		</div>
+	</div>
+
+	<div class="preview__description">{{ locationService.translate('come up with an original link that you will send', 'придумайте оригинальную ссылку, которую вы отправите') }}</div>
+</div> -->
+
+<!-- [class.chat_right]="this.stage < 3" -->
+<div
+	#chatRef
+	class="chat"
+	[class.chat_left]="this.stage > 3"
+	[class.chat_center]="this.stage <= 3"
+>
+	<div class="chat__message chat__message_me" [class.chat__message_animated]="chat.animated">{{ locationService.translate('here is a gift for you', 'здарова, держи подарок') }}</div>
+	<div class="chat__message chat__message_me" [class.chat__message_animated]="chat.animated"><span class="chat__link">{{ 'https://'+baseUrl+'/v/'+general.link }}</span></div>
+	<div class="chat__message" [class.chat__message_animated]="chat.animated">{{ locationService.translate('WOWOWOWOOW', 'вау вау вау вау вау вау вау') }}</div>
+	<div class="chat__message chat__message_me" [class.chat__message_animated]="chat.animated" [style.margin-bottom.px]="chat.margin">{{ locationService.translate('code '+general.code, 'код '+general.code) }}</div>
+</div>
+
+<div
+	#chatRef
+	class="main"
+	[class.main_left]="this.stage > 4"
+	[class.main_center]="this.stage === 4"
+	[class.main_right]="this.stage < 4"
+>
+	<div class="main__title">{{ locationService.translate('gift #', 'подарок #') }} {{ general.id }}</div>
+	<ng-container *ngIf="general.code">
+		<div class="main__code"><span class="main__code-value">{{ general.code }}</span></div>
+		<div class="main__code-sub">{{ locationService.translate('send the code to the recipient immediately or save it somewhere, you won’t see it again', 'отправьте код получателю сразу или сохраните где-то, больше вы его не увидите') }}</div>
+	</ng-container>
+	<div class="box-wrap">
+		<app-box
+			[animate]="false"
+			[packed]="true"
+			[wrapped]="true"
+			[tapped]="true"
+			[w]="box.size.w"
+			[h]="box.size.h"
+			[d]="box.size.d"
+			[package]="box.package"
+	  		[tape]="box.tape"
+			[style.transform]="'translateX(0px) translateY(0px) translateZ(0px) rotateX(-15deg) rotateY(110deg) rotateZ(0deg) scale(1)'"
+		></app-box>
+	</div>
+	<div class="main__link"><span class="main__base-url">{{ baseUrl+'/v/' }}</span><span class="main__path-url">{{ general.link }}</span></div>
+	<!-- <div class="copy" [style.animation-name]="copyAnimationName">
+		<div class="copy__icon"></div>
+		<div class="copy__text">{{ locationService.translate('double click', 'двойное нажатие') }}</div>
+	</div> -->
+	<div class="main__link-exp">
+		<span class="main__link-exp-value">{{ getExpareString() }}</span>
+	</div>
+</div>
+
+<div class="hint" [class.hint_hidden]="this.stage !== 1 && this.stage !== 3">
+	<div class="hint__text">{{ locationService.translate('tap to continue', 'нажмите, чтобы продолжить') }}</div>
+</div>
+
+<!-- (close)="screenLinkWasClosed()" -->
+<!-- <app-touch-rename
+	[show]="stats.link === 'open'"
+	[value]="renameValue"
+	[enterable]="false"
+	[max]="renameMax"
+	[min]="renameMin"
+	[prefix]="baseUrl+'/'"
+	[fontSizePrecentage]="100"
+	[lengthWithPrefix]="false"
+	[rule]="ruleLink"
+	(save)="screenLinkWasSaved($event)"
+></app-touch-rename> -->

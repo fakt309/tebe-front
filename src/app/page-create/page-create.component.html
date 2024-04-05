@@ -1,8 +1,35 @@
-<app-touch-page-create-stage1 *ngIf="typeScreen === 'touch' && stage === 1"></app-touch-page-create-stage1>
-<app-desktop-page-create-stage1 *ngIf="typeScreen === 'desktop' && stage === 1"></app-desktop-page-create-stage1>
+<app-touch-page-create-stage1
+	*ngIf="typeScreen === 'touch' && stage === 1"
+	(changeGlobalStage)="changeStage($event)"
+></app-touch-page-create-stage1>
+<app-desktop-page-create-stage1
+	*ngIf="typeScreen === 'desktop' && stage === 1"
+	(changeGlobalStage)="changeStage($event)"
+></app-desktop-page-create-stage1>
 
-<app-touch-page-create-stage2 *ngIf="typeScreen === 'touch' && stage === 2"></app-touch-page-create-stage2>
-<app-desktop-page-create-stage2 *ngIf="typeScreen === 'desktop' && stage === 2"></app-desktop-page-create-stage2>
+<app-touch-page-create-stage2
+	*ngIf="typeScreen === 'touch' && stage === 2"
+	(changeGlobalStage)="changeStage($event)"
+></app-touch-page-create-stage2>
+<app-desktop-page-create-stage2
+	*ngIf="typeScreen === 'desktop' && stage === 2"
+	(changeGlobalStage)="changeStage($event)"
+></app-desktop-page-create-stage2>
 
-<app-touch-page-create-stage3 *ngIf="typeScreen === 'touch' && stage === 3"></app-touch-page-create-stage3>
-<app-desktop-page-create-stage3 *ngIf="typeScreen === 'desktop' && stage === 3"></app-desktop-page-create-stage3>
+<app-touch-page-create-stage3
+	*ngIf="typeScreen === 'touch' && stage === 3"
+	(changeGlobalStage)="changeStage($event)"
+></app-touch-page-create-stage3>
+<app-desktop-page-create-stage3
+	*ngIf="typeScreen === 'desktop' && stage === 3"
+	(changeGlobalStage)="changeStage($event)"
+></app-desktop-page-create-stage3>
+
+<app-touch-page-create-stage4
+	*ngIf="typeScreen === 'touch' && stage === 4"
+	(changeGlobalStage)="changeStage($event)"
+></app-touch-page-create-stage4>
+<app-desktop-page-create-stage4
+	*ngIf="typeScreen === 'desktop' && stage === 4"
+	(changeGlobalStage)="changeStage($event)"
+></app-desktop-page-create-stage4>

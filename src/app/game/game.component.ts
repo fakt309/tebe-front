@@ -74,14 +74,18 @@ export class GameComponent implements OnInit {
     const memory = this.smooth
     this.smooth = false
 
+    this.host.nativeElement.style.transform.replace(/scale\([0-9|\.]*\)/, `scale(${from/to})`)
+
     this.size = to
     this.setSize()
-    this.host.nativeElement.style.transform = `scale(${from/to})`
+    // this.host.nativeElement.style.transform = `scale(${from/to})`
+    this.host.nativeElement.style.transform = this.host.nativeElement.style.transform.replace(/scale\([0-9|\.]*\)/, `scale(${from/to})`)
     this.depth = from/this.ratio2
     await this.asyncservice.delay(10)
     this.smooth = true
     await this.asyncservice.delay(10)
-    this.host.nativeElement.style.transform = `scale(1)`
+    // this.host.nativeElement.style.transform = `scale(1)`
+    this.host.nativeElement.style.transform = this.host.nativeElement.style.transform.replace(/scale\([0-9|\.]*\)/, `scale(1)`)
     this.depth = to/this.ratio2
     await this.asyncservice.delay(300)
 

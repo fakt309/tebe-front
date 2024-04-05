@@ -1,4 +1,4 @@
-<app-touch-select-location *ngIf="showSelectLanguage"></app-touch-select-location>
+<!-- <app-touch-select-location *ngIf="showSelectLanguage"></app-touch-select-location> -->
 
 <app-touch-confirm [value]="confirm.value" (result)="resultConfirm($event)"></app-touch-confirm>
 
@@ -6,10 +6,28 @@
 
 <app-touch-menu [touch]="touches.menu" [options]="menu" [sublimeshow]="menusublimeshow" (action)="actionmenu($event)" (choose)="menuwaschoosen($event)" ></app-touch-menu>
 
-<app-touch-empty-giftslist *ngIf="!gifts.length" [touch]="touches.giftslist"></app-touch-empty-giftslist>
+<app-touch-empty-giftslist @emptyBlock *ngIf="!gifts.length" [touch]="touches.giftslist"></app-touch-empty-giftslist>
 
-<app-touch-scroll *ngIf="gifts.length" cdkDropList [cdkDropListAutoScrollDisabled]="true" [touch]='touches.giftslist' [refreshable]="true" (cdkDropListDropped)="dropListGifts($event)">
-  <app-touch-giftslist-option *ngFor="let gift of gifts" cdkDrag [class.option-list-gift-animated]="optionListGiftAnimated" [cdkDragDisabled]="gifts.length < 2" [cdkDragStartDelay]="500" [gift]="gift" [refresh]="refreshsnapshots" (click)="showviewgift(gift)" >
+<app-touch-scroll
+  *ngIf="gifts.length"
+  cdkDropList
+  [cdkDropListAutoScrollDisabled]="true"
+  [touch]='touches.giftslist'
+  [refreshable]="true"
+  (cdkDropListDropped)="dropListGifts($event)"
+>
+  <app-touch-giftslist-option
+    *ngFor="let gift of gifts; let i = index"
+    [@slideTopGiftBlock]="{value: '', params: { delay: (i*20)+'ms'}}"
+    class="gift-option-list"
+    cdkDrag
+    [class.option-list-gift-animated]="optionListGiftAnimated"
+    [cdkDragDisabled]="gifts.length < 2"
+    [cdkDragStartDelay]="500"
+    [gift]="gift"
+    [refresh]="refreshsnapshots"
+    (click)="showviewgift(gift)"
+  >
     <div class="placeholder-list-gift" *cdkDragPlaceholder></div>
     {{ gift.title | textMore:20 }}
   </app-touch-giftslist-option>
@@ -216,7 +234,7 @@
 </app-touch-screen>
 
 <app-touch-screen [show]="stats.screenwatchvideo === 'open'" [touch]="touches.screenwatchvideo" [backable]="true" [scrollable]="false" (close)="closewatchvideo()">
-  <app-touch-watch [active]="activewatchvideo" [video]="activeGift?.value"></app-touch-watch>
+  <app-touch-watch [active]="activewatchvideo" [video]="activeGift?.urlVideo" ></app-touch-watch>
 </app-touch-screen>
 
 <app-touch-screen [show]="stats.screentakephoto === 'open'" [touch]="touches.screentakephoto" [backable]="true" [scrollable]="false" (close)="closetakephoto()">

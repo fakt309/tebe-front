@@ -44,6 +44,7 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
   @Input() initialRect: any = null
 
   @Output() close: EventEmitter<void> = new EventEmitter<void>()
+  @Output() change: EventEmitter<void> = new EventEmitter<void>()
 
   editingTitle: boolean = false
 
@@ -357,22 +358,32 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
       this.gift.side = "../../assets/game/gameleft.png"
     }
 
+    this.change.emit()
+
   }
 
   saveSignGreetingcard(points: Array<any>) {
     this.gift.sign = [...points]
+
+    this.change.emit()
   }
 
   inputTitle(e: any): void {
     this.gift.title = e.target.value
+
+    this.change.emit()
   }
 
   inputTextGreetingcard(e: any) {
-    this.gift.text = e.target.value;
+    this.gift.text = e.target.value
+
+    this.change.emit()
   }
 
   setColorTextGreetingCard(e: any) {
     this.gift.color = e.target.value
+
+    this.change.emit()
   }
 
   setColorSignGreetingcard(e: any) {
@@ -385,6 +396,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
 
   setCodeGame(e: any) {
     this.gift.code = e.target.value
+
+    this.change.emit()
   }
 
   async switchTextCodeGame(): Promise<void> {
@@ -466,6 +479,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
 
     this.imageUpload.cancelImg = ''
     // this.imageUpload.type = 'none'
+
+    this.change.emit()
   }
 
   showUploadImageFrontGreetingCard(): void {
@@ -542,6 +557,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
     this.gift.value = val.chunks
     this.gift.sounds = val.sounds
     this.gift.duration = val.duration
+
+    this.change.emit()
   }
 
   selectUploadImage(image: string): void {
@@ -564,10 +581,43 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
     this.imageUpload.cancelImg = ''
   }
 
-  saveWebcamVideo(data: any): void {
+  // convertURIToBinary(dataURI: any): any {
+  //   let BASE64_MARKER = ';base64,'
+  //   let base64Index = dataURI.indexOf(BASE64_MARKER)+BASE64_MARKER.length
+  //   let base64 = dataURI.substring(base64Index)
+  //   let raw = window.atob(base64)
+  //   let rawLength = raw.length
+  //   let arr = new Uint8Array(new ArrayBuffer(rawLength))
+
+  //   for (let i = 0; i < rawLength; i++) {
+  //     arr[i] = raw.charCodeAt(i)
+  //   }
+  //   return arr
+  // }
+
+  async saveWebcamVideo(data: any): Promise<void> {
+
+    // console.log(data)
+
+    // const value = await this.convertURIToBinary(data.value[0])
+
+    // let blob = new Blob([value], {
+    //   type: 'video/webm' // ;codecs=vp8,opus;
+    // })
+
+        //gifts[i] = { ...gift, value: [blob], urlVideo: URL.createObjectURL(blob) }
+
+    // console.log(data.value[0])
+
     this.gift.value = data.value
+    // this.gift.urlVideo = URL.createObjectURL(data.value[0])
+
     this.gift.duration = data.duration
     this.webcamVideo.screen = 'watching'
+
+    this.change.emit()
+
+    return new Promise(res => res())
   }
 
   resultWebcamConfirm(res: string): void {
@@ -575,6 +625,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
       this.gift.value = []
       this.gift.duration = 0
       this.webcamVideo.recording = true
+
+      this.change.emit()
     }
     this.webcamVideo.showConfirm = 'close'
   }
@@ -624,6 +676,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
     }
 
     this.gift.color = color
+
+    this.change.emit()
   }
 
   saveTakePicture(img: string): void {
@@ -632,6 +686,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
     if (img === '') return
 
     this.gift.photo = img
+
+    this.change.emit()
   }
 
   switchShowRecordAudioSpeaker(): void {
@@ -657,6 +713,8 @@ export class DesktopEditGiftComponent implements OnInit, OnChanges, AfterViewIni
     // if (changes['gift'] && (changes['gift'].previousValue === null || changes['gift'].previousValue === undefined) && changes['gift'].currentValue !== null) {
     //   // this.show()
     // }
+
+    console.log(this.gift)
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, HostBinding, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, HostListener, HostBinding, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core'
 import { TouchService, Touch } from '../touch.service'
 import { Subscription } from 'rxjs'
 import { AsyncService } from '../async.service'
@@ -9,13 +9,40 @@ import { SnapshotGiftService } from '../snapshot-gift.service'
 import { ReadFileService } from '../services/read-file.service'
 import { OptionMenu } from '../touch-menu/touch-menu.component'
 import { ChangeDetectorRef } from '@angular/core'
+import { Router } from '@angular/router'
+import { ConfirmService } from '../services/confirm.service'
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations'
 
 @Component({
   selector: 'app-touch-page-create-stage3',
   templateUrl: './touch-page-create-stage3.component.html',
-  styleUrls: ['./touch-page-create-stage3.component.scss']
+  styleUrls: ['./touch-page-create-stage3.component.scss'],
+  animations: [
+    trigger('previewTextAnimation', [
+      transition(':enter', [
+        style({ transform: 'scale(0.1)', opacity: '0' }),
+        animate('0.5s ease', style({ transform: 'scale(1)', opacity: '1' }))
+      ])
+    ]),
+    trigger('hintTextAnimation', [
+      transition(':enter', [
+        style({ transform: 'scale(0.1)', opacity: '0' }),
+        animate('0.5s 0.5s ease', style({ transform: 'scale(1)', opacity: '1' }))
+      ])
+    ]),
+    trigger('stageAnimation', [
+      transition(':leave', [
+        style({ transform: 'scale(1)', opacity: '1' }),
+        animate('0.5s 0.5s ease', style({ transform: 'scale(0.1)', opacity: '0' }))
+      ])
+    ])
+  ]
 })
 export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
+
+  // @HostBinding('@stageAnimation') stageAnimation: string = ''
+
+  @Output() changeGlobalStage: EventEmitter<number> = new EventEmitter<number>()
 
   @ViewChild('colorDrawRef', { read: ElementRef }) colorDrawRef!: ElementRef
 
@@ -45,6 +72,8 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
     shiftRotate: { x: 0, y: 0 }
   }
 
+  cellInfoForBack: any = {}
+
   colorDrawControl: FormControl = new FormControl('#000000')
   toolDraw: 'pen' | 'eraser' = 'pen'
   colorDraw: string = '#000000'
@@ -73,6 +102,11 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
     id: null,
     waiting: false,
     allowed: false
+  }
+
+  public confirm: any = {
+    value: '',
+    type: ''
   }
 
   public menu: Array<OptionMenu> = []
@@ -160,7 +194,9 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
     public snapshotGiftService: SnapshotGiftService,
     public host: ElementRef,
     private readFileService: ReadFileService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router,
+    private confirmService: ConfirmService
   ) { }
 
   @HostListener('window:click', ['$event']) onClick(): void {
@@ -774,7 +810,7 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
           const el1 = this.getEscalateDOM(t.target, 'button-back')
           const el2 = this.getEscalateDOM(t.target, 'button-forward')
           if (el1) {
-            console.log('back to price')
+            this.changeGlobalStage.emit(2)
           } else if (el2) {
             this.onCloseScreen('screenadd')
             this.setPosition3()
@@ -786,6 +822,12 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
         if (t.action === 'move') {
 
           let cellInfo = this.cellBoxDragging(t.x, t.y)
+
+          // this placecellBoxDragging
+
+          this.cellInfoForBack = cellInfo
+
+          console.log(this.cellInfoForBack)
 
           this.dragGift.allowed = cellInfo.allowed
 
@@ -820,9 +862,6 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
               gift.pos.z = this.getZPositionGift(gift)
               this.inBox.push(this.dragGift.id)
             }
-
-            // this.box.animate = true
-            // setTimeout(() => { this.box.packed = true }, 0)
           }
 
           this.dragGift.id = null
@@ -833,6 +872,7 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
           this.onCloseScreen('dragGift')
           this.showScreen('mainGifts')
           this.hiddenGifts.clear()
+          this.saveUpdate()
         }
 
       }
@@ -903,7 +943,7 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
         }
       }
     } else if (this.stage === 4) {
-      if (this.stats.mainTape === 'open' && this.stats.screentrim === 'close' && this.stats.screenlisttrim === 'close') {
+      if (this.stats.mainTape === 'open' && this.stats.screentrim === 'close' && this.stats.screenlisttrim === 'close' && this.confirm.value === '') {
         if (t.action === 'start') {
           clearTimeout(this.dragGift.timeout)
           this.dragGift.timeout = setTimeout(() => {
@@ -962,13 +1002,32 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
             this.setPositionFrom4To3()
             this.stage--
           } else if (el2) {
-            console.log('COMPLETE')
+            this.onCloseScreen('chooseNext')
+            this.changeGlobalStage.emit(4)
+            // this.showConfirm('complete', this.locationService.translate('If you complete it, you will never be able to edit the gift again, you will have to delete it and create it again. Sure?', 'Если вы завершите, вы больше никогда не смжете отредактировать подарок, придётся удалять и заного создавать. Уверены?'))
+            // setTimeout(() => {
+            //     this.showConfirm('complete', this.locationService.translate('If you complete it, you will never be able to edit the gift again, you will have to delete it and create it again. Sure?', 'Если вы завершите, вы больше никогда не смжете отредактировать подарок, придётся удалять и заного создавать. Уверены?'))
+            // }, 10)
           }
         }
       }
     }
+  }
 
+  showConfirm(type: string, text: string): void {
+    this.confirm.value = text
+    this.confirm.type = type
+  }
 
+  resultConfirm(res: any) {
+    if (res === 'agree' && this.confirm.type === 'complete') {
+      // this place
+      // console.log('CREATE GIFT')
+      // this.router.navigateByUrl('/i')
+    }
+
+    this.confirm.value = ''
+    this.confirm.type = ''
   }
 
   closescreentrimlist(): void {
@@ -1032,6 +1091,8 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
     } else if (this.listtrim === 'tapebox') {
       this.box.tape = img
     }
+
+    this.saveUpdate()
   }
 
   actionmenu(act: string): void {
@@ -1395,11 +1456,25 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
       maxHeight += this.getDepthGift(gift)
     })
 
-    maxHeight += 20
+    maxHeight += 40
+
+    maxHeight = Math.ceil(maxHeight)
 
     // if (maxHeight < 20) maxHeight = 20
 
     this.box.size.h = maxHeight
+  }
+
+  saveUpdate(): void {
+    window.localStorage.setItem('box', JSON.stringify({
+      package: this.box.package,
+      tape: this.box.tape,
+      grid: { w: this.grid.w, h: this.grid.h },
+      size: { w: this.box.size.w, h: this.box.size.h, d: this.box.size.d },
+      inBox: this.inBox
+    }))
+
+    window.localStorage.setItem('gifts', JSON.stringify(this.gifts))
   }
 
   ngOnInit(): void {
@@ -1409,11 +1484,11 @@ export class TouchPageCreateStage3Component implements OnInit, OnDestroy {
     )
 
     // setTimeout(() => {
-    //   this.setPosition2()
-    //   this.stage = 2
+    //   this.setPosition4()
+    //   this.stage = 4
     // }, 10)
     
-    window.localStorage.setItem('gifts', JSON.stringify([{"id":1,"title":"Игра","color":"#003791","front":"../../assets/game/example.jpg","inside":"../../assets/game/game.png","side":"../../assets/game/gameleft.png","code":"WERB-NBHP-DXCV-ZZKL-UIFM","platform":"ps","open":false,"type":"game"},{"id":3,"title":"Открытка","front":"../../assets/greetingcard/front/21.png","back":"../../assets/greetingcard/back/5.jpg","text":"Желаю счастья, радости, любви,\nЕще мечты заветной исполненья,\nЗдоровья крепкого, удач всегда во всем\nИ добрых слов не только в день рожденья!","sign":[],"color":"#ffffff","type":"greetingcard"},{"id":2,"title":"Аудиозапись","grill":"../../assets/speaker/grill/0.png","color":"#ff5722","value":[],"type":"speaker"}]))
+    // window.localStorage.setItem('gifts', JSON.stringify([{"id":1,"title":"Игра","color":"#003791","front":"../../assets/game/example.jpg","inside":"../../assets/game/game.png","side":"../../assets/game/gameleft.png","code":"WERB-NBHP-DXCV-ZZKL-UIFM","platform":"ps","open":false,"type":"game"},{"id":3,"title":"Открытка","front":"../../assets/greetingcard/front/21.png","back":"../../assets/greetingcard/back/5.jpg","text":"Желаю счастья, радости, любви,\nЕще мечты заветной исполненья,\nЗдоровья крепкого, удач всегда во всем\nИ добрых слов не только в день рожденья!","sign":[],"color":"#ffffff","type":"greetingcard"},{"id":2,"title":"Аудиозапись","grill":"../../assets/speaker/grill/0.png","color":"#ff5722","value":[],"type":"speaker"}]))
 
     this.gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
 

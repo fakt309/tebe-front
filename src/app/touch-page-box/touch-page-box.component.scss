@@ -1,0 +1,301 @@
+:host {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: center;
+
+	.error::ng-deep {
+		align-self: center;
+		background-color: #ffffff;
+		color: #333333;
+		box-shadow: 0px 0px 5px #00000033;
+	}
+
+	.input-path {
+		padding: 20px;
+		font-size: 20px;
+		color: #333333;
+	}
+
+	.preview {
+		width: 100%;
+		position: absolute;
+		margin: 0px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		transform: translateX(100%);
+		transition: all ease 0.2s;
+	}
+
+	.preview_center {
+		transform: translateX(0%);
+	}
+
+	.preview_left {
+		transform: translateX(-100%);
+	}
+
+	.preview_right {
+		transform: translateX(100%);
+	}
+
+	.search {
+		margin: 20px;
+		margin-bottom: 100px;
+		background-image: url(/assets/search-google.png);
+		background-position: top center;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		overflow: hidden;
+		border-radius: 15px 15px 0px 0px;
+	}
+
+	.search__url {
+		margin-left: 30%;
+		margin-top: 11.6%;
+		font-size: 3vw;
+		white-space: nowrap;
+	}
+
+	.search__base {
+		color: #999999;
+	}
+
+	.search__path {
+		color: #333333;
+		font-weight: 700;
+	}
+
+	.preview__description {
+		margin: 20px;
+		text-align: center;
+		font-size: 18px;
+	}
+
+	.hint {
+		position: fixed;
+		left: 0px;
+		bottom: 0px;
+		width: 100%;
+		z-index: 10;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		transform: translateY(0%);
+		transition: all ease 0.2s;
+	}
+
+	.hint_hidden {
+		transform: translateY(100%);
+	}
+
+	.hint__text {
+		margin: 10px;
+		font-size: 14px;
+		color: #333333;
+		text-align: center;
+	}
+
+	.chat {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		bottom: 40px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-end;
+		transform: translateX(0%);
+		overflow: hidden;
+		transition: all ease 0.2s;
+	}
+
+	.chat_center {
+		transform: translateX(0%);
+	}
+
+	.chat_left {
+		transform: translateX(-100%);
+	}
+
+	.chat_right {
+		transform: translateX(100%);
+	}
+
+	.chat__message {
+		margin: 0px 10px;
+		margin-bottom: 20px;
+		padding: 20px;
+		font-size: 14px;
+		color: #333333;
+		border-radius: 15px;
+		background-color: #ffffff;
+		box-shadow: 0px 0px 5px #00000033;
+	}
+
+	.chat__message_animated {
+		transition: all ease 0.2s;
+	}
+
+	.chat__message_me {
+		background-color: #effdde;
+		align-self: flex-end;
+	}
+
+	.chat__link {
+		color: #168acd;
+	}
+
+	.main {
+		width: 100%;
+		margin: 0px;
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		transform: translateX(100%);
+		transition: all ease 0.2s;
+	}
+
+	.main_center {
+		transform: translateX(0%);
+	}
+
+	.main_left {
+		transform: translateX(-100%);
+	}
+
+	.main_right {
+		transform: translateX(100%);
+	}
+
+	.box-wrap {
+		width: 200px;
+		height: 200px;
+		align-self: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.main__title {
+		margin: 20px;
+		font-size: 18px;
+		text-align: center;
+		align-self: center;
+		color: #333333
+	}
+
+	.main__link {
+		margin: 0px 20px;
+		margin-top: 40px;
+		margin-bottom: 5px;
+		align-self: center;
+		text-align: center;
+		font-size: 14px;
+	}
+
+	.main__base-url, .main__query-url {
+		color: #999999;
+	}
+
+	.main__path-url {
+		color: #333333;
+	}
+
+	.main__link-exp {
+		margin: 20px;
+		margin-top: 40px;
+		align-self: center;
+		text-align: center;
+		font-size: 12px;
+		color: #f44336;
+	}
+
+	.main__link-exp-title {
+		// color: #999999;
+	}
+
+	.main__link-exp-value {
+		// color: #333333;
+	}
+
+	.main__code {
+		margin: 20px;
+		margin-bottom: 5px;
+		align-self: center;
+		text-align: center;
+		font-size: 26px;
+	}
+
+	.main__code-title {
+		color: #999999;
+	}
+
+	.main__code-value {
+		color: #333333;
+	}
+
+	.main__code-sub {
+		margin: 20px;
+		margin-top: 0px;
+		align-self: center;
+		text-align: center;
+		font-size: 12px;
+		color: #f44336;
+	}
+
+	.copy {
+		margin: 10px;
+		margin-top: 0px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	    animation-timing-function: linear;
+		animation-duration: 0.2s;
+		animation-iteration-count: 1;
+	}
+
+	.copy__icon {
+		width: 20px;
+		height: 20px;
+		margin: 0px 10px;
+		margin-right: 0px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-image: url(/assets/copy.svg);
+	}
+
+	.copy__text {
+		margin: 0px 10px;
+		font-size: 12px;
+		color: #333333
+	}
+
+}
+
+@keyframes copyAnimation {
+  0% {
+    transform: scale(1)
+  }
+
+  50% {
+    transform: scale(0.5)
+  }
+
+  100% {
+    transform: scale(1)
+  }
+}

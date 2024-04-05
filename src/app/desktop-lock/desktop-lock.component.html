@@ -1,0 +1,49 @@
+<div class="content">
+	<div class="display"> 
+		<div
+			*ngFor="let item1 of [].constructor(codeControl.value.length); let i = index"
+			@codeNumber
+			class="display__number"
+			[class.display__correct]="codeCorrect"
+		>
+			{{ getCodeChar(i) }}
+		</div>
+	</div>
+
+	<div class="keyboard">
+		<div
+			*ngFor="let item1 of [].constructor(3); let i = index"
+			class="row"
+		>
+			<div
+				*ngFor="let item2 of [].constructor(3); let j = index"
+				class="number"
+				(click)="addNumber(i*3+j+1)"
+			>
+				{{ i*3+j+1 }}
+			</div>
+		</div>
+		<div
+			class="row row_last"
+		>
+			<div
+				class="number"
+				(click)="ok()"
+			>
+				ok
+			</div>
+			<div
+				class="number"
+				(click)="addNumber(0)"
+			>
+				0
+			</div>
+			<div
+				class="number"
+				(click)="deleteLastNumber()"
+			>
+				<
+			</div>
+		</div>
+	</div>
+</div>

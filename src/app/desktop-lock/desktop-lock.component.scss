@@ -1,0 +1,133 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	animation-duration: 0.2s;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		background-color: #333333;
+		border-radius: 15px;
+		max-width: 600px;
+		width: 100%;
+	}
+
+	.display {
+		height: 80px;
+		background-color: #99999900;
+		border-radius: 15px;
+		font-size: 60px;
+		color: #bbbbbb;
+		padding: 20px;
+		padding-bottom: 0px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		transition: all ease 0.2s;
+	}
+
+	.display__correct {
+		color: #8bc34a;
+	}
+
+	.keyboard {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.number {
+		margin-right: 20px;
+		margin-top: 20px;
+		width: 80px;
+		height: 80px;
+		background-color: #ffffff33;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border-radius: 15px;
+		color: #ffffff;
+		font-size: 30px;
+		cursor: pointer;
+		user-select: none;
+		transition: all ease 0.2s;
+	}
+
+	.number:first-child {
+		margin-left: 20px;
+	}
+
+	.row:last-child {
+		.number {
+			margin-bottom: 20px;
+		}
+	}
+
+	.number:hover {
+		background-color: #ffffff66;
+	}
+
+	@keyframes reject {
+		$amplitude: 20px;
+
+		0% {
+			transform: translateX(0px);
+		}
+		11% {
+			transform: translateX($amplitude);
+		}
+		22% {
+			transform: translateX(0px);
+		}
+		33% {
+			transform: translateX(calc(-1 * $amplitude));
+		}
+		44% {
+			transform: translateX(0px);
+		}
+		55% {
+			transform: translateX(0px);
+		}
+		66% {
+			transform: translateX($amplitude);
+		}
+		77% {
+			transform: translateX(0px);
+		}
+		88% {
+			transform: translateX(calc(-1 * $amplitude));
+		}
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+}
+
+:host(.disabled) {
+	filter: blur(5px);
+
+	.number {
+		cursor: default;
+	}
+
+	.number:hover {
+		background-color: #ffffff33;
+	}
+}

@@ -1,1 +1,12 @@
+<ng-container *ngIf="isShowLanguage()">
+	<app-desktop-select-location
+		*ngIf="getTypeScreen() === 'desktop'"
+		(select)="onSelectLanguage($event)"
+	></app-desktop-select-location>
+	<app-touch-select-location
+		*ngIf="getTypeScreen() === 'touch'"
+		(select)="onSelectLanguage($event)"
+	></app-touch-select-location>
+</ng-container>
+
 <router-outlet></router-outlet>

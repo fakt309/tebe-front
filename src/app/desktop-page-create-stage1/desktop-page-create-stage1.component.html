@@ -1,14 +1,15 @@
-<app-desktop-select-location *ngIf="showSelectLanguage"></app-desktop-select-location>
+<!-- <app-desktop-select-location *ngIf="showSelectLanguage"></app-desktop-select-location> -->
 
 <app-desktop-edit-gift
   *ngIf="activeGift !== null"
   [gift]="activeGift"
   [initialRect]="initialRectViewGift"
   (close)="closeEditGift()"
+  (change)="changeEditGift()"
 ></app-desktop-edit-gift>
 
 <template #moveGift></template>
-<div *ngIf="screens.listGifts === 'open' && gifts.length === 0 && !showSelectLanguage" class="skelet-empty" @fade>
+<div *ngIf="screens.listGifts === 'open' && gifts.length === 0" class="skelet-empty" @fade>
   <app-desktop-empty-giftlist></app-desktop-empty-giftlist>
 </div>
 <div *ngIf="screens.listGifts === 'open' && gifts.length !== 0" class="skelet-giftlist" @fade>
@@ -33,7 +34,7 @@
     (click)="screens.addGift = 'open'"
   ></app-desktop-button>
   <app-desktop-button
-    (click)="mixxxx()"
+    (click)="onClickNextStage()"
     [text]="locationService.translate('next stage', 'след. этап')"
     [icon]="'../../assets/checkmark.svg'"
     [background]="'#ffffff'"

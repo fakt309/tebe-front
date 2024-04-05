@@ -14,7 +14,7 @@ class="display"
   <div class="ico" [style.backgroundImage]="'url('+('../../assets/loupe.svg')+')'"></div>
   <div class="text">{{ locationService.translate('double tap', 'двойное нажатие') }}</div>
 </div>
-<div class="hintsidebar">
-  <div class="text">{{ locationService.translate('change object parameters in the right sidebar', 'измение параметров подарка в правом меню') }}</div>
+<div *ngIf="buttomText" class="hintsidebar">
+  <div class="text">{{ buttomText }}</div>
   <div class="ico" [style.backgroundImage]="'url('+'../../assets/arrow-right-sidebar2.svg'+')'"></div>
 </div>

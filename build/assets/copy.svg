@@ -1,0 +1,36 @@
+<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <!-- <rect x="0" y="0" width="30" height="30" fill="#ff000033" /> -->
+  <!-- <rect x="7" y="5" width="16" height="20" rx="3" fill="#00000033" /> -->
+    <path
+      d="
+        M 9 5
+        C 9 5, 21 5, 21 5
+        C 22 5, 23 6, 23 7
+        C 23 7, 23 23, 23 23
+        C 23 24, 22 25, 21 25
+        C 21 25, 9 25, 9 25
+        C 8 25, 7 24, 7 23
+        C 7 23, 7 7, 7 7
+        C 7 6, 8 5, 9 5
+      "
+      troke-width="2"
+      stroke="#333"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="transparent"
+    />
+    <path
+      transform="translate(2, 2)"
+      d="
+        M 23 7
+        C 23 5, 23 23, 23 23
+        C 23 24, 22 25, 21 25
+        C 21 25, 9 25, 9 25
+      "
+      troke-width="2"
+      stroke="#333"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="transparent"
+    />
+</svg>

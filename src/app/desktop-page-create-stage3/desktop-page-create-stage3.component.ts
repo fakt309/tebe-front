@@ -1,10 +1,14 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, HostListener, ViewChild, ElementRef, Output, EventEmitter, ViewContainerRef, HostBinding } from '@angular/core'
 import { trigger, state, transition, style, animate } from '@angular/animations'
 import { Subscription } from 'rxjs'
 import { AsyncService } from '../async.service'
 import { SnapshotGiftService } from '../snapshot-gift.service'
 import { LocationService } from '../services/location.service'
 import { ReadFileService } from '../services/read-file.service'
+import { ConfirmService } from '../services/confirm.service'
+import { GetTargetHtmlService } from '../services/get-target-html.service'
+import { Router } from '@angular/router'
+import { BackendService } from '../services/backend.service'
 
 @Component({
   selector: 'app-desktop-page-create-stage3',
@@ -32,10 +36,20 @@ import { ReadFileService } from '../services/read-file.service'
         display: 'none'
       })),
       transition('open <=> close', animate('0.2s ease'))
+    ]),
+    trigger('stageAnimation', [
+      transition(':leave', [
+        style({ opacity: '1' }),
+        animate('2s ease', style({ opacity: '0' }))
+      ])
     ])
   ]
 })
 export class DesktopPageCreateStage3Component implements OnInit {
+
+  // @HostBinding('@stageAnimation') stageAnimation: string = ''
+
+  @Output() changeGlobalStage: EventEmitter<number> = new EventEmitter<number>()
 
   @ViewChild('boxRef', { read: ElementRef }) boxRef!: ElementRef
 
@@ -120,7 +134,12 @@ export class DesktopPageCreateStage3Component implements OnInit {
     public asyncService: AsyncService,
     public snapshotGiftService: SnapshotGiftService,
     public locationService: LocationService,
-    public readFileService: ReadFileService
+    public readFileService: ReadFileService,
+    private hostContainer: ViewContainerRef,
+    private confirmService: ConfirmService,
+    private getTargetHtmlService: GetTargetHtmlService,
+    private router: Router,
+    private backendService: BackendService
   ) { }
 
   @HostListener('window:mousedown', ['$event']) onMouseDown(e: any): void {
@@ -221,6 +240,8 @@ export class DesktopPageCreateStage3Component implements OnInit {
           gift.pos.z = this.getZPositionGift(gift)
           this.inBox.push(this.dragGift.id)
         }
+
+        this.saveUpdate()
 
         this.dragGift.id = null
         this.dragGift.img = null
@@ -484,16 +505,41 @@ export class DesktopPageCreateStage3Component implements OnInit {
     return new Promise(res => res())
   }
 
-  completeStage(): void {
-    console.log('go go go')
+  // async createBox(): Promise<void> {
+
+  //   this.backendService.createBox(this.box, this.gifts)
+
+  //   return new Promise(res => res())
+  // }
+
+  onClickCompleteStage(e: any): void {
+    this.changeGlobalStage.emit(4)
+    
+    // const el = this.getTargetHtmlService.get(e.target, 'button-next-stage__option')
+
+    // this.confirmService.show(
+    //   this.hostContainer,
+    //   el!,
+    //   this.locationService.translate('If you complete it, you will never be able to edit the gift again, you will have to delete it and create it again. Sure?', 'Если вы завершите, вы больше никогда не смжете отредактировать подарок, придётся удалять и заного создавать. Уверены?'),
+    //   (res: boolean): void => {
+    //     if (res) {
+    //       // this.createBox()
+    //       this.changeGlobalStage.emit(4)
+    //     }
+    //     this.confirmService.hide()
+    // })
   }
 
   setPackageBox(img: string) {
     this.box.package = img
+
+    this.saveUpdate()
   }
 
   setTapeBox(img: string) {
     this.box.tape = img
+
+    this.saveUpdate()
   }
 
   trySetStage2(): void {
@@ -694,20 +740,20 @@ export class DesktopPageCreateStage3Component implements OnInit {
 
     if (countGifts < 4) {
       this.grid = { w: 1, h: 1 }
-      this.box.size.w = 300
-      this.box.size.d = 300
+      this.box.size.w = 150
+      this.box.size.d = 150
     } else if (countGifts >= 4 && countGifts < 6) {
       this.grid = { w: 2, h: 2 }
-      this.box.size.w = 400
-      this.box.size.d = 400
+      this.box.size.w = 300
+      this.box.size.d = 300
     } else if (countGifts >= 6 && countGifts < 9) {
       this.grid = { w: 3, h: 2 }
       this.box.size.w = 300
-      this.box.size.d = 500
+      this.box.size.d = 450
     } else if (countGifts >= 9) {
       this.grid = { w: 3, h: 3 }
-      this.box.size.w = 500
-      this.box.size.d = 500
+      this.box.size.w = 450
+      this.box.size.d = 450
     }
 
     let maxHeight = 0
@@ -716,7 +762,7 @@ export class DesktopPageCreateStage3Component implements OnInit {
       maxHeight += this.getDepthGift(gift)
     })
 
-    maxHeight += 20
+    maxHeight += 40
 
     // if (maxHeight < 20) maxHeight = 20
 
@@ -778,6 +824,8 @@ export class DesktopPageCreateStage3Component implements OnInit {
       this.box.tape = image
     }
 
+    this.saveUpdate()
+
     this.imageUpload.cancelImg = ''
     // this.imageUpload.type = 'none'
   }
@@ -799,14 +847,27 @@ export class DesktopPageCreateStage3Component implements OnInit {
   }
 
   backToPrice(): void {
-    console.log('back back back')
+    this.changeGlobalStage.emit(2)
+  }
+
+  saveUpdate(): void {
+
+    window.localStorage.setItem('box', JSON.stringify({
+      package: this.box.package,
+      tape: this.box.tape,
+      grid: { w: this.grid.w, h: this.grid.h },
+      size: { w: this.box.size.w, h: this.box.size.h, d: this.box.size.d },
+      inBox: this.inBox
+    }))
+
+    window.localStorage.setItem('gifts', JSON.stringify(this.gifts))
   }
 
   ngOnInit(): void {
 
     this.setStage1()
 
-    window.localStorage.setItem('gifts', JSON.stringify([{"id":1,"title":"Игра","color":"#003791","front":"../../assets/game/example.jpg","inside":"../../assets/game/game.png","side":"../../assets/game/gameleft.png","code":"WERB-NBHP-DXCV-ZZKL-UIFM","platform":"ps","open":false,"type":"game"},{"id":3,"title":"Открытка","front":"../../assets/greetingcard/front/21.png","back":"../../assets/greetingcard/back/5.jpg","text":"Желаю счастья, радости, любви,\nЕще мечты заветной исполненья,\nЗдоровья крепкого, удач всегда во всем\nИ добрых слов не только в день рожденья!","sign":[],"color":"#ffffff","type":"greetingcard"},{"id":2,"title":"Аудиозапись","grill":"../../assets/speaker/grill/0.png","color":"#ff5722","value":[],"type":"speaker"}]))
+    // window.localStorage.setItem('gifts', JSON.stringify([{"id":1,"title":"Игра","color":"#003791","front":"../../assets/game/example.jpg","inside":"../../assets/game/game.png","side":"../../assets/game/gameleft.png","code":"WERB-NBHP-DXCV-ZZKL-UIFM","platform":"ps","open":false,"type":"game"},{"id":3,"title":"Открытка","front":"../../assets/greetingcard/front/21.png","back":"../../assets/greetingcard/back/5.jpg","text":"Желаю счастья, радости, любви,\nЕще мечты заветной исполненья,\nЗдоровья крепкого, удач всегда во всем\nИ добрых слов не только в день рожденья!","sign":[],"color":"#ffffff","type":"greetingcard"},{"id":2,"title":"Аудиозапись","grill":"../../assets/speaker/grill/0.png","color":"#ff5722","value":[],"type":"speaker"}]))
 
     this.gifts = JSON.parse(window.localStorage.getItem('gifts') || '[]')
 

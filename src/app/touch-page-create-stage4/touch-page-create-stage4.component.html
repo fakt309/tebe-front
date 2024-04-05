@@ -1,0 +1,58 @@
+<app-touch-error class="error" [value]="valerror"></app-touch-error>
+
+<app-touch-confirm
+	[value]="confirm.value"
+	(result)="resultConfirm($event)"
+></app-touch-confirm>
+
+<div
+	class="preview"
+	[class.preview_left]="this.stage > 1"
+	[class.preview_center]="this.stage === 1"
+	[class.preview_right]="this.stage < 1"
+>
+	<div class="search" [style.width.px]="searchImage.w" [style.height.px]="searchImage.h">
+		<div class="search__url">
+			<span class="search__base">{{ baseUrl+'/' }}</span><span class="search__path">{{ exampleUrl }}</span>
+		</div>
+	</div>
+
+	<div class="preview__description">{{ locationService.translate('come up with an original link that you will send', 'придумайте оригинальную ссылку, которую вы отправите') }}</div>
+</div>
+
+<app-touch-rename
+	[show]="stats.link === 'open'"
+	[value]="renameValue"
+	[enterable]="false"
+	[max]="renameMax"
+	[min]="renameMin"
+	[prefix]="baseUrl+'/'"
+	[fontSizePrecentage]="100"
+	[lengthWithPrefix]="false"
+	[rule]="ruleLink"
+	(save)="screenLinkWasSaved($event)"
+></app-touch-rename>
+
+<app-touch-screen
+	[touch]="touches.chooseNext"
+	[show]="stats.chooseNext === 'open'"
+	[doscrolltocenter]="doscrolltocenterNextChoose"
+	[scrollable]="true"
+	[backable]="true"
+	(close)="closeScreenChooseNext()"
+>
+	<ng-container *ngIf="stage === 3">
+		<div matRipple matRippleColor="#00000011" class="button-forward">
+			<div class="button-forward__icon button-forward__icon_complete"></div>
+			<div class="button-forward__text">{{ locationService.translate('complete', 'завершить') }}</div>
+		</div>
+		<!-- <div matRipple matRippleColor="#00000011" class="button-back button-back-1">
+			<div class="button-back__icon"></div>
+			<div class="button-back__text">{{ locationService.translate('back to link', 'назад к ссылке') }}</div>
+		</div> -->
+		<div matRipple matRippleColor="#00000011" class="button-back">
+			<div class="button-back__icon"></div>
+			<div class="button-back__text">{{ locationService.translate('back to gifts', 'назад к подаркам') }}</div>
+		</div>
+	</ng-container>
+</app-touch-screen>

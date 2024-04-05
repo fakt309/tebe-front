@@ -21,8 +21,8 @@ export class ConfirmService {
   ): void {
     const component = this.cfr.resolveComponentFactory(DesktopConfirmComponent)
     this.component = container.createComponent(component)
-    this.component.instance.text = text;
-    this.component.instance.target = target;
+    this.component.instance.text = text
+    this.component.instance.target = target
     this.component.instance.result.subscribe(callback)
   }
 

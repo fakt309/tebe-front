@@ -1,0 +1,44 @@
+<div class="hook" [class.hook_opened]="opened"></div>
+<div class="content row">
+	<div
+		class="active-rect"
+		[class.active-rect_animated]="activeRect.animated"
+		[style.transform]="'translateX('+(activeRect.x+activeRect.shift.x)+'px) translateY('+activeRect.y+'px)'"
+		[style.width.px]="activeRect.w"
+		[style.height.px]="activeRect.h"
+	></div>
+	<div
+		*ngFor="let ll of letters"
+		class="column tape-digits"
+		[class.tape-digits_animated]="ll.animated"
+		[style.transform]="'translateY('+(ll.y+ll.shift.y)+'px)'"
+	>
+		<div
+			*ngFor="let l of getArrayAlphabet()"
+			class="letter"
+			[style.width.px]="letterData.size"
+			[style.height.px]="letterData.size"
+			[style.font-size.px]="letterData.size*0.5"
+		>
+			{{ l }}
+		</div>
+		<div
+			*ngFor="let l of getArrayAlphabet()"
+			class="letter"
+			[style.width.px]="letterData.size"
+			[style.height.px]="letterData.size"
+			[style.font-size.px]="letterData.size*0.5"
+		>
+			{{ l }}
+		</div>
+		<div
+			*ngFor="let l of getArrayAlphabet()"
+			class="letter"
+			[style.width.px]="letterData.size"
+			[style.height.px]="letterData.size"
+			[style.font-size.px]="letterData.size*0.5"
+		>
+			{{ l }}
+		</div>
+	</div>
+</div>

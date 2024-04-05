@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef, SimpleChanges, HostBinding, EventEmitter, Output } from '@angular/core'
 import { AsyncService } from '../async.service'
 import { LocationService } from '../services/location.service'
+import { BackendService } from '../services/backend.service'
 
 @Component({
   selector: 'app-touch-rename',
@@ -17,6 +18,11 @@ export class TouchRenameComponent implements OnInit {
   @Input() title: string = ''
   @Input() onlyNumbers: boolean = false
   @Input() useAnimate: boolean = true
+  @Input() prefix: string = ''
+  @Input() lengthWithPrefix: boolean = true
+  // @Input() customModify: ((t: string) => string) | null = null
+  @Input() fontSizePrecentage: number = 300
+  @Input() rule: ((t: string) => Promise<string | true>) | null = null
 
   @Output() save: EventEmitter<string> = new EventEmitter()
   @Output() close: EventEmitter<string> = new EventEmitter()
@@ -24,6 +30,9 @@ export class TouchRenameComponent implements OnInit {
 
   @HostBinding('style.display') display: string = 'none'
   @HostBinding('style.transform') transform: string = 'translateX(100%)'
+
+  isCorrectRule: true | string = true
+  timeoutRefreshRule = setTimeout(() => {}, 0)
 
   private timeout = setTimeout(() => {}, 0)
 
@@ -35,21 +44,66 @@ export class TouchRenameComponent implements OnInit {
   constructor(
     private host: ElementRef,
     private asyncservice: AsyncService,
-    public locationService: LocationService
+    public locationService: LocationService,
+    public backendService: BackendService
   ) { }
+
+  onTouchEnd(e: any): void {
+
+    setTimeout(() => {
+      if (e.target.selectionStart < this.prefix.length) {
+        e.target.selectionStart = this.prefix.length
+      }
+    }, 100)
+    
+  }
 
   refresh(e: any): void {
     let textarea = this.host.nativeElement.querySelector(".value")
     let save = false
+
+    if (this.prefix !== '') {
+      // console.log(e.inputType)
+      // console.log(this.prefix.length, e.target.selectionStart)
+      // console.log(textarea.value)
+      let v = textarea.value.replace(new RegExp(`^(${this.prefix}|${this.prefix.slice(0, -1)})`, 'g'), '')
+      v = `${this.prefix}${v}`
+      textarea.value = v
+    }
+    // if (this.customModify !== null) {
+    //   textarea.value = this.customModify(textarea.value)
+    // }
+
     if (this.enterable && /\#/g.test(textarea.value)) save = true
     if (!this.enterable && e.inputType === 'insertLineBreak') save = true
-    textarea.value = textarea.value.replace(/\#/g, "")
-    if (this.onlyNumbers) textarea.value = textarea.value.replace(/[^0-9\.]/g, "")
-    if (!this.enterable) textarea.value = textarea.value.replace(/[\n]+/g, "")
+    textarea.value = textarea.value.replace(/\#/g, '')
+    if (this.onlyNumbers) textarea.value = textarea.value.replace(/[^0-9\.]/g, '')
+    if (!this.enterable) textarea.value = textarea.value.replace(/[\n]+/g, '')
     this.value = textarea.value
     this.setsize()
-    if (save) this.trytosave()
-    this.onInput.emit(this.value)
+    if (save) {
+      this.trytosave().then(() => {
+        this.onInput.emit(this.value)
+      })
+    } else {
+      clearTimeout(this.timeoutRefreshRule)
+      this.timeoutRefreshRule = setTimeout(() => {
+        this.refreshRule()
+      }, 300)
+    }
+    
+    setTimeout(() => {
+      if (e.target.selectionStart < this.prefix.length) e.target.selectionStart = this.prefix.length
+    }, 50)
+  }
+
+  async refreshRule(): Promise<void> {
+    if (!this.rule) {
+      this.isCorrectRule = true
+      return new Promise(res => res())
+    }
+    this.isCorrectRule = await this.rule(this.value.replace(this.prefix, ''))
+    return new Promise(res => res())
   }
 
   setsize(): void {
@@ -106,19 +160,43 @@ export class TouchRenameComponent implements OnInit {
     }
   }
 
-  trytosave(): void {
+  isLengthCorrect(): boolean {
+    let length = this.value.length
+
+    if (!this.lengthWithPrefix) length -= this.prefix.length
+
+    if (length < this.min || length > this.max) {
+      return false
+    }
+    return true
+  }
+
+  // async isCorrectRule(): Promise<true | string> {
+  //   if (!this.rule) return true
+  //   return (await this.rule(this.value.replace(this.prefix, '')))
+  // }
+
+  async trytosave(): Promise<void> {
+    let length = this.value.length
+
+    await this.refreshRule()
+
+    if (this.lengthWithPrefix) length -= this.prefix.length
+
     if (this.show === true) {
-      if (this.value.length < this.min || this.value.length > this.max) {
+      if (!this.isLengthCorrect() || this.isCorrectRule !== true) {
         this.host.nativeElement.querySelector('.maxlength').style.animationName = 'shake'
         clearTimeout(this.timeout)
         this.timeout = setTimeout(() => {
           this.host.nativeElement.querySelector('.maxlength').style.animationName = 'none'
         }, 200)
       } else {
-        this.save.emit(this.value)
+        this.save.emit(this.value.replace(this.prefix, ''))
         this.dohide()
       }
     }
+
+    return new Promise(res => res())
   }
 
   ngOnInit(): void {

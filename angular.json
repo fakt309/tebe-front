@@ -20,8 +20,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "baseHref": "/tebe-front/",
-            "outputPath": "./docs",
+            "baseHref": "/",
+            "outputPath": "./build",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

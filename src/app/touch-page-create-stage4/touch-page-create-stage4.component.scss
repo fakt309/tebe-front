@@ -1,0 +1,141 @@
+:host {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: center;
+
+	.error::ng-deep {
+		align-self: center;
+		background-color: #ffffff;
+		color: #333333;
+		box-shadow: 0px 0px 5px #00000033;
+	}
+
+	.input-path {
+		padding: 20px;
+		font-size: 20px;
+		color: #333333;
+	}
+
+	.preview {
+		width: 100%;
+		position: absolute;
+		margin: 0px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		transform: translateX(100%);
+		transition: all ease 0.2s;
+	}
+
+	.preview_center {
+		transform: translateX(0%);
+	}
+
+	.preview_left {
+		transform: translateX(-100%);
+	}
+
+	.preview_right {
+		transform: translateX(100%);
+	}
+
+	.search {
+		margin: 20px;
+		margin-bottom: 100px;
+		background-image: url(/assets/search-google.png);
+		background-position: top center;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		overflow: hidden;
+		border-radius: 15px 15px 0px 0px;
+	}
+
+	.search__url {
+		margin-left: 30%;
+		margin-top: 11.6%;
+		font-size: 3vw;
+		white-space: nowrap;
+	}
+
+	.search__base {
+		color: #999999;
+		user-select: none;
+	}
+
+	.search__path {
+		color: #333333;
+		font-weight: 700;
+	}
+
+	.preview__description {
+		margin: 20px;
+		text-align: center;
+		font-size: 18px;
+		user-select: none;
+	}
+
+	.hint {
+		position: fixed;
+		left: 0px;
+		bottom: 0px;
+		width: 100%;
+		z-index: 10;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		transform: translateY(0%);
+		transition: all ease 0.2s;
+	}
+
+	.hint_hidden {
+		transform: translateY(100%);
+	}
+
+	.hint__text {
+		margin: 10px;
+		font-size: 14px;
+		color: #333333;
+		text-align: center;
+	}
+
+	.button-back, .button-forward {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.button-back__icon, .button-forward__icon {
+		margin: 10px;
+		width: 100px;
+		height: 100px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 50%;
+		background-image: url(/assets/arrow-left3.svg);
+	}
+
+	.button-forward__icon {
+		background-image: url(/assets/arrow-right3.svg);
+	}
+
+	.button-forward__icon_complete {
+		background-image: url(/assets/checkmark.svg);
+	}
+
+	.button-back__text, .button-forward__text {
+		margin: 10px;
+		color: #333333;
+		font-size: 18px;
+		user-select: none;
+	}
+
+}

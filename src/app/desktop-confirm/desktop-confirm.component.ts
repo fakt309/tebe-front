@@ -51,11 +51,17 @@ export class DesktopConfirmComponent implements OnInit {
   ) { }
 
   setCoord(): void {
+    let rectHost = this.host.nativeElement.getBoundingClientRect()
     let rect = this.target.getBoundingClientRect()
     if (!rect.x && !rect.y && !rect.width && !rect.height) return
 
-    this.left = rect.x+window.scrollX-40
-    this.top = rect.y+window.scrollY+30
+    let x = rect.x+window.scrollX-40
+    let y = rect.y+window.scrollY+30
+
+    if (y+rectHost.height > window.innerHeight) y = rect.y-rectHost.height-30
+
+    this.left = x
+    this.top = y
   }
 
   ngOnInit(): void {

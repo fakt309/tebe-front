@@ -8,7 +8,8 @@ import { IsTouchService } from '../services/is-touch.service'
 })
 export class PageCreateComponent implements OnInit {
 
-  stage: number = 3
+  stage: number = 1
+
   typeScreen: string = 'none'
 
   constructor(
@@ -23,7 +24,14 @@ export class PageCreateComponent implements OnInit {
     }
   }
 
+  changeStage(stage: number): void {
+    this.stage = stage
+    // window.localStorage.setItem('globalStage', JSON.stringify(stage))
+  }
+
   ngOnInit(): void {
+    // this.stage = JSON.parse(window.localStorage.getItem('globalStage') || '1')
+
     this.setTypeScreen()
   }
 

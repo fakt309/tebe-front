@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core'
+import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core'
 import { trigger, transition, style, animate } from '@angular/animations'
 
 @Component({
@@ -19,9 +19,15 @@ import { trigger, transition, style, animate } from '@angular/animations'
 })
 export class TouchSelectLocationComponent implements OnInit {
 
+  @Output() select: EventEmitter<string> = new EventEmitter<string>()
+
   @HostBinding('@slideTop') slideTop: string = 'show'
 
   constructor() { }
+
+  setLang(lang: string): void {
+    this.select.emit(lang)
+  }
 
   ngOnInit(): void { }
 

@@ -62,6 +62,7 @@ export class DesktopMicroComponent implements OnInit {
   textError: string =''
   timeoutError: any = setTimeout(() => {}, 0)
 
+  @Input() withoutRecord: boolean = false
   @Input() sublimeValue: any = null
   @Input() sublimeSounds: any = null
   @Input() sublimeDuration: any = null

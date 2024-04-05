@@ -98,6 +98,17 @@
 		// transform: translateY(-50%) scaleY(0);
 	}
 
+	.row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.align-self_end {
+		align-self: flex-end;
+	}
+
 	@keyframes coin {
 	    0% {
 	      transform: translateY(0px) scale(0.1);

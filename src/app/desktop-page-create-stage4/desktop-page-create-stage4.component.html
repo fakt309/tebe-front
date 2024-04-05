@@ -1,0 +1,64 @@
+<app-desktop-error
+	class="error"
+	[text]="textError"
+></app-desktop-error>
+
+<div
+	class="preview"
+	[class.preview_top]="stage > 1"
+	[class.preview_bottom]="stage === 0"
+>
+	<div class="preview__description">{{ locationService.translate('come up with an original link that you will send', 'придумайте оригинальную ссылку, которую вы отправите') }}</div>
+
+	<div
+		class="search"
+		[style.width.px]="searchImage.w"
+		[style.height.px]="searchImage.h"
+	>
+		<div class="search__url">
+			<span class="search__base">{{ baseUrl+'/' }}</span>
+			<input
+				class="search__input"
+				[class.search__input_incorrect]="linkControl.errors !== null"
+				type="text"
+				[formControl]="linkControl"
+			/>
+			<!-- [attr.placeholder]="exampleUrl" -->
+			<!-- (keydown.enter)="sendLinkGift()" -->
+		</div>
+	</div>
+
+	<div class="row preview__row">
+		<div class="preview__error">
+			{{ linkControl.errors !== null ? linkControl.errors['text'] : '' }}
+			<a
+				*ngIf="showMyContantErrorLink"
+				class="preview__link"
+				href="https://t.me/gaiusdedeo"
+				target="_blank"
+			>@gaiusdedeo</a>
+		</div>
+	</div>
+
+	<div class="row preview__row">
+		
+		<app-desktop-button
+			class="preview__button"
+			[text]="locationService.translate('back to box', 'назад к коробке')"
+		  	[background]="'#ffffff00'"
+		  	[color]="'#333333'"
+		  	(click)="changeGlobalStage.emit(3)"
+		></app-desktop-button>
+
+		<app-desktop-button
+			#completeRef
+			class="preview__button"
+			[text]="locationService.translate('complete', 'завершить')"
+		  	[background]="'#4caf50'"
+		  	[color]="'#ffffff'"
+		  	[disabled]="linkControl.errors !== null"
+		  	(click)="onClickCreateBox($event)"
+		></app-desktop-button>
+		<!-- (click)="sendLinkGift()" -->
+	</div>
+</div>

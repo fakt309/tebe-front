@@ -1,0 +1,38 @@
+<div class="celebrates">
+	<div
+		*ngFor="let celebrate of getCelebrates()"
+		class="celebrates__option"
+	>
+		{{ celebrate }}
+	</div>
+</div>
+
+<div class="wrap-box">
+	<app-box
+			#boxRef
+			class="box"
+			[packed]="box.packed"
+			[animate]="box.animate"
+			[wrapped]="box.wrapped"
+			[tapped]="box.tapped"
+			[w]="box.size.w"
+			[h]="box.size.h"
+			[d]="box.size.d"
+			[inside]="box.inside"
+			[package]="box.package"
+		  	[tape]="box.tape"
+			[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+(box.rotate.x+box.shiftRotate.x)+'deg) rotateY('+(box.rotate.y+box.shiftRotate.y)+'deg) rotateZ('+box.rotate.z+'deg) scale('+box.scale+')'"
+		>
+
+	</app-box>
+</div>
+
+
+<div class="row">
+	<app-desktop-button
+		[text]="locationService.translate('create gift', 'создать подарок')"
+		[color]="'#ffffff'"
+		[background]="'#4caf50'"
+		(click)="goToLink('/c')"
+	></app-desktop-button>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ChangeDetectorRef, Output, EventEmitter } from '@angular/core'
 import { TouchService, Touch } from '../touch.service'
 import { Subscription } from 'rxjs'
 import { LocationService } from '../services/location.service'
@@ -30,6 +30,8 @@ import { trigger, transition, style, animate, query } from '@angular/animations'
 export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
 
   private subs: Array<Subscription> = []
+
+  @Output() changeGlobalStage: EventEmitter<number> = new EventEmitter<number>()
 
   constructor(
     private touchService: TouchService,
@@ -126,7 +128,7 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
     this.stats[type] = 'close'
 
     if (type === 'showPrice' && !this.wasChoosen['showPrice']) {
-      console.log("BACK")
+      this.changeGlobalStage.emit(1)
     } else if (type === 'hintNo' && !this.wasChoosen['hintNo']) {
       this.showScreen('showPrice')
     } else if (type === 'hintYes' && !this.wasChoosen['hintYes']) {
@@ -197,6 +199,8 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
         this.showScreen('currencyValue')
       }
     }
+
+    this.saveUpdate()
   }
 
   currencyOption(type: string): Array<number> {
@@ -259,6 +263,8 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
       this.showScreen('hintNo')
       this.firstChoose = 'no'
     }
+
+    this.saveUpdate()
   }
 
   resultHintNo(res: boolean): void {
@@ -271,6 +277,8 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
       this.howShowPrice = 'notAtAll'
       this.goToNextStage()
     }
+
+    this.saveUpdate()
   }
 
   resultHintYes(res: boolean): void {
@@ -285,6 +293,8 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
       this.showScreen('currency')
       this.call.refreshCurrecy = !this.call.refreshCurrecy
     }
+
+    this.saveUpdate()
   }
 
   formatLabelMoneyHint(value: number) {
@@ -316,6 +326,8 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
     if (this.howShowPrice === 'exact' || this.howShowPrice === 'hint') {
       this.showScreen('currencyRate')
     }
+
+    this.saveUpdate()
   }
 
   onSaveCurrencyRate(val: string): void {
@@ -330,6 +342,8 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
     } else if (this.howShowPrice === 'exact') {
       this.showScreen('currencyValue')
     }
+
+    this.saveUpdate()
   }
 
   onSaveCurrencyValue(val: string): void {
@@ -339,13 +353,52 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
     if (!n) n = 1
     this.currency.value = Math.round(n*100)/100
     this.goToNextStage()
+
+    this.saveUpdate()
   }
 
   onSaveCurrencySlide(): void {
-    console.log('catch close slide')
     this.wasChoosen['currencySlide'] = true
     this.stats['currencySlide'] = 'close'
     this.goToNextStage()
+
+    this.saveUpdate()
+  }
+
+  isDefaultSign(sign: string): boolean {
+    if (sign === 'dollar' || sign === 'euro' || sign === 'ruble' || sign === 'yen' || sign === 'pound') {
+      return true
+    }
+    return false
+  }
+
+  saveUpdate(): void {
+
+    // this place
+    let ttype: string = this.howShowPrice
+    if (ttype === 'notAtAll') ttype = 'no'
+    if (ttype === 'exact') ttype = 'yes'
+    const currency = ttype !== 'no' ? (this.otherCurrency ? this.currency.name : this.currency.id) : null
+    const rate = this.isDefaultSign(currency) ? null : this.currency.rate
+
+    let price = null
+    if (ttype === 'yes') {
+      price = this.currency.value
+    } else if (ttype === 'hint') {
+      const index = this.currency.active
+      const options = this.currencyOption(currency)
+      price = [options[index], options[index+1] !== undefined ? options[index+1] : 'infinity']
+    }
+
+    const cost = {
+      type: ttype,
+      currency,
+      rate,
+      price
+    }
+
+    window.localStorage.setItem('cost', JSON.stringify(cost))
+
   }
 
   onInputCurrencyValue(val: string): void {
@@ -353,7 +406,7 @@ export class TouchPageCreateStage2Component implements OnInit, OnDestroy {
   }
 
   goToNextStage(): void {
-    console.log('GO TO NEXT STAGE')
+    this.changeGlobalStage.emit(3)
   }
 
   ngOnInit(): void {

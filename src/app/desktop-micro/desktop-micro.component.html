@@ -17,6 +17,7 @@
   </div>
 </div>
 <app-desktop-button
+  *ngIf="!withoutRecord"
   [icon]="status === 'recording' ? '../../assets/stop.svg' : '../../assets/record.svg'"
   [background]="'#fafafa'"
   [disabled]="playing || showConfirm === 'open'"

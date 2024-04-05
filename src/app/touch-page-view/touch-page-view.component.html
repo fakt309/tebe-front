@@ -1,0 +1,397 @@
+<app-touch-confirm
+	style="z-index: 100;position: absolute;"
+	[value]="confirm.value"
+	(result)="resultConfirm($event)"
+></app-touch-confirm>
+
+<app-touch-menu
+	[touch]="touches.menu"
+	[options]="menu"
+	[sublimeshow]="menuSublimeShow"
+	(action)="actionMenu($event)"
+	(choose)="menuWasChoosen($event)"
+></app-touch-menu>
+
+<div
+	*ngIf="stage === 4"
+	@menu
+	class="top-menu"
+	[class.top-menu_dark-mode]="activeGift.id !== null"
+>
+	<div
+		*ngIf="activeGift.id !== null"
+		@mainText
+		class="top-menu__option"
+	>
+		<div class="top-menu__icon top-menu__icon_up"></div>
+		<div class="top-menu__text">{{ locationService.translate('to archive', 'в архив') }}</div>
+	</div>
+	<div
+		*ngIf="activeGift.id !== null"
+		@mainText
+		class="top-menu__option"
+	>
+		<div class="top-menu__icon top-menu__icon_left"></div>
+		<div class="top-menu__icon top-menu__icon_right"></div>
+		<div class="top-menu__text">{{ locationService.translate('rotate', 'вращать') }}</div>
+	</div>
+	<div
+		#menuGiftsRef
+		class="top-menu__option margin-left_auto animation-throw"
+	>
+		<div class="top-menu__icon top-menu__icon_archive">
+			<div *ngIf="this.gifts.length-this.inBox.length > 0" @mainText class="top-menu__count">{{ this.gifts.length-this.inBox.length }}</div>
+		</div>
+		<div class="top-menu__text">{{ locationService.translate('archive', 'архив') }}</div>
+	</div>
+</div>
+
+<div
+	*ngIf="stage === 1"
+	@mainText
+	class="main-text"
+>
+	{{ locationService.translate('here is the gift for you', 'для вас подарок') }}
+</div>
+
+<div
+	*ngIf="stage === 2"
+	@mainText2
+	class="main-text-2"
+>
+	{{ locationService.translate('enter a code', 'введите код') }}
+</div>
+
+<div
+	*ngIf="stage === 2"
+	@mainText3
+	class="main-text-3 text_red"
+>
+	{{ locationService.translate('attempts left: ', 'осталось попыток: ') }} {{ triesCode }}
+</div>
+
+<div
+	*ngIf="stage === 1"
+	@hint
+	class="hint"
+>
+	{{ locationService.translate('touch to continue', 'нажмите, чтобы продолжить') }}
+</div>
+
+<div
+	*ngIf="stage === 2"
+	@hint
+	class="hint"
+>
+	{{ locationService.translate('tap to open', 'нажмите, чтобы открыть') }}
+</div>
+
+<div
+	*ngIf="stage === 3"
+	@hint
+	class="hint"
+>
+	{{ locationService.translate('tap to unpack', 'нажмите, чтобы распаковать') }}
+</div>
+
+<div
+	*ngIf="stage === 4 && activeGift.id === null"
+	@hint
+	class="hint"
+>
+	{{ locationService.translate('move all gifts to the archive', 'переложите все подарки в архив') }}
+</div>
+
+<div
+	*ngIf="stage === 4 && activeGift.id !== null && getGiftById(activeGift.id).type === 'game'"
+	@hint
+	class="hint hint_white"
+>
+	{{ locationService.translate('tap - open', 'нажать - открыть') }}
+</div>
+
+<!-- <div
+	*ngIf="stage === 4 && activeGift.id !== null && getGiftById(activeGift.id).type === 'speaker'"
+	@hint
+	class="hint hint_white"
+>
+	{{ locationService.translate('tap - play/pause', 'нажать - плей/пауза') }}
+</div> -->
+
+<app-touch-lock
+	*ngIf="stage === 2"
+	@code
+	class="lock"
+	[disabled]="disabledCode"
+	[toReject]="toRejectCode"
+	[toAccept]="toAcceptCode"
+	[toInput]="toInputCode"
+	(input)="onInputLock($event)"
+></app-touch-lock>
+
+<div
+	class="wrap"
+	[class.wrap_animated]="wrap.animated"
+	[style.transform]="'translateX('+(wrap.x+wrap.shift.x)+'px) translateY('+(wrap.y+wrap.shift.y)+'px) scale('+wrap.scale+')'"
+	[style.display]="wrap.show ? 'flex' : 'none'"
+>
+	<app-box
+		class="box"
+		[packed]="box.packed"
+		[animate]="box.animate"
+		[wrapped]="box.wrapped"
+		[tapped]="box.tapped"
+		[w]="box.size.w"
+		[h]="box.size.h"
+		[d]="box.size.d"
+		[inside]="box.inside"
+		[package]="box.package"
+		[tape]="box.tape"
+		[style.transform]="'translateX('+box.coord.x+'px) translateY('+box.coord.y+'px) translateZ('+box.coord.z+'px) rotateX('+(box.rotate.x+box.shiftRotate.x)+'deg) rotateY('+(box.rotate.y+box.shiftRotate.y)+'deg) rotateZ('+box.rotate.z+'deg) scale('+box.scale+')'"
+	>
+		<ng-container *ngFor="let idGift of inBox">
+			<ng-container *ngIf="getGiftById(idGift) as gift">
+				<app-greeting-card
+					*ngIf="gift.type === 'greetingcard'"
+					class="gift"
+					[class.gift_animated]="activeGift.animated"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY('+(180+gift.rotate.y)+'deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[front]="gift.front"
+					[back]="gift.back"
+					[text]="gift.text"
+					[color]="gift.color"
+					[sign]="gift.sign"
+					[smooth]="activeGift.animated"
+				>
+				</app-greeting-card>
+				<app-game
+					*ngIf="gift.type === 'game'"
+					class="gift"
+					[class.gift_animated]="activeGift.animated"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[color]="gift.color"
+					[front]="gift.front"
+					[inside]="gift.inside"
+					[side]="gift.side"
+					[code]="gift.code"
+					[open]="gift.open"
+					[smooth]="activeGift.animated"
+				>
+				<!-- [smooth]="activeGift.animated" -->
+				</app-game>
+				<app-speaker
+					*ngIf="gift.type === 'speaker'"
+					class="gift"
+					[class.gift_animated]="activeGift.animated"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(0deg) rotateZ(90deg)'"
+					[size]="getSizeGift(gift)"
+					[grill]="gift.grill"
+					[color]="gift.color"
+					[smooth]="activeGift.animated"
+				>
+				</app-speaker>
+				<app-tablet
+					*ngIf="gift.type === 'tablet'"
+					class="gift"
+					[class.gift_animated]="activeGift.animated"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[color]="gift.color"
+					[smooth]="activeGift.animated"
+				>
+				</app-tablet>
+				<app-photo
+					*ngIf="gift.type === 'photo'"
+					class="gift"
+					[class.gift_animated]="activeGift.animated"
+					[style.transform]="'translateX('+(-gift.pos.y)+'px) translateY('+(-gift.pos.x)+'px) translateZ('+(-gift.pos.z)+'px) rotateX('+(gift.rotate.x+gift.shiftRotate.x)+'deg) rotateY(180deg) rotateZ(-90deg)'"
+					[size]="getSizeGift(gift)"
+					[photo]="gift.photo"
+					[sign]="gift.sign"
+					[smooth]="activeGift.animated"
+				>
+				</app-photo>
+			</ng-container>
+		</ng-container>
+		<div
+			*ngIf="activeGift.id"
+			@activeBack
+			class="back-active"
+			[style.width.px]="getSizeBackActive().w"
+			[style.height.px]="getSizeBackActive().h"
+			[style.transform]="'translateZ(-'+box.size.h+'px)'"
+		></div>
+	</app-box>
+</div>
+
+<!-- <div
+	*ngIf="dragGift.img"
+	class="drag-gift"
+	[class.drag-gift_animated]="dragGift.animated"
+	[style.background-image]="'url('+dragGift.img+')'"
+	[style.left.px]="dragGift.position.x"
+	[style.top.px]="dragGift.position.y"
+	[style.width.px]="dragGift.size.w"
+	[style.height.px]="dragGift.size.h"
+>
+	<div *ngIf="!dragGift.allowed" class="drag-gift__not-allowed"></div>
+</div> -->
+
+<!-- cdkDropList
+	[cdkDropListAutoScrollDisabled]="true"
+	(cdkDropListDropped)="dropListGifts($event)"
+ -->
+<app-touch-scroll
+	*ngIf="stage === 5"
+	[touch]='touches.archive'
+	[refreshable]="true"
+>
+	<!-- cdkDrag
+	[cdkDragDisabled]="gifts.length < 2"
+	[cdkDragStartDelay]="500" -->
+  <app-touch-giftslist-option
+    *ngFor="let gift of gifts; let i = index"
+    [@slideTopGiftBlock]="{value: '', params: { delay: (i*20)+'ms'}}"
+    class="gift-option-list"
+    [gift]="gift"
+    [refresh]="refreshSnapshots"
+    (click)="showViewGift(gift)"
+  >
+	<!-- *cdkDragPlaceholder -->
+    <div class="placeholder-list-gift"></div>
+    {{ gift.title | textMore:20 }}
+  </app-touch-giftslist-option>
+</app-touch-scroll>
+
+<app-touch-screen
+	[touch]="touches.screenViewGift"
+	[show]="stats.screenViewGift === 'open' ? true : false"
+	[scrollable]="false"
+	[backable]="modeViewGift === 'usual'"
+	(close)='closeScreenViewGift()'
+>
+	<app-touch-view-gift
+		[touch]="touches.screenViewGift"
+		[gift]="activeGiftView"
+		[mode]="modeViewGift"
+		[sublimerefresh]="sublimeRefreshViewGift"
+		[buttomText]="buttomTextView"
+	></app-touch-view-gift>
+</app-touch-screen>
+
+<app-touch-screen
+	[touch]="touches.poem"
+	[show]="stats.poem === 'open' ? true : false"
+	[doscrolltocenter]="sublimePoemScrollToCenter"
+	(close)="closeScreenPoem()"
+>
+	<app-touch-text-copy
+		*ngIf="stats.poem === 'open' ? true : false"
+		[text]="activeGiftView?.text.replaceAll('<br>', '\n')"
+	></app-touch-text-copy>
+</app-touch-screen>
+
+<app-touch-screen
+	[touch]="touches.howToUse"
+	[show]="stats.howToUse === 'open' ? true : false"
+	[doscrolltocenter]="sublimeHowToUseScrollToCenter"
+	(close)="closeScreenHowToUse()"
+>
+	<div *ngIf="activeGiftView?.platform === 'ps'" class="dialog">
+		<div class="dialog-title">{{ locationService.translate('How to activate a reedem key for playstation', 'Как активировать ключ для playstation') }}</div>
+		<div class="dialog-text">{{ locationService.translate('1. Select PlayStation Store and press the triangle button to bring up the menu.', '1. Выберите PlayStation Store и нажмите кнопку «треугольник» для вызова меню.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/ps1.png" />
+		<div class="dialog-text">{{ locationService.translate('2. Select... (more) > Redeem Codes.', '2. Выберите ... (еще) > Погашение кодов.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/ps2.png" />
+		<div class="dialog-text">{{ locationService.translate('3. Enter the 12-digit code and select Redeem. The funds or materials will be added to your account.', '3. Введите 12-значный код и выберите Погасить. Средства или материалы будут добавлены в вашу учетную запись.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/ps3.png" />
+		<div class="dialog-text">
+			{{ locationService.translate('See the official website for more details: ', 'Подробнее смотрите на официальном сайте: ') }}
+			<a class="dialog-link" target="_blank" href="https://www.playstation.com/ru-ru/support/store/redeem-ps-store-voucher-code/">https://www.playstation.com/ru-ru/support/store/redeem-ps-store-voucher-code/</a>
+		</div>
+	</div>
+	<div *ngIf="activeGiftView?.platform === 'xbox'" class="dialog">
+		<div class="dialog-title">{{ locationService.translate('How to activate a reedem key for xbox', 'Как активировать ключ для xbox') }}</div>
+		<div class="dialog-text">{{ locationService.translate('1. Press the Xbox button to open the guide, then select Store.', '1. Нажмите кнопку Xbox, чтобы открыть гид, а затем выберите Store.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/xbox1.png" />
+		<div class="dialog-text">{{ locationService.translate('2. Click the View button to open the side menu, and then select Activate.', '2. Нажмите кнопку Просмотр, чтобы открыть боковое меню, а затем выберите Активировать.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/xbox2.png" />
+		<div class="dialog-text">{{ locationService.translate('3. Enter the 25-digit code, click Next and follow the onscreen instructions.', '3. Введите 25-значный код, нажмите Далее и следуйте указаниям на экране.') }}</div>
+		<img width="90%" class="dialog-img" src="assets/game/how-to-use/xbox3.png" />
+		<div class="dialog-text">
+			{{ locationService.translate('See the official website for more details: ', 'Подробнее смотрите на официальном сайте: ') }}
+			<a class="dialog-link" target="_blank" href="https://support.xbox.com/ru-RU/help/subscriptions-billing/redeem-codes-gifting/redeem-prepaid-codes">https://support.xbox.com/ru-RU/help/subscriptions-billing/redeem-codes-gifting/redeem-prepaid-codes</a>
+		</div>
+	</div>
+</app-touch-screen>
+
+<app-touch-screen
+	[touch]="touches.codeGame"
+	[show]="stats.codeGame === 'open' ? true : false"
+	[doscrolltocenter]="sublimeCodeGameScrollToCenter"
+	(close)="closeScreenCodeGame()"
+>
+	<app-touch-text-copy
+		*ngIf="stats.codeGame === 'open' ? true : false"
+		[text]="activeGiftView?.code"
+	></app-touch-text-copy>
+</app-touch-screen>
+
+<app-touch-screen
+	[show]="stats.screenListenAudio === 'open'"
+	[backable]="false"
+	[scrollable]="false"
+>
+  <app-touch-listen
+  	[touch]="touches.screenListenAudio"
+  	[gift]="activeGift"
+  	[value]="activeGiftView?.type === 'speaker' ? activeGiftView?.value : null"
+  	(close)="closeScreenListenAudio()"
+	></app-touch-listen>
+</app-touch-screen>
+
+<app-touch-screen
+	[show]="stats.screenWatchVideo === 'open'"
+	[touch]="touches.screenWatchVideo"
+	[backable]="true"
+	[scrollable]="false"
+	(close)="closeWatchVideo()"
+>
+  <app-touch-watch
+  	[active]="activeWatchVideo"
+  	[video]="activeGiftView?.urlVideo"
+	></app-touch-watch>
+</app-touch-screen>
+
+<app-touch-screen
+	[show]="stats.generalInfo === 'open'"
+	[touch]="touches.generalInfo"
+	[backable]="true"
+	[doscrolltocenter]="sublimeGeneralInfoScrollToCenter"
+	(close)="closeGeneralInfo()"
+>
+  <div class="gi-title">{{ locationService.translate('general info', 'общая информация') }}</div>
+
+  <div class="gi-box">
+  	<app-box
+			class="box"
+			[packed]="true"
+			[animate]="false"
+			[wrapped]="true"
+			[tapped]="true"
+			[w]="box.size.w"
+			[h]="box.size.h"
+			[d]="box.size.d"
+			[package]="box.package"
+			[tape]="box.tape"
+			[style.transform]="'translateX(0px) translateY(0px) translateZ(0px) rotateX(-15deg) rotateY(75deg) rotateZ(0deg) scale(1)'"
+		></app-box>
+  </div>
+
+  <div class="gi-text">{{ locationService.translate('gifts: ', 'подарков: ') }} {{ gifts.length }}</div>
+
+  <div class="gi-text">{{ locationService.translate('cost: ', 'стоимость: ') }} {{ getPriceString() }}</div>
+
+</app-touch-screen>

@@ -16,15 +16,23 @@ export class LocationService {
   constructor(
     private route: ActivatedRoute
   ) {
-    this.route.queryParams.subscribe((params: any) => {
-      let code = params['l']
-      if (!code) return
-      this.countryCodes.forEach((country: any) => {
-        if (country.code === code) {
-          this.country = country.index
-          return
-        }
-      })
+    // this.route.queryParams.subscribe((params: any) => {
+    //   let code = params['l']
+    //   if (!code) return
+    //   this.countryCodes.forEach((country: any) => {
+    //     if (country.code === code) {
+    //       this.country = country.index
+    //       return
+    //     }
+    //   })
+    // })
+
+    const code = window.sessionStorage.getItem('lang') || null
+    this.countryCodes.forEach((country: any) => {
+      if (country.code === code) {
+        this.country = country.index
+        return
+      }
     })
   }
 

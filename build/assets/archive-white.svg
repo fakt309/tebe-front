@@ -1,0 +1,41 @@
+<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <!-- <rect
+    x="0"
+    y="0"
+    width="30"
+    height="30"
+    fill="#ff000033"
+  ></rect> -->
+
+  <rect
+    x="5"
+    y="5"
+    width="20"
+    height="5"
+    stroke-width="2px"
+    stroke="#ffffff"
+    fill="#ff000000"
+    rx="1"
+  ></rect>
+
+  <rect
+    x="7.5"
+    y="10"
+    width="15"
+    height="15"
+    stroke-width="2px"
+    stroke="#ffffff"
+    fill="#ff000000"
+    rx="1"
+  ></rect>
+
+  <line
+    x1="12"
+    y1="15"
+    x2="18"
+    y2="15"
+    stroke-width="2px"
+    stroke="#ffffff"
+    stroke-linecap="round"
+  />
+</svg>

@@ -14,6 +14,7 @@ export class TouchViewGiftComponent implements OnInit {
 
   @Input() gift: any = null
   @Input() sublimerefresh: boolean = false
+  @Input() buttomText: string = this.locationService.translate('change object parameters in the right sidebar', 'изменение параметров подарка в правом меню')
 
   public width: number = 0
   public height: number = 0
@@ -74,7 +75,7 @@ export class TouchViewGiftComponent implements OnInit {
     await this.asyncservice.delay(10)
     // this.rotateDisplayY = 0
     this.host.nativeElement.querySelector('.hintview').style.top = '47%'
-    this.host.nativeElement.querySelector('.hintsidebar').style.bottom = '0%'
+    if (this.host.nativeElement.querySelector('.hintsidebar')) this.host.nativeElement.querySelector('.hintsidebar').style.bottom = '0%'
     this.intervalRotate = setInterval(() => {
       this.rotateDisplayY++
       if (this.rotateDisplayY > 360) {
@@ -91,7 +92,7 @@ export class TouchViewGiftComponent implements OnInit {
     await this.asyncservice.delay(10)
     // this.rotateDisplayY = 0
     this.host.nativeElement.querySelector('.hintview').style.top = '5%'
-    this.host.nativeElement.querySelector('.hintsidebar').style.bottom = '-10%'
+    if (this.host.nativeElement.querySelector('.hintsidebar')) this.host.nativeElement.querySelector('.hintsidebar').style.bottom = '-10%'
     await this.asyncservice.delay(200)
     // this.host.nativeElement.querySelector(".display").style.transition = "none"
     return new Promise(res => res())
